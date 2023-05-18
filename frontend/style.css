@@ -1,0 +1,99 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap');
+
+body{
+    font-family: 'Space Mono', monospace; 
+    background-color: #F1F6F9;
+}
+body *{
+    color: #212A3E !important;
+}
+
+/* NAVBAR */
+.navbar{
+    border-bottom:1px solid #212A3E ;
+    box-shadow: 0 8px 6px -6px #212A3E;
+}
+
+.nav-item{
+    padding-right:2em;
+}
+.nav-item:hover{
+    font-weight: bold;
+}
+
+.btn{
+    border: 1px solid #212A3E;
+}
+
+.btn:hover{
+    background-color: #212A3E;
+    color:white !important;
+}
+
+/* STAGES */
+
+.stage{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    
+}
+.last-day{
+    text-align: center;
+    border-radius: 0;
+    margin-top: 1em;
+    border:none;
+    background-color: #212A3E;
+
+}
+.last-day h1{
+    color: white !important ;
+    padding: 1em;
+}
+
+/* card  */
+
+.card{
+    border:none;
+    padding-left: 1em;
+}
+.form-control{
+    border:1px solid #212A3E;
+}
+
+/* footer */
+
+footer{
+    background-color: #212A3E;
+    text-align: center;
+}
+
+footer *{
+    color: white !important;
+    text-decoration: none;
+}
+
+footer a{
+    color:white;
+}
+
+footer a:hover{
+    opacity: 0.7;
+}
+footer .social a{
+    margin-right: 10px;
+}
+
+.create-btn{
+    background-color: #212A3E;
+    color:white !important;
+    width: 50%;
+    margin-left: 45%;
+    padding:10px 5px;
+}
+
+.create-btn:hover{
+    background-color: white;
+    color: #212A3E !important;
+    border: 1px solid #212A3E
+}
