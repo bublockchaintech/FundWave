@@ -2,8 +2,11 @@
 pragma solidity ^0.8.9;
 
 import "./interfaces/MultiSignature.sol";
+import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 
 contract DAO {
+    using SafeMath for uint256;
+
     enum StageSection {
         NON_STAGE,
         PROJECT_CREATION_STAGE,
@@ -16,6 +19,7 @@ contract DAO {
         uint256 moneyPool;
         StageSection stageState;
         uint16 projectCount;
+        uint256 coefficient;
     }
 
     struct MultiSignatureWallet {
@@ -25,7 +29,7 @@ contract DAO {
         bool approved;
         uint16 executedProjectCounts;
         uint16 rejectedProjectCounts;
-        Project[] projects;
+        Project[] previousProjects;
     }
 
     struct Project {
@@ -34,6 +38,7 @@ contract DAO {
         address ownerContractAddress;
         uint256 totalFunds;
         uint64 totalVotes;
+        uint256 confirmedBalance;
     }
 
     uint16 public stageCount;
@@ -73,6 +78,11 @@ contract DAO {
 
     modifier approvedAccount(address contractAddress) {
         require(multiWallets[contractAddress].approved == true);
+        _;
+    }
+
+    modifier isFormulaCalculated(uint16 stageId) {
+        require(stages[stageId].coefficient > 0);
         _;
     }
 
@@ -122,21 +132,67 @@ contract DAO {
             id: stage.projectCount,
             ownerContractAddress: contractAddress,
             totalFunds: 0,
-            totalVotes: 0
+            totalVotes: 0,
+            confirmedBalance: 0
         });
 
         stagesToProject[stageId][project.id] = project;
-        multiWallets[contractAddress].projects.push(project);
     }
 
     function fund(
         uint16 stageId,
         uint16 projectId
-    ) external payable isProjectFundingStage(stageId) {}
+    ) external payable isProjectFundingStage(stageId) {
+        Project storage project = stagesToProject[stageId][projectId];
+        Stage storage stage = stages[stageId];
+
+        require(project.stageId != 0, "Project not initialized");
+
+        stage.moneyPool += msg.value;
+        project.totalFunds += msg.value;
+        project.totalVotes++;
+    }
 
     function distributeFunds(
         uint16 stageId
-    ) external onlyOwner isProjectExecutingStage(stageId) {}
+    )
+        external
+        onlyOwner
+        isProjectExecutingStage(stageId)
+        isFormulaCalculated(stageId)
+    {
+        Stage memory stage = stages[stageId];
+        for (
+            uint16 projectIndex = 1;
+            projectIndex <= stage.projectCount;
+            projectIndex++
+        ) {
+            Project memory project = stagesToProject[stageId][projectIndex];
+            uint256 multiplication = project.totalFunds.mul(project.totalVotes);
+            project.confirmedBalance = stage.coefficient.mul(multiplication);
+            (bool sent, ) = project.ownerContractAddress.call{
+                value: project.confirmedBalance
+            }("");
+            require(sent, "Failed to send ether");
+        }
+        stage.stageState = StageSection.NON_STAGE;
+    }
+
+    function calculateFormula(uint16 stageId) internal view {
+        Stage memory stage = stages[stageId];
+        uint256 sum = 0;
+        for (
+            uint16 projectIndex = 1;
+            projectIndex <= stage.projectCount;
+            projectIndex++
+        ) {
+            Project memory project = stagesToProject[stageId][projectIndex];
+            uint256 multiplication = project.totalFunds.mul(project.totalVotes);
+            sum = sum.add(multiplication);
+        }
+        uint256 coefficient = stage.moneyPool.div(sum);
+        stage.coefficient = coefficient;
+    }
 
     function getMultiSignatureWallet(
         address contractAddress
