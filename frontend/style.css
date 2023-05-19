@@ -32,7 +32,7 @@ body *{
 
 /* STAGES */
 
-.stage{
+/* .stage{
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -43,12 +43,22 @@ body *{
     border-radius: 0;
     margin-top: 1em;
     border:none;
-    background-color: #212A3E;
+    background-color: rgb(33, 42, 62);
 
 }
 .last-day h1{
     color: white !important ;
     padding: 1em;
+} */
+.stage-dot{
+    text-align: center;
+    display: flex;
+    justify-content: space-around;
+    border-top: 3px solid #212A3E;
+    
+}
+.stage{
+    margin-top:-11px;
 }
 
 /* card  */
