@@ -2,10 +2,12 @@
 
 body{
     font-family: 'Space Mono', monospace; 
-    background-color: #F1F6F9;
+    background:#F1F6F9;
+    background-size: cover;
 }
 body *{
     color: #212A3E !important;
+
 }
 
 /* NAVBAR */
@@ -32,43 +34,57 @@ body *{
 
 /* STAGES */
 
-/* .stage{
+ /* .stage{
     display: flex;
     justify-content: space-around;
     align-items: center;
-    
-}
-.last-day{
+    margin-top: 6em;
+} */
+
+ .last-day{
     text-align: center;
     border-radius: 0;
-    margin-top: 1em;
+    margin-top: 3.5em;
     border:none;
-    background-color: rgb(33, 42, 62);
-
+    background-color: #E9BE25;
 }
+
 .last-day h1{
-    color: white !important ;
-    padding: 1em;
-} */
+    color: #212A3E !important ;
+    padding: 10px;
+}  
+
 .stage-dot{
     text-align: center;
     display: flex;
     justify-content: space-around;
-    border-top: 3px solid #212A3E;
-    
-}
-.stage{
-    margin-top:-11px;
 }
 
-/* card  */
 
-.card{
+/* card */
+
+ .card{
+    background: white;
     border:none;
-    padding-left: 1em;
+    padding: 2em;
 }
+
 .form-control{
     border:1px solid #212A3E;
+}  
+
+.create-btn{
+    background-color: #212A3E;
+    color:white !important;
+    width: 50%;
+    margin-left: 45%;
+    padding:10px 5px;
+}
+
+.create-btn:hover{
+    background-color: white;
+    color: #212A3E !important;
+    border: 1px solid #212A3E
 }
 
 /* footer */
@@ -76,9 +92,11 @@ body *{
 footer{
     background-color: #212A3E;
     text-align: center;
+    height: 17vh;
 }
 
 footer *{
+    padding-top:15px;
     color: white !important;
     text-decoration: none;
 }
@@ -94,16 +112,3 @@ footer .social a{
     margin-right: 10px;
 }
 
-.create-btn{
-    background-color: #212A3E;
-    color:white !important;
-    width: 50%;
-    margin-left: 45%;
-    padding:10px 5px;
-}
-
-.create-btn:hover{
-    background-color: white;
-    color: #212A3E !important;
-    border: 1px solid #212A3E
-}
