@@ -1,0 +1,86 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap');
+
+body{
+    font-family: 'Space Mono', monospace; 
+    background:#F1F6F9;
+}
+body *{
+    color: #212A3E !important;
+
+}
+
+/* NAVBAR */
+.navbar{
+    border-bottom:1px solid #212A3E ;
+    box-shadow: 0 8px 6px -6px #212A3E;
+}
+
+.nav-item{
+    padding-right:2em;
+}
+.nav-item:hover{
+    font-weight: bold;
+}
+
+.btn{
+    border: 1px solid #212A3E;
+}
+
+.btn:hover{
+    background-color: #212A3E;
+    color:white !important;
+}
+
+/* STAGES */
+
+.last-day{
+    text-align: center;
+    border-radius: 0;
+    margin-top: 3.5em;
+    border:none;
+    background-color: #E9BE25;
+}
+
+.last-day h1{
+    color: #212A3E !important ;
+    padding: 10px;
+}  
+
+.stage-dot{
+    text-align: center;
+    display: flex;
+    justify-content: space-around;
+}
+
+
+/* PROJECT CARDS */
+
+.info, .number{
+    display:flex;
+    justify-content: space-around;
+}
+
+/* FOOTER */
+
+footer{
+    background-color: #212A3E;
+    text-align: center;
+    height: 17vh;
+}
+
+footer *{
+    padding-top:15px;
+    color: white !important;
+    text-decoration: none;
+}
+
+footer a{
+    color:white;
+}
+
+footer a:hover{
+    opacity: 0.7;
+}
+footer .social a{
+    margin-right: 10px;
+}
