@@ -14,8 +14,8 @@ contract DAO {
     struct Stage {
         uint16 id;
         uint256 moneyPool;
-        StageSection stage;
-        uint64 projectCount;
+        StageSection stageState;
+        uint16 projectCount;
     }
 
     struct MultiSignatureWallet {
@@ -25,6 +25,7 @@ contract DAO {
         bool approved;
         uint16 executedProjectCounts;
         uint16 rejectedProjectCounts;
+        Project[] projects;
     }
 
     struct Project {
@@ -43,6 +44,27 @@ contract DAO {
     mapping(uint16 => Stage) public stages;
 
     address private owner;
+
+    modifier isProjectCreationStage(uint16 stageId) {
+        require(
+            stages[stageId].stageState == StageSection.PROJECT_CREATION_STAGE
+        );
+        _;
+    }
+
+    modifier isProjectFundingStage(uint16 stageId) {
+        require(
+            stages[stageId].stageState == StageSection.PROJECT_FUNDING_STAGE
+        );
+        _;
+    }
+
+    modifier isProjectExecutingStage(uint16 stageId) {
+        require(
+            stages[stageId].stageState == StageSection.PROJECT_EXECUTION_STAGE
+        );
+        _;
+    }
 
     modifier onlyOwner() {
         require(msg.sender == owner, "Not authorized");
@@ -84,13 +106,43 @@ contract DAO {
     }
 
     // STAGE, APPROVED
-    function createProject(address contractAddress) external {}
+    function createProject(
+        address contractAddress,
+        uint16 stageId
+    )
+        external
+        approvedAccount(contractAddress)
+        isProjectCreationStage(stageId)
+    {
+        Stage storage stage = stages[stageId];
+        stage.projectCount++;
 
-    function fund(address contractAddress) external payable {}
+        Project memory project = Project({
+            stageId: stageId,
+            id: stage.projectCount,
+            ownerContractAddress: contractAddress,
+            totalFunds: 0,
+            totalVotes: 0
+        });
 
-    function distributeFunds() external onlyOwner {}
+        stagesToProject[stageId][project.id] = project;
+        multiWallets[contractAddress].projects.push(project);
+    }
 
-    function withdraw(address contractAddress) external {}
+    function fund(
+        uint16 stageId,
+        uint16 projectId
+    ) external payable isProjectFundingStage(stageId) {}
+
+    function distributeFunds(
+        uint16 stageId
+    ) external onlyOwner isProjectExecutingStage(stageId) {}
+
+    function getMultiSignatureWallet(
+        address contractAddress
+    ) external view returns (MultiSignatureWallet memory) {
+        return multiWallets[contractAddress];
+    }
 
     function getProject(
         uint16 stageId,
