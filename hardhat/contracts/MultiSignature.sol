@@ -46,20 +46,18 @@ contract MultiSignature {
     ) {
         require(_owners.length >= 5, "at least 5 owners required");
         require(
-            _numConfirmationsRequired > (_owners.length / 2) &&
+            _numConfirmationsRequired > 0 &&
                 _numConfirmationsRequired <= _owners.length,
             "invalid number of required confirmations"
         );
 
         for (uint i = 0; i < _owners.length; i++) {
             address owner = _owners[i];
-
-            require(owner != address(0), "invalid owner");
             require(!isOwner[owner], "owner not unique");
-
             isOwner[owner] = true;
-            owners.push(owner);
         }
+
+        owners = _owners;
 
         numConfirmationsRequired = _numConfirmationsRequired;
         daoContractAddress = _daoContractAddress;
