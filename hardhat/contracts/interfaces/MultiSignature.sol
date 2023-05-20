@@ -5,4 +5,6 @@ interface MultiSignature {
     function getDaoContractAddress() external view returns (address);
 
     function getOwners() external view returns (address[] memory);
+
+    function isOwner(address) external view returns (bool);
 }
