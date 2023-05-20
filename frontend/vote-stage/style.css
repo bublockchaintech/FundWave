@@ -10,6 +10,7 @@ body *{
 }
 
 /* NAVBAR */
+
 .navbar{
     border-bottom:1px solid #212A3E ;
     box-shadow: 0 8px 6px -6px #212A3E;
@@ -55,24 +56,53 @@ body *{
 
 /* PROJECT CARDS */
 
+.card{
+    background: linear-gradient(to left top, #E9BE25, #F1F6F9);
+
+}
 .info, .number{
     display:flex;
     justify-content: space-around;
 }
 
 .fund-btn{
-    width:8em;
+    width:35%;
     margin-left: auto;
     margin-right: 15px;
     margin-bottom: 10px;
+    background: #212A3E;
+    color:white !important;
 }
-/* modals */
+.fund-btn:hover{
+    background-color: #F1F6F9;
+    color:#212A3E !important;
+    border:1px solid #212A3E;
+}
+#number{
+    background: #F1F6F9;
+    border: 1px solid #212A3E;
+}
+
+.card-footer{
+    display: flex;
+    justify-content: space-between;
+}
+
+/* MODALS */
 
 .icons{
     display: flex;
     justify-content: space-around;
 }
 
+.modal-footer{
+    display: flex;
+    justify-content: space-between;
+}
+
+.modal-btn{
+    width: 40%;
+}
 
 
 /* FOOTER */
