@@ -74,6 +74,11 @@ contract DAO {
         _;
     }
 
+    modifier isFinishedStage() {
+        require(stages[stageCount].stageState == StageSection.FINISHED);
+        _;
+    }
+
     modifier onlyOwner() {
         require(msg.sender == owner, "Not authorized");
         _;
@@ -194,13 +199,23 @@ contract DAO {
             project.confirmedBalance = stage.coefficient.mul(
                 dividerForCoefficient
             );
-            console.log(project.confirmedBalance);
-            // (bool sent, ) = address(project.ownerContractAddress).call{
-            //     value: uint256(project.confirmedBalance)
-            // }("");
-            // require(sent, "Failed to send ether");
         }
         stage.stageState = StageSection.FINISHED;
+    }
+
+    function withdrawProjectMoney(
+        uint16 stageId,
+        uint16 projectId
+    ) external isFinishedStage {
+        Project storage project = stagesToProject[stageId][projectId];
+        require(
+            MultiSignature(project.ownerContractAddress).isOwner(msg.sender),
+            "Not authorized"
+        );
+        (bool sent, ) = project.ownerContractAddress.call{
+            value: project.confirmedBalance
+        }("");
+        require(sent, "Failed to send ether");
     }
 
     function calculateFormula() external onlyOwner isProjectExecutingStage {
