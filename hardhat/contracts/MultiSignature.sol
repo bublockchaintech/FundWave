@@ -157,4 +157,8 @@ contract MultiSignature {
             transaction.numConfirmations
         );
     }
+
+    fallback() external payable {}
+
+    receive() external payable {}
 }
