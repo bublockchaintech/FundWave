@@ -3,6 +3,7 @@ pragma solidity ^0.8.9;
 
 import "./interfaces/MultiSignature.sol";
 import "@openzeppelin/contracts/utils/math/SafeMath.sol";
+import "hardhat/console.sol";
 
 contract DAO {
     using SafeMath for uint256;
@@ -11,7 +12,8 @@ contract DAO {
         NON_STAGE,
         PROJECT_CREATION_STAGE,
         PROJECT_FUNDING_STAGE,
-        PROJECT_EXECUTION_STAGE
+        PROJECT_EXECUTION_STAGE,
+        FINISHED
     }
 
     struct Stage {
@@ -44,29 +46,30 @@ contract DAO {
     uint16 public stageCount;
     uint16 public multiWalletCount;
 
-    mapping(uint16 => mapping(uint16 => Project)) stagesToProject;
+    mapping(uint16 => mapping(uint16 => Project)) public stagesToProject;
     mapping(address => MultiSignatureWallet) public multiWallets;
     mapping(uint16 => Stage) public stages;
 
     address private owner;
 
-    modifier isProjectCreationStage(uint16 stageId) {
+    modifier isProjectCreationStage() {
         require(
-            stages[stageId].stageState == StageSection.PROJECT_CREATION_STAGE
+            stages[stageCount].stageState == StageSection.PROJECT_CREATION_STAGE
         );
         _;
     }
 
-    modifier isProjectFundingStage(uint16 stageId) {
+    modifier isProjectFundingStage() {
         require(
-            stages[stageId].stageState == StageSection.PROJECT_FUNDING_STAGE
+            stages[stageCount].stageState == StageSection.PROJECT_FUNDING_STAGE
         );
         _;
     }
 
-    modifier isProjectExecutingStage(uint16 stageId) {
+    modifier isProjectExecutingStage() {
         require(
-            stages[stageId].stageState == StageSection.PROJECT_EXECUTION_STAGE
+            stages[stageCount].stageState ==
+                StageSection.PROJECT_EXECUTION_STAGE
         );
         _;
     }
@@ -81,8 +84,8 @@ contract DAO {
         _;
     }
 
-    modifier isFormulaCalculated(uint16 stageId) {
-        require(stages[stageId].coefficient > 0);
+    modifier isFormulaCalculated() {
+        require(stages[stageCount].coefficient > 0);
         _;
     }
 
@@ -115,20 +118,42 @@ contract DAO {
         multiWallets[multiSignatureContract].approved = true;
     }
 
+    function initializeStage() external onlyOwner {
+        stageCount++;
+        stages[stageCount] = Stage({
+            id: stageCount,
+            moneyPool: 0,
+            stageState: StageSection.NON_STAGE,
+            projectCount: 0,
+            coefficient: 0
+        });
+    }
+
+    function setStageToCreation() external onlyOwner {
+        stages[stageCount].stageState = StageSection.PROJECT_CREATION_STAGE;
+    }
+
+    function setStageToFunding() external onlyOwner {
+        stages[stageCount].stageState = StageSection.PROJECT_FUNDING_STAGE;
+    }
+
+    function setStageToExecution() external onlyOwner {
+        stages[stageCount].stageState = StageSection.PROJECT_EXECUTION_STAGE;
+    }
+
     // STAGE, APPROVED
     function createProject(
-        address contractAddress,
-        uint16 stageId
-    )
-        external
-        approvedAccount(contractAddress)
-        isProjectCreationStage(stageId)
-    {
-        Stage storage stage = stages[stageId];
+        address contractAddress
+    ) external approvedAccount(contractAddress) isProjectCreationStage {
+        require(
+            MultiSignature(contractAddress).isOwner(msg.sender),
+            "Not authorized"
+        );
+        Stage storage stage = stages[stageCount];
         stage.projectCount++;
 
         Project memory project = Project({
-            stageId: stageId,
+            stageId: stageCount,
             id: stage.projectCount,
             ownerContractAddress: contractAddress,
             totalFunds: 0,
@@ -136,15 +161,13 @@ contract DAO {
             confirmedBalance: 0
         });
 
-        stagesToProject[stageId][project.id] = project;
+        stagesToProject[stageCount][project.id] = project;
     }
 
-    function fund(
-        uint16 stageId,
-        uint16 projectId
-    ) external payable isProjectFundingStage(stageId) {
-        Project storage project = stagesToProject[stageId][projectId];
-        Stage storage stage = stages[stageId];
+    function fund(uint16 projectId) external payable isProjectFundingStage {
+        // require(msg.value > 0, "Fund must be more than 0");
+        Project storage project = stagesToProject[stageCount][projectId];
+        Stage storage stage = stages[stageCount];
 
         require(project.stageId != 0, "Project not initialized");
 
@@ -153,57 +176,47 @@ contract DAO {
         project.totalVotes++;
     }
 
-    function distributeFunds(
-        uint16 stageId
-    )
+    function distributeFunds()
         external
         onlyOwner
-        isProjectExecutingStage(stageId)
-        isFormulaCalculated(stageId)
+        isProjectExecutingStage
+        isFormulaCalculated
     {
-        Stage memory stage = stages[stageId];
+        Stage storage stage = stages[stageCount];
         for (
             uint16 projectIndex = 1;
             projectIndex <= stage.projectCount;
             projectIndex++
         ) {
-            Project memory project = stagesToProject[stageId][projectIndex];
+            Project storage project = stagesToProject[stageCount][projectIndex];
             uint256 multiplication = project.totalFunds.mul(project.totalVotes);
-            project.confirmedBalance = stage.coefficient.mul(multiplication);
-            (bool sent, ) = project.ownerContractAddress.call{
-                value: project.confirmedBalance
-            }("");
-            require(sent, "Failed to send ether");
+            uint256 dividerForCoefficient = multiplication.div(10 ** 9);
+            project.confirmedBalance = stage.coefficient.mul(
+                dividerForCoefficient
+            );
+            console.log(project.confirmedBalance);
+            // (bool sent, ) = address(project.ownerContractAddress).call{
+            //     value: uint256(project.confirmedBalance)
+            // }("");
+            // require(sent, "Failed to send ether");
         }
-        stage.stageState = StageSection.NON_STAGE;
+        stage.stageState = StageSection.FINISHED;
     }
 
-    function calculateFormula(uint16 stageId) internal view {
-        Stage memory stage = stages[stageId];
+    function calculateFormula() external onlyOwner isProjectExecutingStage {
+        Stage storage stage = stages[stageCount];
         uint256 sum = 0;
         for (
             uint16 projectIndex = 1;
             projectIndex <= stage.projectCount;
             projectIndex++
         ) {
-            Project memory project = stagesToProject[stageId][projectIndex];
+            Project memory project = stagesToProject[stageCount][projectIndex];
             uint256 multiplication = project.totalFunds.mul(project.totalVotes);
             sum = sum.add(multiplication);
         }
+        sum = sum.div(10 ** 9);
         uint256 coefficient = stage.moneyPool.div(sum);
         stage.coefficient = coefficient;
-    }
-
-    function getMultiSignatureWallet(
-        address contractAddress
-    ) external view returns (MultiSignatureWallet memory) {
-        return multiWallets[contractAddress];
-    }
-
-    function getProject(
-        uint16 stageId,
-        uint16 projectId
-    ) external view returns (Project memory) {
-        return stagesToProject[stageId][projectId];
     }
 }
