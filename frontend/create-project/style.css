@@ -34,13 +34,6 @@ body *{
 
 /* STAGES */
 
- /* .stage{
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    margin-top: 6em;
-} */
-
  .last-day{
     text-align: center;
     border-radius: 0;
