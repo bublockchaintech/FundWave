@@ -20,8 +20,10 @@
 
 <body>
 
+    <!-- NAVBAR -->
     <nav class="navbar navbar-expand navbar-light bg-light fixed-top">
         <div class="container">
+            <h2>FundWave</h2>
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
                     <a href="#" class="nav-link">Home</a>
@@ -35,30 +37,33 @@
         </div>
     </nav>
 
+    <!-- STAGES -->
+    <div class="container mb-2">
+        <div class="stage-dot">
+            <a>CREATE PROJECT</a>
+            <a href=""><i class="fa-solid fa-play"></i></a>
+            <a>VOTE</a>
+            <a href=""><i class="fa-solid fa-play"></i></a>
+            <a>EXECUTE</a>
+        </div>
+    </div>
+
     <div class="last-day">
         <h1>15:21:42:33</h1>
     </div>
-    <div class="container mb-5">
-        <div class="stage-dot mt-2">
-            <div class="stage">
-                <a href=""><i class="fa-solid fa-circle" style="color:#E9BE25 !important"></i></a>
-                <h5 style="color:#E9BE25 !important">CREATE PROJECT</h5>
-            </div>
-            <div class="stage">
-                <a href="/frontend/vote-stage/index.html"><i class="fa-solid fa-circle"></i></a>
-                <h5>VOTE</h5>
-            </div>
 
-            <div class="stage">
-                <a href=""><i class="fa-solid fa-circle"></i></a>
-                <h5>EXECUTE</h5>
+    <!-- CARD -->
+
+    <div class="card mt-5">
+        <div class="row w-100">
+            <div class="col-6 create-bg">
+                <h1>Create</h1>
+                <h1>Your</h1>
+                <h1>Project!</h1>
+                <h5>Your project will be put to the vote when the project collection phase is over. Good luck now!</h5>
             </div>
-        </div>
-
-
-        <div class="card mt-5">
-            <div class="row w-100">
-                <div class="col-6">
+            <div class="col-6">
+                <div class="card-body py-4">
                     <form>
                         <div class="form-label">
                             <label for="text">Community Name :</label>
@@ -81,18 +86,14 @@
                             <textarea name="why" id="why" class="form-control"></textarea>
                         </div>
                     </form>
+                    <h5>Explain your project:</h5>
+                    <textarea name="" id="" cols="30" rows="10" class="form-control"></textarea>
                 </div>
-                <div class="col-6">
-                    <div class="card-body">
-                        <h5 class="card-title">Explain your project:</h5>
-                        <textarea name="" id="" cols="30" rows="10" class="form-control"></textarea>
-                    </div>
-                    <button class="btn create-btn">Create</button>
-                </div>
-
+                <button class="btn create-btn">Create</button>
             </div>
         </div>
     </div>
+    <!-- FOOTER -->
     <footer>
         <div class="social">
             <a href="https://www.instagram.com/bublockchaintechclub/">

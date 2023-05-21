@@ -2,7 +2,7 @@
 
 body{
     font-family: 'Space Mono', monospace; 
-    background:#F1F6F9;
+    background:#fff;
     background-size: cover;
 }
 body *{
@@ -36,18 +36,15 @@ body *{
 
  .last-day{
     text-align: center;
+    margin-top: 5px;
+    padding: 15px;
     border-radius: 0;
-    margin-top: 3.5em;
     border:none;
-    background-color: #E9BE25;
+    background:url("/frontend/create-project/soyuttüpler.png");
 }
 
-.last-day h1{
-    color: #212A3E !important ;
-    padding: 10px;
-}  
-
 .stage-dot{
+    margin-top: 100px;
     text-align: center;
     display: flex;
     justify-content: space-around;
@@ -57,20 +54,35 @@ body *{
 /* card */
 
  .card{
-    background: white;
     border:none;
-    padding: 2em;
+    padding-bottom: 2em;
 }
 
 .form-control{
     border:1px solid #212A3E;
 }  
 
+.create-bg{
+    background: url("/frontend/create-project/soyuttüpler.png");
+    background-size: cover;
+    background-position: center;
+    text-align: center;
+}
+.create-bg h1{
+    margin-top:15px;
+    font-weight:800;
+    font-size:95px;
+    color:white !important;
+}
+.create-bg h5{
+    margin-top: 8em;
+    color:white !important;
+}
+
 .create-btn{
     background-color: #212A3E;
     color:white !important;
-    width: 50%;
-    margin-left: 45%;
+    width: 100%;
     padding:10px 5px;
 }
 
@@ -83,14 +95,12 @@ body *{
 /* footer */
 
 footer{
-    background-color: #212A3E;
     text-align: center;
     height: 17vh;
 }
 
 footer *{
     padding-top:15px;
-    color: white !important;
     text-decoration: none;
 }
 
