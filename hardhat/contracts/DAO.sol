@@ -9,15 +9,17 @@ contract DAO {
     using SafeMath for uint256;
 
     enum StageSection {
-        NON_STAGE,
-        PROJECT_CREATION_STAGE,
-        PROJECT_FUNDING_STAGE,
-        PROJECT_EXECUTION_STAGE,
-        FINISHED
+        NON_STAGE, // Stage Opening, 3 DAYS
+        PROJECT_CREATION_STAGE, // Project Creation, 5 DAYS
+        PROJECT_FUNDING_STAGE, // Project Funding 8 DAYS
+        PROJECT_EXECUTION_STAGE, // Project Execution 3 DAYS
+        FINISHED // Finished
     }
 
     struct Stage {
         uint16 id;
+        uint48 createdAt;
+        uint48 updatedAt;
         uint256 moneyPool;
         StageSection stageState;
         uint16 projectCount;
@@ -30,7 +32,6 @@ contract DAO {
         address[] owners;
         bool approved;
         uint16 executedProjectCounts;
-        uint16 rejectedProjectCounts;
         Project[] previousProjects;
     }
 
@@ -41,6 +42,7 @@ contract DAO {
         uint256 totalFunds;
         uint64 totalVotes;
         uint256 confirmedBalance;
+        bool withdrawed;
     }
 
     uint16 public stageCount;
@@ -49,8 +51,14 @@ contract DAO {
     mapping(uint16 => mapping(uint16 => Project)) public stagesToProject;
     mapping(address => MultiSignatureWallet) public multiWallets;
     mapping(uint16 => Stage) public stages;
+    mapping(address => mapping(uint16 => mapping(uint16 => bool))) isAddressFundProject;
 
     address private owner;
+
+    modifier isStageInitialized() {
+        require(stages[stageCount].stageState == StageSection.NON_STAGE);
+        _;
+    }
 
     modifier isProjectCreationStage() {
         require(
@@ -74,8 +82,8 @@ contract DAO {
         _;
     }
 
-    modifier isFinishedStage() {
-        require(stages[stageCount].stageState == StageSection.FINISHED);
+    modifier isFinishedStage(uint16 stageId) {
+        require(stages[stageId].stageState == StageSection.FINISHED);
         _;
     }
 
@@ -123,10 +131,12 @@ contract DAO {
         multiWallets[multiSignatureContract].approved = true;
     }
 
-    function initializeStage() external onlyOwner {
+    function initializeStage() external onlyOwner isFinishedStage(stageCount) {
         stageCount++;
         stages[stageCount] = Stage({
             id: stageCount,
+            createdAt: uint48(block.timestamp),
+            updatedAt: uint48(block.timestamp),
             moneyPool: 0,
             stageState: StageSection.NON_STAGE,
             projectCount: 0,
@@ -134,16 +144,34 @@ contract DAO {
         });
     }
 
-    function setStageToCreation() external onlyOwner {
-        stages[stageCount].stageState = StageSection.PROJECT_CREATION_STAGE;
+    function setStageToCreation() external onlyOwner isStageInitialized {
+        Stage storage stage = stages[stageCount];
+        require(
+            (stage.updatedAt + 3 days) < block.timestamp,
+            "Initialized stage is not over"
+        );
+        stage.stageState = StageSection.PROJECT_CREATION_STAGE;
+        stage.updatedAt = uint48(block.timestamp);
     }
 
-    function setStageToFunding() external onlyOwner {
-        stages[stageCount].stageState = StageSection.PROJECT_FUNDING_STAGE;
+    function setStageToFunding() external onlyOwner isProjectCreationStage {
+        Stage storage stage = stages[stageCount];
+        require(
+            (stage.updatedAt + 5 days) < block.timestamp,
+            "Creation stage is not over"
+        );
+        stage.stageState = StageSection.PROJECT_FUNDING_STAGE;
+        stage.updatedAt = uint48(block.timestamp);
     }
 
-    function setStageToExecution() external onlyOwner {
-        stages[stageCount].stageState = StageSection.PROJECT_EXECUTION_STAGE;
+    function setStageToExecution() external onlyOwner isProjectFundingStage {
+        Stage storage stage = stages[stageCount];
+        require(
+            (stage.updatedAt + 8 days) < block.timestamp,
+            "Funding stage is not over"
+        );
+        stage.stageState = StageSection.PROJECT_EXECUTION_STAGE;
+        stage.updatedAt = uint48(block.timestamp);
     }
 
     // STAGE, APPROVED
@@ -163,7 +191,8 @@ contract DAO {
             ownerContractAddress: contractAddress,
             totalFunds: 0,
             totalVotes: 0,
-            confirmedBalance: 0
+            confirmedBalance: 0,
+            withdrawed: false
         });
 
         stagesToProject[stageCount][project.id] = project;
@@ -175,7 +204,12 @@ contract DAO {
         Stage storage stage = stages[stageCount];
 
         require(project.stageId != 0, "Project not initialized");
+        require(
+            !isAddressFundProject[msg.sender][stageCount][projectId],
+            "You have funded already"
+        );
 
+        isAddressFundProject[msg.sender][stageCount][projectId] = true;
         stage.moneyPool += msg.value;
         project.totalFunds += msg.value;
         project.totalVotes++;
@@ -201,17 +235,27 @@ contract DAO {
             );
         }
         stage.stageState = StageSection.FINISHED;
+        stage.updatedAt = uint48(block.timestamp);
     }
 
     function withdrawProjectMoney(
         uint16 stageId,
         uint16 projectId
-    ) external isFinishedStage {
+    ) external isFinishedStage(stageId) {
         Project storage project = stagesToProject[stageId][projectId];
+        MultiSignatureWallet storage multiWallet = multiWallets[
+            project.ownerContractAddress
+        ];
         require(
             MultiSignature(project.ownerContractAddress).isOwner(msg.sender),
             "Not authorized"
         );
+        require(!project.withdrawed, "Project already withdrawed");
+
+        project.withdrawed = true;
+        multiWallet.executedProjectCounts++;
+        multiWallet.previousProjects.push(project);
+
         (bool sent, ) = project.ownerContractAddress.call{
             value: project.confirmedBalance
         }("");
@@ -233,5 +277,25 @@ contract DAO {
         sum = sum.div(10 ** 9);
         uint256 coefficient = stage.moneyPool.div(sum);
         stage.coefficient = coefficient;
+    }
+
+    function getStageProjectsCountWithStageId(
+        uint16 stageId
+    ) public view returns (uint16) {
+        return stages[stageId].projectCount;
+    }
+
+    function getStageProjectsCount() external view returns (uint16) {
+        return getStageProjectsCountWithStageId(stageCount);
+    }
+
+    function getStageDonationAmountWithStageId(
+        uint16 stageId
+    ) public view returns (uint256) {
+        return stages[stageId].moneyPool;
+    }
+
+    function getStageDonationAmount() external view returns (uint256) {
+        return getStageDonationAmountWithStageId(stageCount);
     }
 }
