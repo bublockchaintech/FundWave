@@ -1,3 +1,9 @@
+.s {
+  font-family: "Space Mono", monospace;
+  background: #f1f6f9;
+  background-size: cover;
+}
+
 .name {
   color: red;
 }
