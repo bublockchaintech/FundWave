@@ -234,4 +234,24 @@ contract DAO {
         uint256 coefficient = stage.moneyPool.div(sum);
         stage.coefficient = coefficient;
     }
+
+    function getStageProjectsCountWithStageId(
+        uint16 stageId
+    ) public view returns (uint16) {
+        return stages[stageId].projectCount;
+    }
+
+    function getStageProjectsCount() external view returns (uint16) {
+        return getStageProjectsCountWithStageId(stageCount);
+    }
+
+    function getStageDonationAmountWithStageId(
+        uint16 stageId
+    ) public view returns (uint256) {
+        return stages[stageId].moneyPool;
+    }
+
+    function getStageDonationAmount() external view returns (uint256) {
+        return getStageDonationAmountWithStageId(stageCount);
+    }
 }
