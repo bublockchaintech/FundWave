@@ -5,7 +5,7 @@ import { Stage } from "./Stage";
 export function CreateProject() {
   return (
     <>
-      <Stage stage={"create"} />
+      <Stage stage={"CREATE_PROJECT"} />
     </>
   );
 }

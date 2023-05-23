@@ -6,7 +6,7 @@ export function Stage({ stage }) {
     <>
       <div className="container mb-2">
         <div className={styles.stage_dot}>
-          {stage === "create" && (
+          {stage === "CREATE_PROJECT" && (
             <>
               <h4 className={styles.active_stage}>CREATE PROJECT</h4>
               <h4>
@@ -19,7 +19,7 @@ export function Stage({ stage }) {
               <h4>EXECUTE PROJECT</h4>
             </>
           )}
-          {stage === "fund" && (
+          {stage === "FUND_PROJECT" && (
             <>
               <h4>CREATE PROJECT</h4>
               <h4>
@@ -32,7 +32,7 @@ export function Stage({ stage }) {
               <h4>EXECUTE PROJECT</h4>
             </>
           )}
-          {stage === "execute" && (
+          {stage === "EXECUTE_PROJECT" && (
             <>
               <h4>CREATE PROJECT</h4>
               <h4>
