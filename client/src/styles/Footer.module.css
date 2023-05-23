@@ -1,0 +1,20 @@
+.footer {
+  text-align: center;
+  height: 17vh;
+}
+
+.footer * {
+  padding-top: 15px;
+  text-decoration: none;
+}
+
+.footer i {
+  color: white;
+}
+
+.footer i:hover {
+  opacity: 0.7;
+}
+.footer .social i {
+  margin-right: 10px;
+}
