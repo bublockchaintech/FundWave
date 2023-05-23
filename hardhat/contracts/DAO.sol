@@ -24,6 +24,7 @@ contract DAO {
         StageSection stageState;
         uint16 projectCount;
         uint256 coefficient;
+        bool isFundDistributed;
     }
 
     struct MultiSignatureWallet {
@@ -43,6 +44,9 @@ contract DAO {
         uint64 totalVotes;
         uint256 confirmedBalance;
         bool withdrawed;
+        string title;
+        string subject;
+        string explanation;
     }
 
     uint16 public stageCount;
@@ -140,7 +144,8 @@ contract DAO {
             moneyPool: 0,
             stageState: StageSection.NON_STAGE,
             projectCount: 0,
-            coefficient: 0
+            coefficient: 0,
+            isFundDistributed: false
         });
     }
 
@@ -176,7 +181,10 @@ contract DAO {
 
     // STAGE, APPROVED
     function createProject(
-        address contractAddress
+        address contractAddress,
+        string memory _title,
+        string memory _subject,
+        string memory _explanation
     ) external approvedAccount(contractAddress) isProjectCreationStage {
         require(
             MultiSignature(contractAddress).isOwner(msg.sender),
@@ -192,7 +200,10 @@ contract DAO {
             totalFunds: 0,
             totalVotes: 0,
             confirmedBalance: 0,
-            withdrawed: false
+            withdrawed: false,
+            title: _title,
+            subject: _subject,
+            explanation: _explanation
         });
 
         stagesToProject[stageCount][project.id] = project;
@@ -204,15 +215,14 @@ contract DAO {
         Stage storage stage = stages[stageCount];
 
         require(project.stageId != 0, "Project not initialized");
-        require(
-            !isAddressFundProject[msg.sender][stageCount][projectId],
-            "You have funded already"
-        );
 
-        isAddressFundProject[msg.sender][stageCount][projectId] = true;
+        if (!isAddressFundProject[msg.sender][stageCount][projectId]) {
+            isAddressFundProject[msg.sender][stageCount][projectId] = true;
+            project.totalVotes++;
+        }
+
         stage.moneyPool += msg.value;
         project.totalFunds += msg.value;
-        project.totalVotes++;
     }
 
     function distributeFunds()
@@ -222,17 +232,24 @@ contract DAO {
         isFormulaCalculated
     {
         Stage storage stage = stages[stageCount];
+        require(!stage.isFundDistributed, "Fund already distributed");
+        stage.isFundDistributed = true;
         for (
             uint16 projectIndex = 1;
             projectIndex <= stage.projectCount;
             projectIndex++
         ) {
             Project storage project = stagesToProject[stageCount][projectIndex];
+            MultiSignatureWallet storage multiWallet = multiWallets[
+                project.ownerContractAddress
+            ];
             uint256 multiplication = project.totalFunds.mul(project.totalVotes);
             uint256 dividerForCoefficient = multiplication.div(10 ** 9);
             project.confirmedBalance = stage.coefficient.mul(
                 dividerForCoefficient
             );
+            multiWallet.executedProjectCounts++;
+            multiWallet.previousProjects.push(project);
         }
         stage.stageState = StageSection.FINISHED;
         stage.updatedAt = uint48(block.timestamp);
@@ -243,9 +260,6 @@ contract DAO {
         uint16 projectId
     ) external isFinishedStage(stageId) {
         Project storage project = stagesToProject[stageId][projectId];
-        MultiSignatureWallet storage multiWallet = multiWallets[
-            project.ownerContractAddress
-        ];
         require(
             MultiSignature(project.ownerContractAddress).isOwner(msg.sender),
             "Not authorized"
@@ -253,8 +267,6 @@ contract DAO {
         require(!project.withdrawed, "Project already withdrawed");
 
         project.withdrawed = true;
-        multiWallet.executedProjectCounts++;
-        multiWallet.previousProjects.push(project);
 
         (bool sent, ) = project.ownerContractAddress.call{
             value: project.confirmedBalance
@@ -297,5 +309,17 @@ contract DAO {
 
     function getStageDonationAmount() external view returns (uint256) {
         return getStageDonationAmountWithStageId(stageCount);
+    }
+
+    function getOwners(
+        address contractAddress
+    ) external view returns (address[] memory) {
+        return multiWallets[contractAddress].owners;
+    }
+
+    function getProjects(
+        address contractAddress
+    ) external view returns (Project[] memory) {
+        return multiWallets[contractAddress].previousProjects;
     }
 }

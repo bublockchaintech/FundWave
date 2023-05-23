@@ -45,3 +45,13 @@ npx hardhat run scripts/deploy.js
     - 1,2 - 4000000000000000000,4
     - Money pool has 22000000000000000000
 12. setStageToExecution
+
+---
+
+- At least 5 members should be in multisignature wallet. We should reach them via getOwners() function.
+- There should not be any owner.
+- All members should do their KYCs.
+- There should be our DAO's contract address in constructor, and we should reach it via getDaoContractAddress() function.
+- There should be isOwner() function for control users.
+- Must have fallback and receive functions.
+- You can directly take the contract from our github.
