@@ -6,7 +6,7 @@ import Head from "next/head";
 import { useState } from "react";
 
 export default function () {
-  const [stageStage, setStageStage] = useState("FUND_PROJECT");
+  const [stageStage, setStageStage] = useState("CREATE_PROJECT");
 
   return (
     <>
