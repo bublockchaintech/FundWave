@@ -45,11 +45,11 @@
   justify-content: space-around;
 }
 
-.modal-footer {
+.modal_footer {
   display: flex;
   justify-content: space-between;
 }
 
-.modal-btn {
+.modal_btn {
   width: 40%;
 }
