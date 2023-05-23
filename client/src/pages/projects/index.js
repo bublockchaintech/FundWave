@@ -1,14 +1,12 @@
 import { CreateProject } from "@/components/CreateProject";
 import { ExecuteProject } from "@/components/ExecuteProject";
-import { Footer } from "@/components/Footer";
 import { FundProject } from "@/components/FundProject";
-import { Navbar } from "@/components/Navbar";
 import styles from "@/styles/Projects.module.css";
 import Head from "next/head";
 import { useState } from "react";
 
 export default function () {
-  const [stageStage, setStageStage] = useState("EXECUTE_PROJECT");
+  const [stageStage, setStageStage] = useState("CREATE_PROJECT");
   function chooseStage() {
     setStageStage("CREATE_PROJECT");
     setStageStage("FUND_PROJECT");
@@ -30,14 +28,11 @@ export default function () {
           referrerpolicy="no-referrer"
         />
       </Head>
-      <Navbar />
 
       {/* Project Cards */}
       {stageStage === "CREATE_PROJECT" && <CreateProject />}
       {stageStage === "FUND_PROJECT" && <FundProject />}
       {stageStage === "EXECUTE_PROJECT" && <ExecuteProject />}
-
-      <Footer />
     </>
   );
 }
