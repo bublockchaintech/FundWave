@@ -55,6 +55,19 @@ img{
 
 .info{
     display:flex;
+
+}
+
+.info a {
+  text-decoration: none;
+}
+
+.form-label .fa-circle-check{
+  color:green !important;
+}  
+
+.form-label .fa-circle-xmark{
+  color:red !important;
 }
 
 /* FOOTER */
