@@ -3,10 +3,10 @@ import { ExecuteProject } from "@/components/ExecuteProject";
 import { FundProject } from "@/components/FundProject";
 import styles from "@/styles/Projects.module.css";
 import Head from "next/head";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function () {
-  const [stageStage, setStageStage] = useState("FUND_PROJECT");
+  const [stageStage, setStageStage] = useState("EXECUTE_PROJECT");
 
   return (
     <>
