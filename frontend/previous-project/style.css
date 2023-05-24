@@ -40,15 +40,6 @@ body * {
   background:linear-gradient(#fff,#b3c3da) ;
 }
 
-/* İMAGE */
-
-img{
-    position:absolute;
-    top:0;
-    left: 0;
-    height: 46%;
-    width: 100%;
-}
 
 .input-group{
 width: 35%;
@@ -61,24 +52,64 @@ margin-left: 50px;
 }
 
 /* CARDS */
-.card{
-    border: none;
-    border-radius: 0;
-    border-bottom: 1px solid #212a3e; 
+.card {
+  background:#E55807;
+  border-radius:5px 20px;
 }
-
-.card-bg{
-    margin-top: 130px;
-}
-
-.info{
-    display:flex;
+.card:hover {
+  -ms-transform: scale(1.05); /* IE 9 */
+  -webkit-transform: scale(1.05); /* Safari 3-8 */
+  transform: scale(1.05);
+  transition: 0.5s;
 
 }
 
-.info a {
-  text-decoration: none;
+.info,
+.number {
+  display: flex;
+  justify-content: space-around;
 }
+
+.fund-btn {
+  width: 35%;
+  margin-left: auto;
+  margin-right: 15px;
+  margin-bottom: 10px;
+  background: #212a3e;
+  color: white !important;
+}
+.fund-btn:hover {
+  background-color: #f1f6f9;
+  color: #212a3e !important;
+  border: 1px solid #212a3e;
+}
+#number {
+  background: #f1f6f9;
+  border: 1px solid #212a3e;
+}
+
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.for_mt{
+  margin-top: 100px;
+}
+
+/* MODALS */
+
+.icons {
+  display: flex;
+  justify-content: space-around;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: space-between;
+}
+
+
 
 /* FOOTER */
 
