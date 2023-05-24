@@ -55,7 +55,6 @@ export default function () {
               <div className={`${styles.info}`}>
                 <p>Is Approved: </p>
                 <p>
-                  {" "}
                   {community.is_approved && <i className={`fa-sharp fa-solid fa-circle-check fa-xl ms-2`}></i>}
                   {!community.is_approved && <i className={`fa-sharp fa-solid fa-circle-xmark fa-xl ms-2`}></i>}
                 </p>

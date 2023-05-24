@@ -11,6 +11,16 @@ export default function (props) {
     is_approved: false,
     total_votes: 1.123,
     number_of_projects: 5,
+    owners: [
+      "0x32748uidsjfkashdasuye72",
+      "0x32748uidsjfkashdasqqw72",
+      "0x32748uidsjfkashdasuls72",
+      "0x32748uidsjfkashdasuye12",
+      "0x32748uidsjfkashdasuye99",
+      "0x32748uidsjfkashdasuye29",
+      "0x32748uidsjfkashdasuye39",
+      "0x32748uidsjfkashdasuye19",
+    ],
     text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio repudiandae reprehenderit praesentium possimus. Quis consequatur pariatur fuga blanditiis voluptatibus eaque?",
   };
 
@@ -54,13 +64,15 @@ export default function (props) {
               </div>
             </div>
             <div className="col-4">
-              <div className="card-body">
-                <p className={`${styles.info}`}>Team Members:</p>
-                <p>0x0000000000000000000000</p>
-                <p>0x0000000000000000000000</p>
-                <p>0x0000000000000000000000</p>
-                <p>0x0000000000000000000000</p>
-                <p>0x0000000000000000000000</p>
+              <div className={`card-body`}>
+                <p className={`${styles.info}`}>
+                  <b>Team Members:</b>
+                </p>
+                <div className={styles.scroll}>
+                  {community.owners.map((owner) => {
+                    return <p key={owner}>{owner}</p>;
+                  })}
+                </div>
               </div>
             </div>
           </div>
