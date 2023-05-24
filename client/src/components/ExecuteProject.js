@@ -75,12 +75,11 @@ export function ExecuteProject() {
               <div className={`${styles.info}`}>
                 <p>{project.community_address}</p>
                 <div className={`${styles.number}`}>
-                    <i className="fa-solid fa-coins"></i>
+                  <i className="fa-solid fa-coins"></i>
                   <p>{project.totalFunds}</p>
                 </div>
                 <div className={`${styles.number}`}>
-                    <i
-                      className="fa-sharp fa-solid fa-user"></i>
+                  <i className="fa-sharp fa-solid fa-user"></i>
                   <p>{project.totalVotes}</p>
                 </div>
               </div>
@@ -88,9 +87,7 @@ export function ExecuteProject() {
               <p>{project.text}</p>
             </div>
             <div className={`${styles.card_footer} card-footer`}>
-              <button onClick={showModal}
-                type="button"
-                className={`${styles.fund_btn} btn`}>
+              <button onClick={showModal} type="button" className={`${styles.fund_btn} btn`}>
                 Details
               </button>
             </div>
@@ -102,11 +99,7 @@ export function ExecuteProject() {
             <div className="modal-content">
               <div className="modal-header">
                 <h4 className="modal-title">{project.project_name}</h4>
-                <button
-                  type="button"
-                  className="btn-close"
-                  onClick={hideModal}
-                ></button>
+                <button type="button" className="btn-close" onClick={hideModal}></button>
               </div>
               <div className={`modal-body`}>
                 <p>Community Address: {project.community_address}</p>
@@ -115,11 +108,11 @@ export function ExecuteProject() {
                 <p>{project.text}</p>
                 <div className={`${styles.icons}`}>
                   <div>
-                      <i className="fa-solid fa-coins"></i>
+                    <i className="fa-solid fa-coins"></i>
                     <p>{project.totalFunds}</p>
                   </div>
                   <div>
-                      <i className="fa-sharp fa-solid fa-user"></i>
+                    <i className="fa-sharp fa-solid fa-user"></i>
                     <p>{project.totalVotes}</p>
                   </div>
                 </div>
@@ -136,9 +129,7 @@ export function ExecuteProject() {
     <>
       <Stage stage={"EXECUTE_PROJECT"} />
       <div className="container my-4">
-        <div className="row row-cols-1 row-cols-lg-3 row-cols-md-2 g-4">
-          {listItems}
-        </div>
+        <div className="row row-cols-1 row-cols-lg-3 row-cols-md-2 g-4">{listItems}</div>
       </div>
     </>
   );

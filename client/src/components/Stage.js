@@ -1,7 +1,11 @@
 import styles from "../styles/Stage.module.css";
+import { CountdownTimer } from "./CountdownTimer";
 
 export function Stage({ stage }) {
-  console.log(stage);
+  const THREE_DAYS_IN_MS = 3 * 24 * 60 * 60 * 1000; // 3 DAYS
+  const NOW_IN_MS = new Date().getTime();
+  const dateTimeAfterThreeDays = NOW_IN_MS + THREE_DAYS_IN_MS;
+
   return (
     <>
       <div className="container mb-2">
@@ -48,7 +52,7 @@ export function Stage({ stage }) {
         </div>
       </div>
       <div className={styles.last_day}>
-        <h1>15:21:42:33</h1>
+        <CountdownTimer targetDate={dateTimeAfterThreeDays} />
       </div>
     </>
   );
