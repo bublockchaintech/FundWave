@@ -54,11 +54,14 @@ export default function () {
               </div>
               <div className={`${styles.info}`}>
                 <p>Is Approved: </p>
-                <p>{community.is_approved}</p>
+                <p>
+                  {" "}
+                  {community.is_approved && <i className={`fa-sharp fa-solid fa-circle-check fa-xl ms-2`}></i>}
+                  {!community.is_approved && <i className={`fa-sharp fa-solid fa-circle-xmark fa-xl ms-2`}></i>}
+                </p>
               </div>
               <div className={`${styles.info}`}>
                 <p>Number of Projects:</p>
-                <p>{community.number_of_projects}</p>
               </div>
               <div className={`${styles.card_footer} card-footer`}>
                 <Link className={`${styles.btn} btn`} href={`/communities/${community.community_address}`}>

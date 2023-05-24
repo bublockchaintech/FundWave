@@ -1,9 +1,8 @@
 import { CreateProject } from "@/components/CreateProject";
 import { ExecuteProject } from "@/components/ExecuteProject";
 import { FundProject } from "@/components/FundProject";
-import styles from "@/styles/Projects.module.css";
 import Head from "next/head";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export default function () {
   const [stageStage, setStageStage] = useState("EXECUTE_PROJECT");
