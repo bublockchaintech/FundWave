@@ -1,0 +1,61 @@
+.fund_card {
+  background: #cec1c9;
+  border-radius: 5px 20px;
+}
+.fund_card:hover {
+  -ms-transform: scale(1.05); /* IE 9 */
+  -webkit-transform: scale(1.05); /* Safari 3-8 */
+  transform: scale(1.05);
+  transition: 0.5s;
+}
+
+.fund_info,
+.fund_number {
+  display: flex;
+  justify-content: space-around;
+}
+
+.fund_btn {
+  width: 35%;
+  margin-left: auto;
+  margin-right: 15px;
+  margin-bottom: 10px;
+  background: #212a3e;
+  color: white !important;
+}
+.fund_btn:hover {
+  background-color: #f1f6f9;
+  color: #212a3e !important;
+  border: 1px solid #212a3e;
+}
+#number {
+  background: #f1f6f9;
+  border: 1px solid #212a3e;
+}
+
+.fund_card_footer {
+  display: flex;
+  justify-content: space-between;
+}
+
+/* MODALS */
+
+.fund_icons {
+  display: flex;
+  justify-content: space-around;
+}
+
+.fund_modal_footer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.fund_modal_btn {
+  width: 40%;
+  border: 1px solid #212a3e;
+}
+
+.fund_modal_btn:hover {
+  background-color: #212a3e;
+  color: #fff !important;
+}
