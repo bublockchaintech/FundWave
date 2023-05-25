@@ -1,6 +1,8 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import Navbar from "./sections/Navbar/Navbar";
+
+import { Communities, Community, Home, Projects } from "./pages";
+import { Footer, Navbar } from "./sections";
 
 function App() {
   return (
@@ -11,44 +13,22 @@ function App() {
         <Route exact path="/">
           <Home />
         </Route>
+        <Route path="/communities/:contractAddress">
+          <Community />
+        </Route>
         <Route path="/communities">
           <Communities />
         </Route>
         <Route path="/projects">
           <Projects />
         </Route>
+        <Route path="/previous-projects">
+          <Projects />
+        </Route>
       </Switch>
+
+      <Footer />
     </Router>
-  );
-}
-
-function Home() {
-  return (
-    <div>
-      <h2>Home</h2>
-    </div>
-  );
-}
-
-function Communities() {
-  return (
-    <div>
-      <h2>Communities</h2>
-      <p>eren</p>
-      <p>eren</p>
-      <p>eren</p>
-      <p>eren</p>
-      <p>eren</p>
-      <p>eren</p>
-    </div>
-  );
-}
-
-function Projects() {
-  return (
-    <div>
-      <h2>Projects</h2>
-    </div>
   );
 }
 
