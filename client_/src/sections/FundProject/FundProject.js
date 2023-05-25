@@ -75,7 +75,7 @@ const FundProject = ({ projects }) => {
                 </div>
                 <div className="fund_modal_footer">
                   <div className="form-label">
-                    <input type="number" name="number" id="number" className="form-control modal-input" />
+                    <input type="number" name="number" id="fund_number" className="form-control modal-input" />
                   </div>
                   <button className="btn fund_modal_btn">FUND</button>
                 </div>

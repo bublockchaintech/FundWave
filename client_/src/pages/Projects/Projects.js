@@ -45,14 +45,14 @@ const projects = [
 ];
 
 const Projects = () => {
-  const [stageStage, setStageStage] = useState("FUND_PROJECT");
+  const [stageStage, setStageStage] = useState("EXECUTE_PROJECT");
 
   return (
     <>
       {/* Project Cards */}
       {stageStage === "CREATE_PROJECT" && <CreateProject />}
       {stageStage === "FUND_PROJECT" && <FundProject projects={projects} />}
-      {stageStage === "EXECUTE_PROJECT" && <ExecuteProject />}
+      {stageStage === "EXECUTE_PROJECT" && <ExecuteProject projects={projects} />}
     </>
   );
 };
