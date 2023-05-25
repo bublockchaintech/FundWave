@@ -10,11 +10,11 @@
   font-weight: bold;
 }
 
-.btn {
+.nav_btn {
   border: 1px solid #212a3e;
 }
 
-.btn:hover {
+.nav_btn:hover {
   background-color: #212a3e;
   color: white !important;
 }
