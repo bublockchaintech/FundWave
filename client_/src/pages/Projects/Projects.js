@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { CreateProject, ExecuteProject, FundProject } from "../../sections";
 
 const Projects = () => {
-  const [stageStage, setStageStage] = useState("FUND_PROJECT");
+  const [stageStage, setStageStage] = useState("CREATE_PROJECT");
 
   return (
     <>
