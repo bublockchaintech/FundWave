@@ -1,0 +1,20 @@
+footer {
+  text-align: center;
+  height: 17vh;
+}
+
+footer * {
+  padding-top: 15px;
+  text-decoration: none;
+}
+
+footer a {
+  color: #212a3e;
+}
+
+footer a:hover {
+  opacity: 0.7;
+}
+footer .social a {
+  margin-right: 10px;
+}

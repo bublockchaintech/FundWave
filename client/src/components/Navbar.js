@@ -8,19 +8,37 @@ export function Navbar() {
         <h2>FundWave</h2>
         <ul className="navbar-nav ms-auto">
           <li className="nav-item pe-5">
-            <Link href="/" className="nav-link">
+            <Link to="/" className="nav-link">
               Home
             </Link>
           </li>
           <li className="nav-item pe-5">
-            <Link href="/projects" className="nav-link">
-              Project
-            </Link>
-          </li>
-          <li className="nav-item pe-5">
-            <Link href="/communities" className="nav-link">
+            <Link to="/communities" className="nav-link">
               Community
             </Link>
+          </li>
+          <li className="nav-item pe-5 dropdown">
+            <Link to="/projects" className="nav-link dropdown-toggle">
+              Project
+            </Link>
+            <ul className="dropdown-menu">
+              <li>
+                <div className="d-flex">
+                  <i className="fa-regular fa-hourglass-half pt-2"></i>
+                  <Link to="/projects" className="dropdown-item">
+                    Ongoing Projects
+                  </Link>
+                </div>
+              </li>
+              <li>
+                <div className="d-flex">
+                  <i className="fa-solid fa-hourglass-end pt-2"></i>
+                  <Link to="/projects" className="dropdown-item">
+                    Previous Projects
+                  </Link>
+                </div>
+              </li>
+            </ul>
           </li>
         </ul>
         <button className={`${styles.btn} btn`}>Connect</button>

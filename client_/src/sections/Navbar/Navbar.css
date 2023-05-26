@@ -1,0 +1,20 @@
+.navbar {
+  border-bottom: 1px solid #212a3e;
+  box-shadow: 0 8px 6px -6px #212a3e;
+}
+
+.nav-item {
+  padding-right: 2em;
+}
+.nav-item:hover {
+  font-weight: bold;
+}
+
+.nav_btn {
+  border: 1px solid #212a3e;
+}
+
+.nav_btn:hover {
+  background-color: #212a3e;
+  color: white !important;
+}

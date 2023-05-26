@@ -1,7 +1,7 @@
 import Link from "next/link";
 import styles from "../styles/FundProject.module.css";
 import { Stage } from "./Stage";
-import { Modal } from "bootstrap";
+// import { Modal } from "bootstrap";
 import { useRef } from "react";
 
 export function FundProject() {
@@ -52,17 +52,17 @@ export function FundProject() {
 
   const showModal = () => {
     const modalEl = modalRef.current;
-    const bsModal = new Modal(modalEl, {
-      backdrop: "static",
-      keyboard: false,
-    });
-    bsModal.show();
+    // const bsModal = new Modal(modalEl, {
+    //   backdrop: "static",
+    //   keyboard: false,
+    // });
+    // bsModal.show();
   };
 
   const hideModal = () => {
     const modalEl = modalRef.current;
-    const bsModal = Modal.getInstance(modalEl);
-    bsModal.hide();
+    // const bsModal = Modal.getInstance(modalEl);
+    // bsModal.hide();
   };
 
   const listItems = projects.map((project, i) => {

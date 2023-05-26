@@ -1,0 +1,97 @@
+.comm_card {
+  background: #1d67cd;
+  border-radius: 5px 20px;
+  margin-top: 5em;
+}
+.comm_card * {
+  color: #fff !important;
+}
+
+.comm_card:hover {
+  -ms-transform: scale(1.05);
+  -webkit-transform: scale(1.05);
+  transform: scale(1.05);
+  transition: 0.5s;
+}
+
+.comm_btn {
+  width: 35%;
+  margin-left: auto;
+  margin-right: 15px;
+  margin-bottom: 10px;
+  background-color: #fff;
+  color: #212a3e !important;
+}
+.comm_btn:hover {
+  color: #fff !important;
+}
+
+.comm_info {
+  display: flex;
+}
+
+.comm_card_footer {
+  display: flex;
+  justify-content: space-between;
+}
+
+/* image */
+
+.comm_image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 46%;
+  width: 100%;
+}
+
+/* CARDS */
+.comm_card_single {
+  border: none;
+  border-radius: 0;
+  border-bottom: 1px solid #212a3e;
+}
+
+.comm_card_bg {
+  margin-top: 130px;
+}
+
+.comm_info {
+  display: flex;
+}
+
+.comm_info a {
+  text-decoration: none;
+}
+
+.comm_form_label .fa_circle_check {
+  color: green !important;
+}
+
+.comm_form_label .fa_circle_xmark {
+  color: red !important;
+}
+
+.comm_scroll {
+  height: 240px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  text-align: center;
+  padding: 0 20px;
+  margin-right: 4em;
+}
+
+.comm_scroll::-webkit-scrollbar {
+  width: 1em;
+}
+
+.comm_scroll::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  border-radius: 1em;
+}
+
+.comm_scroll::-webkit-scrollbar-thumb {
+  background-color: darkgrey;
+  outline: 1px solid slategrey;
+  border-radius: 1em;
+}
