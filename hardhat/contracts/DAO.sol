@@ -51,6 +51,9 @@ contract DAO {
 
     uint16 public stageCount;
     uint16 public multiWalletCount;
+    uint256 public allStagesVoteCount;
+    uint256 public allStagesFundAmount;
+    uint256 public allStagesProjectCount;
 
     mapping(uint16 => mapping(uint16 => Project)) public stagesToProject;
     mapping(address => MultiSignatureWallet) public multiWallets;
@@ -205,7 +208,7 @@ contract DAO {
             subject: _subject,
             explanation: _explanation
         });
-
+        allStagesProjectCount++;
         stagesToProject[stageCount][project.id] = project;
     }
 
@@ -220,9 +223,10 @@ contract DAO {
             isAddressFundProject[msg.sender][stageCount][projectId] = true;
             project.totalVotes++;
         }
-
+        allStagesFundAmount += msg.value;
         stage.moneyPool += msg.value;
         project.totalFunds += msg.value;
+        allStagesVoteCount++;
     }
 
     function distributeFunds()
@@ -321,5 +325,9 @@ contract DAO {
         address contractAddress
     ) external view returns (Project[] memory) {
         return multiWallets[contractAddress].previousProjects;
+    }
+
+    function getOwner() external view returns (address) {
+        return owner;
     }
 }
