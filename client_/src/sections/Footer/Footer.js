@@ -10,7 +10,7 @@ const Footer = () => {
         <a href="https://twitter.com/BU_blockchain">
           <i className="fab fa-twitter fa-2x" />
         </a>
-        <a href="">
+        <a href="#/">
           <i className="fab fa-youtube fa-2x" />
         </a>
         <a href="https://www.linkedin.com/company/blockchaintechclub/mycompany/">

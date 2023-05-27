@@ -3,8 +3,21 @@ import styles from "./Navbar.css";
 import { Link } from "react-router-dom";
 import Dropdown from "react-bootstrap/Dropdown";
 import NavDropdown from "react-bootstrap/NavDropdown";
+import { sliceAddress } from "../../utils/sliceAddress";
 
-const Navbar = () => {
+const Navbar = ({ walletConnected, setWalletConnected, getProviderOrSigner, address, setAddress }) => {
+  const connectWallet = async () => {
+    try {
+      const signer = await getProviderOrSigner(true);
+      const _address = await signer.getAddress();
+      setAddress(_address);
+      sliceAddress(_address);
+      setWalletConnected(true);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <nav className={`${styles.navbar} navbar navbar-expand navbar-light bg-light fixed-top`}>
       <div className="container">
@@ -39,7 +52,15 @@ const Navbar = () => {
             </Dropdown.Item>
           </NavDropdown>
         </ul>
-        <button className={`${styles.nav_btn} btn`}>Connect</button>
+        <button onClick={connectWallet} className={`${styles.nav_btn} btn`}></button>
+
+        {!walletConnected ? (
+          <button onClick={connectWallet} className={`${styles.nav_btn} btn`}>
+            Connect
+          </button>
+        ) : (
+          <button className={`${styles.nav_btn} btn`}>{sliceAddress(address)}</button>
+        )}
       </div>
     </nav>
   );
