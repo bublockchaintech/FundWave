@@ -2,10 +2,10 @@ import React from "react";
 import { Stage } from "../../components";
 import "./CreateProject.css";
 
-const CreateProject = () => {
+const CreateProject = ({ lastUpdate }) => {
   return (
     <>
-      <Stage stage={"CREATE_PROJECT"} />
+      <Stage stage={"CREATE_PROJECT"} lastUpdate={lastUpdate} />
       <div className="create_card card mt-5">
         <div className="row w-100">
           <div className="create_bg col-6">

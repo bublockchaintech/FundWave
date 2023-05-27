@@ -137,9 +137,10 @@ contract DAO {
 
     function approveRequest(address multiSignatureContract) external onlyOwner {
         multiWallets[multiSignatureContract].approved = true;
+        multiAddresses.push(multiSignatureContract);
     }
 
-    function initializeStage() external onlyOwner isFinishedStage(stageCount) {
+    function initializeStage() external onlyOwner {
         stageCount++;
         stages[stageCount] = Stage({
             id: stageCount,
@@ -156,7 +157,7 @@ contract DAO {
     function setStageToCreation() external onlyOwner isStageInitialized {
         Stage storage stage = stages[stageCount];
         require(
-            (stage.updatedAt + 3 days) < block.timestamp,
+            (stage.updatedAt + 5 minutes) < block.timestamp,
             "Initialized stage is not over"
         );
         stage.stageState = StageSection.PROJECT_CREATION_STAGE;
@@ -166,7 +167,7 @@ contract DAO {
     function setStageToFunding() external onlyOwner isProjectCreationStage {
         Stage storage stage = stages[stageCount];
         require(
-            (stage.updatedAt + 5 days) < block.timestamp,
+            (stage.updatedAt + 5 minutes) < block.timestamp,
             "Creation stage is not over"
         );
         stage.stageState = StageSection.PROJECT_FUNDING_STAGE;
@@ -176,7 +177,7 @@ contract DAO {
     function setStageToExecution() external onlyOwner isProjectFundingStage {
         Stage storage stage = stages[stageCount];
         require(
-            (stage.updatedAt + 8 days) < block.timestamp,
+            (stage.updatedAt + 8 minutes) < block.timestamp,
             "Funding stage is not over"
         );
         stage.stageState = StageSection.PROJECT_EXECUTION_STAGE;

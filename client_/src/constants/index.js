@@ -1,4 +1,4 @@
-export const DAO_CONTRACT_ADDRESS = "0x6906647f46a3a70dd1fe59cb6fb8af5a63fa7644";
+export const DAO_CONTRACT_ADDRESS = "0xaB940dc1e54F7d77334EfaEE613b6BFc53cBc685";
 export const DAO_ABI = [
   {
     inputs: [],
@@ -284,6 +284,25 @@ export const DAO_ABI = [
     name: "initializeStage",
     outputs: [],
     stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    name: "multiAddresses",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
     type: "function",
   },
   {

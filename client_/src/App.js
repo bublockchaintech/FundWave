@@ -8,6 +8,9 @@ import Web3Modal from "web3modal";
 function App() {
   const [walletConnected, setWalletConnected] = useState(false);
   const [address, setAddress] = useState("");
+  const [wallets, setWallets] = useState([]);
+  const [communities, setCommunities] = useState([]);
+
   const web3ModalRef = useRef();
 
   useEffect(() => {
@@ -18,7 +21,7 @@ function App() {
         disableInjectedProvider: false,
       });
     }
-  }, []);
+  }, [walletConnected]);
 
   const getProviderOrSigner = async (needSigner = false) => {
     const provider = await web3ModalRef.current.connect();
@@ -54,13 +57,19 @@ function App() {
           <Community />
         </Route>
         <Route path="/communities">
-          <Communities />
+          <Communities
+            getProviderOrSigner={getProviderOrSigner}
+            setWallets={setWallets}
+            setCommunities={setCommunities}
+            communities={communities}
+            wallets={wallets}
+          />
         </Route>
         <Route path="/previous-projects">
           <PreviousProjects />
         </Route>
         <Route path="/projects">
-          <Projects />
+          <Projects getProviderOrSigner={getProviderOrSigner} />
         </Route>
       </Switch>
 

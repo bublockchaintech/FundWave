@@ -1,10 +1,18 @@
 import CountdownTimer from "../Countdown/CountdownTimer";
 import "./Stage.css";
 
-const Stage = ({ stage }) => {
+const Stage = ({ stage, lastUpdate }) => {
+  if (stage === "CREATE_PROJECT") {
+    const FIVE_DAYS_IN_MS = 5 * 24 * 60 * 60 * 1000; // 3 DAYS
+    const updateInMS = lastUpdate * 1000;
+  } else if (stage === "FUND_PROJECT") {
+  } else if (stage === "EXECUTE_PROJECT") {
+  }
+
   const THREE_DAYS_IN_MS = 3 * 24 * 60 * 60 * 1000; // 3 DAYS
   const NOW_IN_MS = new Date().getTime();
-  const dateTimeAfterThreeDays = NOW_IN_MS + THREE_DAYS_IN_MS;
+
+  const dateTimeAfterThreeDays = lastUpdate + NOW_IN_MS;
 
   return (
     <>
