@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { Communities, Community, Home, Projects } from "./pages";
+import { Communities, Community, Home, PreviousProjects, Projects } from "./pages";
 import { Footer, Navbar } from "./sections";
 import { providers, Contract } from "ethers";
 import Web3Modal from "web3modal";
@@ -56,10 +56,10 @@ function App() {
         <Route path="/communities">
           <Communities />
         </Route>
-        <Route path="/projects">
-          <Projects />
-        </Route>
         <Route path="/previous-projects">
+          <PreviousProjects />
+        </Route>
+        <Route path="/projects">
           <Projects />
         </Route>
       </Switch>

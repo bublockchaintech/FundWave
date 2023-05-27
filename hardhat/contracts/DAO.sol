@@ -54,6 +54,7 @@ contract DAO {
     uint256 public allStagesVoteCount;
     uint256 public allStagesFundAmount;
     uint256 public allStagesProjectCount;
+    address[] public multiAddresses;
 
     mapping(uint16 => mapping(uint16 => Project)) public stagesToProject;
     mapping(address => MultiSignatureWallet) public multiWallets;

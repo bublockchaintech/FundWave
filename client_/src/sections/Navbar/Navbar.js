@@ -11,7 +11,6 @@ const Navbar = ({ walletConnected, setWalletConnected, getProviderOrSigner, addr
       const signer = await getProviderOrSigner(true);
       const _address = await signer.getAddress();
       setAddress(_address);
-      sliceAddress(_address);
       setWalletConnected(true);
     } catch (error) {
       console.log(error);
