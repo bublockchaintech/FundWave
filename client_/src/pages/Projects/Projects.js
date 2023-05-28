@@ -82,7 +82,9 @@ const Projects = ({ getProviderOrSigner }) => {
     <>
       {/* Project Cards */}
 
-      {(stageState === 0 || stageState === 1) && <CreateProject lastUpdate={lastUpdate} />}
+      {(stageState === 0 || stageState === 1) && (
+        <CreateProject getProviderOrSigner={getProviderOrSigner} lastUpdate={lastUpdate} />
+      )}
       {stageState === 2 && <FundProject projects={projects} lastUpdate={lastUpdate} />}
       {(stageState === 3 || stageState === 4) && <ExecuteProject projects={projects} lastUpdate={lastUpdate} />}
     </>

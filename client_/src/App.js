@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { Communities, Community, Home, PreviousProjects, Projects } from "./pages";
 import { Footer, Navbar } from "./sections";
-import { providers, Contract } from "ethers";
+import { providers, Contract, ethers } from "ethers";
 import Web3Modal from "web3modal";
 
 function App() {
@@ -24,8 +24,7 @@ function App() {
   }, [walletConnected]);
 
   const getProviderOrSigner = async (needSigner = false) => {
-    const provider = await web3ModalRef.current.connect();
-    const web3Provider = new providers.Web3Provider(provider);
+    const web3Provider = new providers.Web3Provider(window.ethereum);
 
     const { chainId } = await web3Provider.getNetwork();
     if (chainId !== 80001) {
