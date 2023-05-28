@@ -46,6 +46,7 @@ function App() {
         getProviderOrSigner={getProviderOrSigner}
         address={address}
         setAddress={setAddress}
+        web3ModalRef={web3ModalRef}
       />
 
       <Switch>

@@ -51,7 +51,7 @@ const Communities = ({ getProviderOrSigner, setWallets, setCommunities, communit
         {communities.map((community, i) => {
           return (
             <div key={i} className="col">
-              <div className="comm_card card mb-3 shadow">
+              <div className={`color${i} comm_card card mb-3 shadow`}>
                 <div className="card-body">
                   <div className="comm_info">
                     <p>Community Contract Address:</p>

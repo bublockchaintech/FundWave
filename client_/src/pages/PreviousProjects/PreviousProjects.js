@@ -45,6 +45,8 @@ const projects = [
   },
 ];
 
+const className = ["color1, color2, color3, color4, color5"];
+
 const PreviousProjects = () => {
   const modalRef = useRef();
 
@@ -67,7 +69,7 @@ const PreviousProjects = () => {
     return (
       <>
         <div key={i} className="col">
-          <div className="prev_card card mb-3 shadow">
+          <div className={`color${i % 6} prev_card card mb-3 shadow`}>
             <div className="card-body">
               <h5 className="card-title">{project.project_name}</h5>
               <div className="execute_info">
