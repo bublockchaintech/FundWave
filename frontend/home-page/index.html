@@ -63,7 +63,27 @@
             <h3>Create your community,</h3>
             <h3>get the opportunity to</h3>
             <h3>find funding for your projects!</h3>
-            <div class="btn btn-light mt-5">JOIN US</div>
+            <div class="btn btn-light mt-5" data-bs-toggle="offcanvas" data-bs-target="#myOffcanvas">JOIN US</div>
+
+            <div class="offcanvas offcanvas-bottom" id="myOffcanvas" data-bs-backdrop="false" >
+                <div class="offcanvas-header">
+                    <h2 class="offcanvas-title ">CREATE YOUR COMMUNITY</h2>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+                </div>
+                <div class="offcanvas-body">
+                    <h5 class="text-center">Create your community, find fund!</h5>
+                    <form>
+                        <div class="form-label">
+                            <label for="text">Contract Address:</label>
+                            <div class="d-flex">
+                                <input type="text" name="name" id="name" class="form-control w-50 me-3" placeholder="contract address">
+                            <button class="btn join-btn">Join Us</button>
+                            </div>
+                            
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
 
         <div class=" container text-centers header_items">

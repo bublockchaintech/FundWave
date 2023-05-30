@@ -89,12 +89,12 @@ body * {
   background-color:#180d5b;
   border: none;
 }
+
 img{
   width: 100%;
 }
 
 .card_text{
-  color:#fff !important;
   text-align: center;
   margin-top:33%;
   font-size:60px;
@@ -148,4 +148,22 @@ footer {
     margin-right: 10px;
   }
 
+  .offcanvas *{
+    color:#180d5b !important;
+  }
+  .offcanvas-title{
+    padding-left: 36%;
+  }
+
+  .join-btn{
+    background-color: #180d5b;
+    padding: 5px 30px;
+    color:#fff !important;
+  }
+
+  .join-btn:hover{
+    background-color: #fff;
+    color:#180d5b !important;
+    border: 1px solid #180d5b;
+  }
 
