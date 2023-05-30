@@ -1,11 +1,30 @@
-import React from "react";
+import React, { useState } from "react";
 import { Stage } from "../../components";
 import "./CreateProject.css";
+import { Contract } from "ethers";
+import { DAO_ABI, DAO_CONTRACT_ADDRESS } from "../../constants";
 
-const CreateProject = () => {
+const CreateProject = ({ lastUpdate, getProviderOrSigner }) => {
+  const [contractAddress, setContractAddress] = useState("");
+  const [title, setTitle] = useState("");
+  const [subject, setSubject] = useState("");
+  const [text, setText] = useState("");
+
+  const createProject = async () => {
+    try {
+      const signer = await getProviderOrSigner(true);
+      const contract = new Contract(DAO_CONTRACT_ADDRESS, DAO_ABI, signer);
+      const tx = await contract.createProject(contractAddress, title, subject, text);
+      await tx.wait();
+      alert("Project created succesfully.");
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return (
     <>
-      <Stage stage={"CREATE_PROJECT"} />
+      <Stage stage={"CREATE_PROJECT"} lastUpdate={lastUpdate} />
       <div className="create_card card mt-5">
         <div className="row w-100">
           <div className="create_bg col-6">
@@ -19,21 +38,52 @@ const CreateProject = () => {
               <form>
                 <div className="form-label">
                   <label for="text">Contract Address:</label>
-                  <input type="text" name="name" id="name" className="create_form_control form-control"></input>
+                  <input
+                    value={contractAddress}
+                    onChange={(e) => setContractAddress(e.target.value)}
+                    type="text"
+                    name="name"
+                    id="name"
+                    className="create_form_control form-control"
+                  />
                 </div>
                 <div className="form-label">
                   <label for="text">Title:</label>
-                  <input type="text" name="title" id="title" className="create_form_control form-control"></input>
+                  <input
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                    type="text"
+                    name="title"
+                    id="title"
+                    className="create_form_control form-control"
+                  />
                 </div>
                 <div className="form-label">
                   <label for="text">Subject:</label>
-                  <input type="text" name="subject" id="subject" className="create_form_control form-control"></input>
+                  <input
+                    value={subject}
+                    onChange={(e) => setSubject(e.target.value)}
+                    type="text"
+                    name="subject"
+                    id="subject"
+                    className="create_form_control form-control"
+                  />
                 </div>
               </form>
               <h5>Explain your project:</h5>
-              <textarea name="" id="" cols="30" rows="10" className="create_form_control form-control"></textarea>
+              <textarea
+                name=""
+                id=""
+                cols="30"
+                rows="10"
+                className="create_form_control form-control"
+                value={text}
+                onChange={(e) => setText(e.target.value)}
+              />
             </div>
-            <button className="create_btn btn mt-3">Create</button>
+            <button onClick={createProject} className="create_btn btn mt-3">
+              Create
+            </button>
           </div>
         </div>
       </div>

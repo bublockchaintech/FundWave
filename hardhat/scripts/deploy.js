@@ -24,3 +24,7 @@ main().catch((error) => {
   console.error(error);
   process.exitCode = 1;
 });
+
+// 5 minutes initialize to creation
+// 5 minutes creation to funding
+// 8 minutes funding to execution

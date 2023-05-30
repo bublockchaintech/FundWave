@@ -5,13 +5,13 @@ import Dropdown from "react-bootstrap/Dropdown";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { sliceAddress } from "../../utils/sliceAddress";
 
-const Navbar = ({ walletConnected, setWalletConnected, getProviderOrSigner, address, setAddress }) => {
+const Navbar = ({ walletConnected, setWalletConnected, getProviderOrSigner, address, setAddress, web3ModalRef }) => {
   const connectWallet = async () => {
     try {
+      await web3ModalRef.current.connect();
       const signer = await getProviderOrSigner(true);
       const _address = await signer.getAddress();
       setAddress(_address);
-      sliceAddress(_address);
       setWalletConnected(true);
     } catch (error) {
       console.log(error);

@@ -1,0 +1,39 @@
+.color0 {
+  background: #e1f532;
+}
+
+.color1 {
+  background: #e55807;
+}
+
+.color2 {
+  background: #43aa3e;
+}
+
+.color3 {
+  background: #43ae23;
+}
+
+.prev_card {
+  border-radius: 5px 20px;
+}
+.prev_card:hover {
+  -ms-transform: scale(1.05); /* IE 9 */
+  -webkit-transform: scale(1.05); /* Safari 3-8 */
+  transform: scale(1.05);
+  transition: 0.5s;
+}
+
+.prev_btn {
+  width: 35%;
+  margin-left: auto;
+  margin-right: 15px;
+  margin-bottom: 10px;
+  background: #212a3e;
+  color: white !important;
+}
+.prev_btn:hover {
+  background-color: #f1f6f9;
+  color: #212a3e !important;
+  border: 1px solid #212a3e;
+}

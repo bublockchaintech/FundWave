@@ -1,9 +1,53 @@
 import React, { useRef } from "react";
-import { Stage } from "../../components";
 import { Modal } from "bootstrap";
-import "./ExecuteProject.css";
+import "./PreviousProjects.css";
 
-const ExecuteProject = ({ projects, lastUpdate }) => {
+const projects = [
+  {
+    project_name: "PROJECT NAME",
+    community_address: "0x343...2321",
+    totalFunds: 342.123,
+    totalVotes: 1.123,
+    subject: "Subject",
+    text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio repudiandae reprehenderit praesentium possimus. Quis consequatur pariatur fuga blanditiis voluptatibus eaque?",
+  },
+  {
+    project_name: "PROJECT NAME",
+    community_address: "0x343...2321",
+    totalFunds: 342.123,
+    totalVotes: 1.123,
+    subject: "Subject",
+    text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio repudiandae reprehenderit praesentium possimus. Quis consequatur pariatur fuga blanditiis voluptatibus eaque?",
+  },
+  {
+    project_name: "PROJECT NAME",
+    community_address: "0x343...2321",
+    totalFunds: 342.123,
+    totalVotes: 1.123,
+    subject: "Subject",
+    text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio repudiandae reprehenderit praesentium possimus. Quis consequatur pariatur fuga blanditiis voluptatibus eaque?",
+  },
+  {
+    project_name: "PROJECT NAME",
+    community_address: "0x343...2321",
+    totalFunds: 342.123,
+    totalVotes: 1.123,
+    subject: "Subject",
+    text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio repudiandae reprehenderit praesentium possimus. Quis consequatur pariatur fuga blanditiis voluptatibus eaque?",
+  },
+  {
+    project_name: "PROJECT NAME",
+    community_address: "0x343...2321",
+    totalFunds: 342.123,
+    totalVotes: 1.123,
+    subject: "Subject",
+    text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio repudiandae reprehenderit praesentium possimus. Quis consequatur pariatur fuga blanditiis voluptatibus eaque?",
+  },
+];
+
+const className = ["color1, color2, color3, color4, color5"];
+
+const PreviousProjects = () => {
   const modalRef = useRef();
 
   const showModal = () => {
@@ -25,7 +69,7 @@ const ExecuteProject = ({ projects, lastUpdate }) => {
     return (
       <>
         <div key={i} className="col">
-          <div className="execute_card card mb-3 shadow">
+          <div className={`color${i % 6} prev_card card mb-3 shadow`}>
             <div className="card-body">
               <h5 className="card-title">{project.project_name}</h5>
               <div className="execute_info">
@@ -43,7 +87,7 @@ const ExecuteProject = ({ projects, lastUpdate }) => {
               <p>{project.text}</p>
             </div>
             <div className="execute_card_footer card-footer">
-              <button onClick={showModal} type="button" className="execute_btn btn">
+              <button onClick={showModal} type="button" className="prev_btn btn">
                 Details
               </button>
             </div>
@@ -82,13 +126,13 @@ const ExecuteProject = ({ projects, lastUpdate }) => {
   });
 
   return (
-    <>
-      <Stage stage={"EXECUTE_PROJECT"} lastUpdate={lastUpdate} />
+    <div className="my-5">
+      ern
       <div className="container my-4">
         <div className="row row-cols-1 row-cols-lg-3 row-cols-md-2 g-4">{listItems}</div>
       </div>
-    </>
+    </div>
   );
 };
 
-export default ExecuteProject;
+export default PreviousProjects;
