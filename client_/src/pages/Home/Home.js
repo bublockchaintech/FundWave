@@ -1,10 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Home.css";
-import { Contract } from "ethers";
+import { BigNumber, Contract } from "ethers";
 import { DAO_CONTRACT_ADDRESS, DAO_ABI } from "../../constants";
 
 const Home = ({ getProviderOrSigner }) => {
   const [requestedContractAddress, setRequestedContractAddress] = useState("");
+  const [projectsCount, setProjectsCount] = useState(0);
+  const [totalFunds, setTotalFunds] = useState(0);
+  const [totalVotes, setTotalVotes] = useState(0);
 
   const onSubmitRequested = async (e) => {
     e.preventDefault();
@@ -19,6 +22,21 @@ const Home = ({ getProviderOrSigner }) => {
       console.error(err);
     }
   };
+
+  const getProps = async () => {
+    const provider = await getProviderOrSigner();
+    const contract = new Contract(DAO_CONTRACT_ADDRESS, DAO_ABI, provider);
+    const fundedAmount = await contract.allStagesFundAmount();
+    const projectsCount = await contract.allStagesProjectCount();
+    const votesCount = await contract.allStagesVoteCount();
+    setProjectsCount(projectsCount.toNumber());
+    setTotalFunds(fundedAmount.toNumber());
+    setTotalVotes(votesCount.toNumber());
+  };
+
+  useEffect(() => {
+    getProps();
+  }, []);
 
   return (
     <div className="body">
@@ -98,30 +116,30 @@ const Home = ({ getProviderOrSigner }) => {
             <div className="col text-center">
               <div>
                 <i className="fa-solid fa-person-chalkboard fa-2xl"></i>
-                <h5 className="mt-5 fw-bold">PROJECT</h5>
+                <h5 className="mt-5 fw-bold">PROJECTS COUNT</h5>
               </div>
               <div>
-                <h1>1.896</h1>
+                <h1>{projectsCount}</h1>
               </div>
             </div>
             <div className="col text-center">
               <div>
                 <div>
                   <i className="fa-solid fa-hand-holding-dollar fa-2xl"></i>
-                  <h5 className="mt-5 fw-bold">TOTAL FUND</h5>
+                  <h5 className="mt-5 fw-bold">TOTAL FUNDS</h5>
                 </div>
                 <div>
-                  <h1>1.489.257</h1>
+                  <h1>{totalFunds}</h1>
                 </div>
               </div>
             </div>
             <div className="col text-center">
               <div>
                 <i className="fa-solid fa-hand-holding-heart fa-2xl"></i>
-                <h5 className="mt-5 fw-bold">TOTAL VOTE</h5>
+                <h5 className="mt-5 fw-bold">TOTAL VOTES</h5>
               </div>
               <div>
-                <h1>482.964</h1>
+                <h1>{totalVotes}</h1>
               </div>
             </div>
           </div>
