@@ -7,15 +7,19 @@ import { sliceAddress } from "../../utils/sliceAddress";
 
 const Communities = ({ getProviderOrSigner, setWallets, setCommunities, communities, wallets }) => {
   const getWallets = async () => {
-    const provider = await getProviderOrSigner();
-    const contract = new Contract(DAO_CONTRACT_ADDRESS, DAO_ABI, provider);
-    const multiWalletCount = await contract.multiWalletCount();
-    for (let i = 0; i < multiWalletCount; i++) {
-      const address = await contract.multiAddresses(i);
-      const found = wallets.find((_address) => _address === address);
-      if (!found) {
-        setWallets([...wallets, address]);
+    try {
+      const provider = await getProviderOrSigner();
+      const contract = new Contract(DAO_CONTRACT_ADDRESS, DAO_ABI, provider);
+      const multiWalletCount = await contract.multiWalletCount();
+      for (let i = 0; i < multiWalletCount; i++) {
+        const address = await contract.multiAddresses(i);
+        const found = wallets.find((_address) => _address === address);
+        if (!found) {
+          setWallets([...wallets, address]);
+        }
       }
+    } catch (err) {
+      console.error(err);
     }
   };
 

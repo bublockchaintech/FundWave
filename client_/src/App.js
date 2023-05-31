@@ -51,7 +51,7 @@ function App() {
 
       <Switch>
         <Route exact path="/">
-          <Home />
+          <Home getProviderOrSigner={getProviderOrSigner} />
         </Route>
         <Route path="/communities/:contractAddress">
           <Community />

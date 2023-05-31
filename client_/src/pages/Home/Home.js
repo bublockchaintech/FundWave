@@ -1,7 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Home.css";
+import { Contract } from "ethers";
+import { DAO_CONTRACT_ADDRESS, DAO_ABI } from "../../constants";
 
-const Home = () => {
+const Home = ({ getProviderOrSigner }) => {
+  const [requestedContractAddress, setRequestedContractAddress] = useState("");
+
+  const onSubmitRequested = async (e) => {
+    e.preventDefault();
+    try {
+      const signer = await getProviderOrSigner(true);
+      const contract = new Contract(DAO_CONTRACT_ADDRESS, DAO_ABI, signer);
+      const tx = await contract.requestForMultiSignature(requestedContractAddress);
+      await tx.wait();
+      alert("Requested successfully. Wait for our approve.");
+    } catch (err) {
+      alert(err.message);
+      console.error(err);
+    }
+  };
+
   return (
     <div className="body">
       <div className="home__header header ps-3">
@@ -21,18 +39,22 @@ const Home = () => {
             </div>
             <div className="offcanvas-body">
               <h5 className="text-center">Create your community, find fund!</h5>
-              <form>
+              <form onSubmit={onSubmitRequested}>
                 <div className="form-label">
                   <label for="text">Contract Address:</label>
                   <div className="d-flex">
                     <input
+                      value={requestedContractAddress}
+                      onChange={(e) => setRequestedContractAddress(e.target.value)}
                       type="text"
                       name="name"
                       id="name"
                       className="form-control w-50 me-3"
                       placeholder="contract address"
                     />
-                    <button className="btn join-btn">Join Us</button>
+                    <button type="submit" className="btn join-btn">
+                      Join Us
+                    </button>
                   </div>
                 </div>
               </form>
