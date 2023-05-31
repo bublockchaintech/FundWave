@@ -130,10 +130,9 @@ contract DAO {
                 multiWalletCount++;
                 _wallet.id = multiWalletCount;
                 _wallet.contractAddress = multiSignatureContract;
-                _wallet.owners = MultiSignature(multiSignatureContract)
-                    .getOwners();
                 multiAddresses.push(multiSignatureContract);
             }
+            _wallet.owners = MultiSignature(multiSignatureContract).getOwners();
         }
     }
 
