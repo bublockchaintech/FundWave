@@ -55,7 +55,7 @@ body * {
 }
 
 .header h1 {
-  padding-top: 190px;
+  padding-top: 250px;
   font-size: 150px;
 }
 
@@ -82,7 +82,24 @@ body * {
   font-size: 70px;
   color: #5d62f9 !important;
 }
+.offcanvas * {
+  color: #180d5b !important;
+}
+.offcanvas-title {
+  padding-left: 36%;
+}
 
+.join-btn {
+  background-color: #180d5b;
+  padding: 5px 30px;
+  color: #fff !important;
+}
+
+.join-btn:hover {
+  background-color: #fff;
+  color: #180d5b !important;
+  border: 1px solid #180d5b;
+}
 /* CARDS */
 
 .row-image {
@@ -93,21 +110,13 @@ body * {
   background-color: #180d5b;
   border: none;
 }
-<<<<<<< HEAD
 
-img{
-  width: 100%;
-}
-
-.card_text{
-=======
 img {
   width: 100%;
 }
 
 .card_text {
   color: #fff !important;
->>>>>>> 85fa4ae499d69c6c2e580c4895f87810bf2b2489
   text-align: center;
   margin-top: 33%;
   font-size: 60px;
@@ -143,32 +152,12 @@ footer {
   background-color: #fff !important;
 }
 
-<<<<<<< HEAD
-  .offcanvas *{
-    color:#180d5b !important;
-  }
-  .offcanvas-title{
-    padding-left: 36%;
-  }
 
-  .join-btn{
-    background-color: #180d5b;
-    padding: 5px 30px;
-    color:#fff !important;
-  }
-
-  .join-btn:hover{
-    background-color: #fff;
-    color:#180d5b !important;
-    border: 1px solid #180d5b;
-  }
-=======
 footer * {
   padding-top: 15px;
   text-decoration: none;
   color: #180d5b !important;
 }
->>>>>>> 85fa4ae499d69c6c2e580c4895f87810bf2b2489
 
 footer a {
   color: white;
