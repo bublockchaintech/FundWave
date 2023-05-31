@@ -6,9 +6,9 @@ const Stage = ({ stage, lastUpdate }) => {
   if (stage === "CREATE_PROJECT") {
     dayNeedTime = 3 * 24 * 60 * 60 * 1000; // 3 DAYS
   } else if (stage === "FUND_PROJECT") {
-    dayNeedTime = 10 * 24 * 60 * 60 * 1000; // 3 DAYS
+    dayNeedTime = 3 * 24 * 60 * 60 * 1000; // 3 DAYS
   } else if (stage === "EXECUTE_PROJECT") {
-    dayNeedTime = 7 * 24 * 60 * 60 * 1000; // 3 DAYS
+    dayNeedTime = 3 * 24 * 60 * 60 * 1000; // 3 DAYS
   }
 
   const updateDate = new Date(lastUpdate).getTime() * 1000;

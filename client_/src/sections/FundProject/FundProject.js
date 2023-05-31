@@ -1,9 +1,13 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { Stage } from "../../components";
 import { Modal } from "bootstrap";
 import "./FundProject.css";
+import { DAO_ABI, DAO_CONTRACT_ADDRESS } from "../../constants";
+import { Contract } from "ethers";
+import { parseEther } from "ethers/lib/utils";
 
-const FundProject = ({ projects, lastUpdate }) => {
+const FundProject = ({ projects, lastUpdate, getProviderOrSigner }) => {
+  const [fundAmount, setFundAmount] = useState(0);
   const modalRef = useRef();
 
   const showModal = () => {
@@ -19,6 +23,20 @@ const FundProject = ({ projects, lastUpdate }) => {
     const modalEl = modalRef.current;
     const bsModal = Modal.getInstance(modalEl);
     bsModal.hide();
+  };
+
+  const fundProject = async (_id) => {
+    try {
+      const signer = await getProviderOrSigner(true);
+      const contract = new Contract(DAO_CONTRACT_ADDRESS, DAO_ABI, signer);
+      let tx = await contract.fund(_id, { value: parseEther(fundAmount.toString()) });
+      tx.wait();
+      window.alert("Funded successfully");
+      setFundAmount(0);
+    } catch (error) {
+      window.alert(error.message);
+      console.error(error);
+    }
   };
 
   const listItems = projects.map((project, i) => {
@@ -44,9 +62,18 @@ const FundProject = ({ projects, lastUpdate }) => {
             </div>
             <div className="card-footer fund_card_footer">
               <div className="form-label">
-                <input type="number" name="number" id="number" className="form-control" />
+                <input
+                  value={fundAmount}
+                  onChange={(e) => setFundAmount(e.target.value)}
+                  type="number"
+                  name="number"
+                  id="number"
+                  className="form-control"
+                />
               </div>
-              <button className="fund_btn btn">FUND</button>
+              <button onClick={() => fundProject(project.id)} className="fund_btn btn">
+                FUND
+              </button>
             </div>
           </div>
         </div>
@@ -75,9 +102,18 @@ const FundProject = ({ projects, lastUpdate }) => {
                 </div>
                 <div className="fund_modal_footer">
                   <div className="form-label">
-                    <input type="number" name="number" id="fund_number" className="form-control modal-input" />
+                    <input
+                      value={fundAmount}
+                      onChange={(e) => setFundAmount(e.target.value)}
+                      type="number"
+                      name="number"
+                      id="fund_number"
+                      className="form-control modal-input"
+                    />
                   </div>
-                  <button className="btn fund_modal_btn">FUND</button>
+                  <button onClick={() => fundProject(project.id)} className="btn fund_modal_btn">
+                    FUND
+                  </button>
                 </div>
               </div>
             </div>
