@@ -63,6 +63,7 @@ function App() {
             setCommunities={setCommunities}
             communities={communities}
             wallets={wallets}
+            address={address}
           />
         </Route>
         <Route path="/previous-projects">

@@ -5,7 +5,7 @@ import { Contract } from "ethers";
 import { DAO_CONTRACT_ADDRESS, DAO_ABI } from "../../constants";
 import { sliceAddress } from "../../utils/sliceAddress";
 
-const Communities = ({ getProviderOrSigner, setWallets, setCommunities, communities, wallets }) => {
+const Communities = ({ getProviderOrSigner, setWallets, setCommunities, communities, wallets, address }) => {
   const getWallets = async () => {
     try {
       const provider = await getProviderOrSigner();
@@ -49,6 +49,19 @@ const Communities = ({ getProviderOrSigner, setWallets, setCommunities, communit
     getComms();
   }, []);
 
+  const approveComm = async (_contractAddress) => {
+    try {
+      const signer = await getProviderOrSigner(true);
+      const contract = new Contract(DAO_CONTRACT_ADDRESS, DAO_ABI, signer);
+      const tx = await contract.approveRequest(_contractAddress);
+      await tx.wait();
+      alert("Community Approved");
+    } catch (error) {
+      console.error(error);
+      alert(error.message);
+    }
+  };
+
   return (
     <div className="container my-4">
       <div className="row row-cols-1 row-cols-lg-3 row-cols-md-2 g-4">
@@ -78,6 +91,11 @@ const Communities = ({ getProviderOrSigner, setWallets, setCommunities, communit
                     >
                       Details
                     </Link>
+                    {!community.approved && address === "0x651f283C9FE9DD238ceaC39415F8d531D4ea792B" && (
+                      <button onClick={() => approveComm(community.contractAddress)} className="comm_btn btn _danger">
+                        Approve
+                      </button>
+                    )}
                   </div>
                 </div>
               </div>

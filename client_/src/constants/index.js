@@ -1,4 +1,4 @@
-export const DAO_CONTRACT_ADDRESS = "0xaB940dc1e54F7d77334EfaEE613b6BFc53cBc685";
+export const DAO_CONTRACT_ADDRESS = "0x0F3537b30C605Ffb89b747d22452f583DBF3D3E7";
 export const DAO_ABI = [
   {
     inputs: [],
