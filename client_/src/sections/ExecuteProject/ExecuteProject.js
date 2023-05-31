@@ -25,7 +25,7 @@ const ExecuteProject = ({ projects, lastUpdate }) => {
     return (
       <>
         <div key={i} className="col">
-          <div className="execute_card card mb-3 shadow">
+          <div className={`color${i % 6} execute_card card mb-3 shadow`}>
             <div className="card-body">
               <h5 className="card-title">{project.project_name}</h5>
               <div className="execute_info">

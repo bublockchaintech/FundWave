@@ -95,3 +95,7 @@
   outline: 1px solid slategrey;
   border-radius: 1em;
 }
+
+._danger {
+  background-color: rgb(221, 66, 66);
+}

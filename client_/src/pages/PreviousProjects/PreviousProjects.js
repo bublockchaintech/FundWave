@@ -43,9 +43,15 @@ const projects = [
     subject: "Subject",
     text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio repudiandae reprehenderit praesentium possimus. Quis consequatur pariatur fuga blanditiis voluptatibus eaque?",
   },
+  {
+    project_name: "PROJECT NAME",
+    community_address: "0x343...2321",
+    totalFunds: 342.123,
+    totalVotes: 1.123,
+    subject: "Subject",
+    text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio repudiandae reprehenderit praesentium possimus. Quis consequatur pariatur fuga blanditiis voluptatibus eaque?",
+  },
 ];
-
-const className = ["color1, color2, color3, color4, color5"];
 
 const PreviousProjects = () => {
   const modalRef = useRef();
@@ -87,7 +93,7 @@ const PreviousProjects = () => {
               <p>{project.text}</p>
             </div>
             <div className="execute_card_footer card-footer">
-              <button onClick={showModal} type="button" className="prev_btn btn">
+              <button onClick={showModal} type="button" className="btn-light prev_btn btn">
                 Details
               </button>
             </div>

@@ -1,17 +1,31 @@
 .color0 {
-  background: #e1f532;
+  background: #1d67cd;
+  color: #fff !important;
 }
 
 .color1 {
-  background: #e55807;
+  background: #5a149e;
+  color: #fff !important;
 }
 
 .color2 {
-  background: #43aa3e;
+  background: #31cd1d;
+  color: #fff !important;
 }
 
 .color3 {
-  background: #43ae23;
+  background: #c91f3f;
+  color: #fff !important;
+}
+
+.color4 {
+  background: #15d2d4;
+  color: #fff !important;
+}
+
+.color5 {
+  background: #f030e1;
+  color: #fff !important;
 }
 
 .prev_card {
@@ -29,11 +43,9 @@
   margin-left: auto;
   margin-right: 15px;
   margin-bottom: 10px;
-  background: #212a3e;
-  color: white !important;
 }
 .prev_btn:hover {
-  background-color: #f1f6f9;
-  color: #212a3e !important;
+  background-color: #212a3e;
+  color: #f1f6f9 !important;
   border: 1px solid #212a3e;
 }

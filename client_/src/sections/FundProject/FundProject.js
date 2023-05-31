@@ -43,7 +43,7 @@ const FundProject = ({ projects, lastUpdate, getProviderOrSigner }) => {
     return (
       <>
         <div key={i} className="col">
-          <div className="fund_card card mb-3 shadow">
+          <div className={`color${i % 6} fund_card card mb-3 shadow`}>
             <div className="card-body" onClick={showModal} type="button">
               <h5 className="card-title">{project.project_name}</h5>
               <div className="fund_info">
