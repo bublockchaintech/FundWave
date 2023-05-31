@@ -1,0 +1,110 @@
+/* HEADER */
+@import url("https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap");
+
+.body {
+  font-family: "Space Mono", monospace;
+  background: #180d5b;
+}
+
+.body * {
+  color: #fff;
+}
+
+.home__header {
+  background: url("../../assets/homepage.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  height: 100%;
+}
+
+.home__header h1 {
+  padding-top: 250px;
+  font-size: 150px;
+}
+
+.home__header * {
+  color: #fff !important;
+}
+
+.home__btn-light {
+  color: #212a3e !important;
+  border-radius: 20px;
+  padding: 10px 60px;
+  font-weight: bold;
+}
+
+.home__btn-light:hover {
+  background-color: #689ade;
+}
+
+.home__header_items {
+  margin-top: 10em;
+}
+
+.home__header_item i {
+  font-size: 70px;
+  color: #5d62f9 !important;
+}
+.offcanvas * {
+  color: #180d5b !important;
+}
+.offcanvas-title {
+  padding-left: 36%;
+}
+
+.join-btn {
+  background-color: #180d5b;
+  padding: 5px 30px;
+  color: #fff !important;
+}
+
+.join-btn:hover {
+  background-color: #fff;
+  color: #180d5b !important;
+  border: 1px solid #180d5b;
+}
+/* CARDS */
+
+.row-image {
+  margin-bottom: -100px;
+}
+
+.home__card {
+  background-color: #180d5b !important;
+  border: none;
+}
+
+img {
+  width: 100%;
+}
+
+.home__card_text {
+  color: #fff !important;
+  text-align: center;
+  margin-top: 33%;
+  font-size: 60px;
+  font-weight: bold;
+  margin-left: -2em;
+}
+
+.totals i {
+  font-size: 50px;
+}
+
+.totals h1 {
+  color: #9e57e4 !important;
+}
+
+/* ABOUT */
+
+.home__about h1 {
+  font-size: 50px;
+}
+
+.home__about_text {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
