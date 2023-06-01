@@ -1,14 +1,23 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Stage } from "../../components";
 import "./CreateProject.css";
 import { Contract } from "ethers";
 import { DAO_ABI, DAO_CONTRACT_ADDRESS } from "../../constants";
 
-const CreateProject = ({ lastUpdate, getProviderOrSigner }) => {
+const CreateProject = ({
+  lastUpdate,
+  getProviderOrSigner,
+  setStageToCreation,
+  setStageToFunding,
+  stageState,
+  address,
+}) => {
   const [contractAddress, setContractAddress] = useState("");
   const [title, setTitle] = useState("");
   const [subject, setSubject] = useState("");
   const [text, setText] = useState("");
+
+  console.log(stageState);
 
   const createProject = async () => {
     try {
@@ -24,7 +33,13 @@ const CreateProject = ({ lastUpdate, getProviderOrSigner }) => {
 
   return (
     <>
-      <Stage stage={"CREATE_PROJECT"} lastUpdate={lastUpdate} />
+      <Stage
+        stage={"CREATE_PROJECT"}
+        lastUpdate={lastUpdate}
+        stageState={stageState}
+        getProviderOrSigner={getProviderOrSigner}
+      />
+
       <div className="create_card card mt-5">
         <div className="row w-100">
           <div className="create_bg col-6">

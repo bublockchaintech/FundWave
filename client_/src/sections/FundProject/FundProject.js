@@ -6,7 +6,15 @@ import { DAO_ABI, DAO_CONTRACT_ADDRESS } from "../../constants";
 import { Contract } from "ethers";
 import { parseEther } from "ethers/lib/utils";
 
-const FundProject = ({ projects, lastUpdate, getProviderOrSigner }) => {
+const FundProject = ({
+  projects,
+  lastUpdate,
+  getProviderOrSigner,
+  calculateFormula,
+  distributeFunds,
+  stageState,
+  address,
+}) => {
   const [fundAmount, setFundAmount] = useState(0);
   const modalRef = useRef();
 
@@ -125,7 +133,12 @@ const FundProject = ({ projects, lastUpdate, getProviderOrSigner }) => {
 
   return (
     <>
-      <Stage stage={"FUND_PROJECT"} lastUpdate={lastUpdate} />
+      <Stage
+        stage={"FUND_PROJECT"}
+        lastUpdate={lastUpdate}
+        stageState={stageState}
+        getProviderOrSigner={getProviderOrSigner}
+      />
       <div className="container my-4">
         <div className="row row-cols-1 row-cols-lg-3 row-cols-md-2 g-4">{listItems}</div>
       </div>

@@ -3,7 +3,7 @@ import { Stage } from "../../components";
 import { Modal } from "bootstrap";
 import "./ExecuteProject.css";
 
-const ExecuteProject = ({ projects, lastUpdate }) => {
+const ExecuteProject = ({ projects, lastUpdate, getProviderOrSigner, address, stageState }) => {
   const modalRef = useRef();
 
   const showModal = () => {
@@ -83,7 +83,12 @@ const ExecuteProject = ({ projects, lastUpdate }) => {
 
   return (
     <>
-      <Stage stage={"EXECUTE_PROJECT"} lastUpdate={lastUpdate} />
+      <Stage
+        stage={"EXECUTE_PROJECT"}
+        lastUpdate={lastUpdate}
+        stageState={stageState}
+        getProviderOrSigner={getProviderOrSigner}
+      />
       <div className="container my-4">
         <div className="row row-cols-1 row-cols-lg-3 row-cols-md-2 g-4">{listItems}</div>
       </div>

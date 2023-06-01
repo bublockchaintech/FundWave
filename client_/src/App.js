@@ -70,7 +70,7 @@ function App() {
           <PreviousProjects />
         </Route>
         <Route path="/projects">
-          <Projects getProviderOrSigner={getProviderOrSigner} />
+          <Projects getProviderOrSigner={getProviderOrSigner} address={address} />
         </Route>
       </Switch>
 
