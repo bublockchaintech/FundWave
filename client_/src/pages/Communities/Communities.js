@@ -72,7 +72,11 @@ const Communities = ({ getProviderOrSigner, setWallets, setCommunities, communit
                 <div className="card-body">
                   <div className="comm_info">
                     <p>Community Contract Address:</p>
-                    <p>{sliceAddress(community.contractAddress)}</p>
+                    <p>
+                      <a href={`https://mumbai.polygonscan.com/address/${community.contractAddress}`} target="blank">
+                        {sliceAddress(community.contractAddress)}
+                      </a>
+                    </p>
                   </div>
                   <div className="comm_info">
                     <p>Is Approved: </p>
