@@ -16,7 +16,7 @@ const Projects = ({ getProviderOrSigner, address }) => {
     const _stageCount = await contract.stageCount();
     const stage = await contract.stages(_stageCount);
     setStageCount(_stageCount);
-    setStageProjectsCount(stage.projectsCount);
+    setStageProjectsCount(stage.projectCount);
     setStageState(stage.stageState);
     setLastUpdate(stage.updatedAt);
   };
@@ -28,7 +28,8 @@ const Projects = ({ getProviderOrSigner, address }) => {
       for (let i = 1; i <= stageProjectsCount; i++) {
         const _project = await contract.stagesToProject(stageCount, i);
         console.log(_project);
-        setProjects([...projects, _project]);
+        // TODO: Set project props
+        // setProjects([...projects, {}]);
       }
     } catch (error) {
       console.log(error);
