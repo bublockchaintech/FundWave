@@ -11,13 +11,12 @@ const Communities = ({ getProviderOrSigner, setWallets, setCommunities, communit
       const provider = await getProviderOrSigner();
       const contract = new Contract(DAO_CONTRACT_ADDRESS, DAO_ABI, provider);
       const multiWalletCount = await contract.multiWalletCount();
+      const walletArr = [];
       for (let i = 0; i < multiWalletCount; i++) {
         const address = await contract.multiAddresses(i);
-        const found = wallets.find((_address) => _address === address);
-        if (!found) {
-          setWallets([...wallets, address]);
-        }
+        walletArr.push(address);
       }
+      setWallets(walletArr);
     } catch (err) {
       console.error(err);
     }
@@ -30,21 +29,16 @@ const Communities = ({ getProviderOrSigner, setWallets, setCommunities, communit
     wallets.length > 0 &&
       wallets.forEach(async (address) => {
         const comm = await contract.multiWallets(address);
-        setCommunities([
-          ...communities,
-          {
-            approved: comm.approved,
-            contractAddress: comm.contractAddress,
-            executedProjectCounts: comm.executedProjectCounts,
-          },
-        ]);
+        arr.push({
+          approved: comm.approved,
+          contractAddress: comm.contractAddress,
+          executedProjectCounts: comm.executedProjectCounts,
+        });
       });
     setCommunities(arr);
   };
 
   useEffect(() => {
-    setWallets([]);
-    setCommunities([]);
     getWallets();
     getComms();
   }, []);
