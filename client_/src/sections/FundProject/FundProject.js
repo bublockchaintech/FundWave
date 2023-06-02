@@ -44,7 +44,7 @@ const FundProject = ({
       }
     };
     getProjects();
-  }, [getProviderOrSigner, projects, setStageProjects, stageCount, stageProjectsCount]);
+  }, []);
 
   const showModal = () => {
     const modalEl = modalRef.current;

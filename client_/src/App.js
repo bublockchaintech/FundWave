@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { Communities, Community, Home, PreviousProjects, Projects } from "./pages";
 import { Footer, Navbar } from "./sections";
-import { providers, Contract, ethers } from "ethers";
+import { providers } from "ethers";
 import Web3Modal from "web3modal";
 
 function App() {
@@ -11,6 +11,7 @@ function App() {
   const [wallets, setWallets] = useState([]);
   const [communities, setCommunities] = useState([]);
   const [stageProjects, setStageProjects] = useState([]);
+  const [allProjects, setAllProjects] = useState([]);
 
   const web3ModalRef = useRef();
 
@@ -68,7 +69,11 @@ function App() {
           />
         </Route>
         <Route path="/previous-projects">
-          <PreviousProjects />
+          <PreviousProjects
+            projects={allProjects}
+            setProjects={setAllProjects}
+            getProviderOrSigner={getProviderOrSigner}
+          />
         </Route>
         <Route path="/projects">
           <Projects

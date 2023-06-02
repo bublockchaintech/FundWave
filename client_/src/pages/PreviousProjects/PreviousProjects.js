@@ -1,60 +1,52 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Modal } from "bootstrap";
 import "./PreviousProjects.css";
+import { Contract } from "ethers";
+import { DAO_ABI, DAO_CONTRACT_ADDRESS } from "../../constants";
+import { sliceAddress } from "../../utils/sliceAddress";
 
-const projects = [
-  {
-    project_name: "PROJECT NAME",
-    community_address: "0x343...2321",
-    totalFunds: 342.123,
-    totalVotes: 1.123,
-    subject: "Subject",
-    text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio repudiandae reprehenderit praesentium possimus. Quis consequatur pariatur fuga blanditiis voluptatibus eaque?",
-  },
-  {
-    project_name: "PROJECT NAME",
-    community_address: "0x343...2321",
-    totalFunds: 342.123,
-    totalVotes: 1.123,
-    subject: "Subject",
-    text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio repudiandae reprehenderit praesentium possimus. Quis consequatur pariatur fuga blanditiis voluptatibus eaque?",
-  },
-  {
-    project_name: "PROJECT NAME",
-    community_address: "0x343...2321",
-    totalFunds: 342.123,
-    totalVotes: 1.123,
-    subject: "Subject",
-    text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio repudiandae reprehenderit praesentium possimus. Quis consequatur pariatur fuga blanditiis voluptatibus eaque?",
-  },
-  {
-    project_name: "PROJECT NAME",
-    community_address: "0x343...2321",
-    totalFunds: 342.123,
-    totalVotes: 1.123,
-    subject: "Subject",
-    text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio repudiandae reprehenderit praesentium possimus. Quis consequatur pariatur fuga blanditiis voluptatibus eaque?",
-  },
-  {
-    project_name: "PROJECT NAME",
-    community_address: "0x343...2321",
-    totalFunds: 342.123,
-    totalVotes: 1.123,
-    subject: "Subject",
-    text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio repudiandae reprehenderit praesentium possimus. Quis consequatur pariatur fuga blanditiis voluptatibus eaque?",
-  },
-  {
-    project_name: "PROJECT NAME",
-    community_address: "0x343...2321",
-    totalFunds: 342.123,
-    totalVotes: 1.123,
-    subject: "Subject",
-    text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio repudiandae reprehenderit praesentium possimus. Quis consequatur pariatur fuga blanditiis voluptatibus eaque?",
-  },
-];
-
-const PreviousProjects = () => {
+const PreviousProjects = ({ projects, setProjects, getProviderOrSigner }) => {
   const modalRef = useRef();
+  const [stageCount, setStageCount] = useState(null);
+
+  const stageSection = async () => {
+    const provider = await getProviderOrSigner();
+    const contract = new Contract(DAO_CONTRACT_ADDRESS, DAO_ABI, provider);
+    const _stageCount = await contract.stageCount();
+    setStageCount(_stageCount);
+  };
+
+  useEffect(() => {
+    const getProjects = async () => {
+      try {
+        const provider = await getProviderOrSigner();
+        const contract = new Contract(DAO_CONTRACT_ADDRESS, DAO_ABI, provider);
+        const projectsArr = [];
+        for (let i = 1; i <= stageCount; i++) {
+          const { projectCount } = await contract.stages(stageCount);
+          for (let j = 1; j <= projectCount; j++) {
+            const _project = await contract.stagesToProject(i, j);
+            projectsArr.push({
+              project_name: _project.title,
+              community_address: _project.ownerContractAddress,
+              totalFunds: _project.totalFunds.toString() / 10 ** 18,
+              confirmedBalance: _project.confirmedBalance.toString() / 10 ** 18,
+              totalVotes: _project.totalVotes.toString(),
+              id: _project.id,
+              subject: _project.subject,
+              text: _project.explanation,
+            });
+          }
+        }
+        setProjects(projectsArr);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    stageSection();
+    getProjects();
+  }, [getProviderOrSigner]);
 
   const showModal = () => {
     const modalEl = modalRef.current;
@@ -73,13 +65,21 @@ const PreviousProjects = () => {
 
   const listItems = projects.map((project, i) => {
     return (
-      <>
-        <div key={i} className="col">
+      <span key={i}>
+        <div className="col">
           <div className={`color${i % 6} prev_card card mb-3 shadow`}>
             <div className="card-body">
               <h5 className="card-title">{project.project_name}</h5>
               <div className="execute_info">
-                <p>{project.community_address}</p>
+                <p>
+                  <a
+                    className="a_tag"
+                    href={`https://mumbai.polygonscan.com/address/${project.community_address}`}
+                    target="blank"
+                  >
+                    {sliceAddress(project.community_address)}
+                  </a>
+                </p>
                 <div className="execute_number">
                   <i className="fa-solid fa-coins"></i>
                   <p>{project.totalFunds}</p>
@@ -90,7 +90,7 @@ const PreviousProjects = () => {
                 </div>
               </div>
               <h5>{project.subject}</h5>
-              <p>{project.text}</p>
+              <p>{project.text.length > 120 ? `${project.text.substring(0, 120)}...` : project.text}</p>
             </div>
             <div className="execute_card_footer card-footer">
               <button onClick={showModal} type="button" className="btn-light prev_btn btn">
@@ -108,10 +108,23 @@ const PreviousProjects = () => {
                 <button type="button" className="btn-close" onClick={hideModal}></button>
               </div>
               <div className="modal-body">
-                <p>Community Address: {project.community_address}</p>
-                <p>Subject: {project.subject}</p>
+                <p>
+                  Community Address:
+                  <a
+                    className="a_tag_modal"
+                    href={`https://mumbai.polygonscan.com/address/${project.community_address}`}
+                    target="blank"
+                  >
+                    <span className="bold">{`  ${sliceAddress(project.community_address)}`}</span>
+                  </a>
+                </p>
+                <p>
+                  Subject: <span className="bold">{project.subject}</span>
+                </p>
                 <p>Explanation: </p>
-                <p>{project.text}</p>
+                <p>
+                  <span className="bold">{project.text}</span>
+                </p>
                 <div className="execute_icons">
                   <div>
                     <i className="fa-solid fa-coins"></i>
@@ -127,7 +140,7 @@ const PreviousProjects = () => {
             </div>
           </div>
         </div>
-      </>
+      </span>
     );
   });
 

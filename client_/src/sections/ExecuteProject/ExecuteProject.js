@@ -37,13 +37,12 @@ const ExecuteProject = ({
           });
         }
         setStageProjects(projectsArr);
-        console.log(projects);
       } catch (error) {
         console.log(error);
       }
     };
     getProjects();
-  }, [getProviderOrSigner, projects, setStageProjects, stageCount, stageProjectsCount]);
+  }, []);
 
   const showModal = () => {
     const modalEl = modalRef.current;
@@ -62,8 +61,8 @@ const ExecuteProject = ({
 
   const listItems = projects.map((project, i) => {
     return (
-      <>
-        <div key={i} className="col">
+      <span key={i}>
+        <div className="col">
           <div className={`color${i % 6} execute_card card mb-3 shadow`}>
             <div className="card-body">
               <h5 className="card-title">{project.project_name}</h5>
@@ -96,7 +95,6 @@ const ExecuteProject = ({
             </div>
           </div>
         </div>
-
         <div className="modal" ref={modalRef}>
           <div className="modal-dialog modal-dialog-scrollable modal-fullscreen-sm-down">
             <div className="modal-content">
@@ -137,7 +135,7 @@ const ExecuteProject = ({
             </div>
           </div>
         </div>
-      </>
+      </span>
     );
   });
 
