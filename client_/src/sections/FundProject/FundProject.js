@@ -1,22 +1,57 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Stage } from "../../components";
 import { Modal } from "bootstrap";
 import "./FundProject.css";
 import { DAO_ABI, DAO_CONTRACT_ADDRESS } from "../../constants";
 import { Contract } from "ethers";
 import { parseEther } from "ethers/lib/utils";
+import { sliceAddress } from "../../utils/sliceAddress";
 
 const FundProject = ({
   projects,
   lastUpdate,
   getProviderOrSigner,
-  calculateFormula,
-  distributeFunds,
   stageState,
+  stageCount,
+  stageProjectsCount,
   address,
+  setStageProjects,
 }) => {
   const [fundAmount, setFundAmount] = useState(0);
+
   const modalRef = useRef();
+
+  console.log(stageState);
+  console.log(stageCount);
+  console.log(stageProjectsCount);
+
+  const getProjects = async () => {
+    try {
+      const provider = await getProviderOrSigner();
+      const contract = new Contract(DAO_CONTRACT_ADDRESS, DAO_ABI, provider);
+      const projectsArr = [];
+      for (let i = 1; i <= stageProjectsCount; i++) {
+        const _project = await contract.stagesToProject(stageCount, i);
+        projectsArr.push({
+          project_name: _project.title,
+          community_address: _project.ownerContractAddress,
+          totalFunds: _project.totalFunds.toString() / 10 ** 18,
+          totalVotes: _project.totalVotes.toString(),
+          id: _project.id,
+          subject: _project.subject,
+          text: _project.explanation,
+        });
+      }
+      setStageProjects(projectsArr);
+      console.log(projects);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getProjects();
+  }, []);
 
   const showModal = () => {
     const modalEl = modalRef.current;
@@ -55,7 +90,15 @@ const FundProject = ({
             <div className="card-body" onClick={showModal} type="button">
               <h5 className="card-title">{project.project_name}</h5>
               <div className="fund_info">
-                <p>{project.community_address}</p>
+                <p>
+                  <a
+                    className="a_tag"
+                    href={`https://mumbai.polygonscan.com/address/${project.community_address}`}
+                    target="blank"
+                  >
+                    {sliceAddress(project.community_address)}
+                  </a>
+                </p>
                 <div className="fund_number">
                   <i className="fa-solid fa-coins me-2"></i>
                   <p>{project.totalFunds}</p>

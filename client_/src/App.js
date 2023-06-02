@@ -10,6 +10,7 @@ function App() {
   const [address, setAddress] = useState("");
   const [wallets, setWallets] = useState([]);
   const [communities, setCommunities] = useState([]);
+  const [stageProjects, setStageProjects] = useState([]);
 
   const web3ModalRef = useRef();
 
@@ -70,7 +71,12 @@ function App() {
           <PreviousProjects />
         </Route>
         <Route path="/projects">
-          <Projects getProviderOrSigner={getProviderOrSigner} address={address} />
+          <Projects
+            stageProjects={stageProjects}
+            setStageProjects={setStageProjects}
+            getProviderOrSigner={getProviderOrSigner}
+            address={address}
+          />
         </Route>
       </Switch>
 
