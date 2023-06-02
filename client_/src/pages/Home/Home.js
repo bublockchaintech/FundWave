@@ -29,9 +29,9 @@ const Home = ({ getProviderOrSigner }) => {
     const fundedAmount = await contract.allStagesFundAmount();
     const projectsCount = await contract.allStagesProjectCount();
     const votesCount = await contract.allStagesVoteCount();
-    setProjectsCount(projectsCount.toNumber());
-    setTotalFunds(fundedAmount.toNumber());
-    setTotalVotes(votesCount.toNumber());
+    setProjectsCount(projectsCount.toString());
+    setTotalFunds(fundedAmount.toString() / 10 ** 18);
+    setTotalVotes(votesCount.toString());
   };
 
   useEffect(() => {
