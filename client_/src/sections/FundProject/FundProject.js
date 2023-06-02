@@ -109,7 +109,7 @@ const FundProject = ({
                 </div>
               </div>
               <h5>{project.subject}</h5>
-              <p>{project.text} </p>
+              <p>{`${project.text.substring(0, 120)}...`} </p>
             </div>
             <div className="card-footer fund_card_footer">
               <div className="form-label">
@@ -137,10 +137,23 @@ const FundProject = ({
                 <button type="button" onClick={hideModal} className="btn-close"></button>
               </div>
               <div className="modal-body">
-                <p>Community Address: {project.community_address}</p>
-                <p>Subject: {project.subject}</p>
+                <p>
+                  Community Address:
+                  <a
+                    className="a_tag_modal"
+                    href={`https://mumbai.polygonscan.com/address/${project.community_address}`}
+                    target="blank"
+                  >
+                    <span className="bold">{`  ${sliceAddress(project.community_address)}`}</span>
+                  </a>
+                </p>
+                <p>
+                  Subject: <span className="bold">{project.subject}</span>
+                </p>
                 <p>Explanation: </p>
-                <p>{project.text}</p>
+                <p>
+                  <span className="bold">{project.text}</span>
+                </p>
                 <div className="fund_icons">
                   <div>
                     <i className="fa-solid fa-coins" />
