@@ -83,10 +83,7 @@ const Communities = ({ getProviderOrSigner, setWallets, setCommunities, communit
                     <p>Number of Projects: {community.executedProjectCounts}</p>
                   </div>
                   <div className="comm_card_footer card-footer">
-                    <Link
-                      className="comm_btn btn"
-                      to={{ pathname: `/communities/${community.contractAddress}`, state: { ...community } }}
-                    >
+                    <Link className="comm_btn btn" to={{ pathname: `/communities/${community.contractAddress}` }}>
                       Details
                     </Link>
                     {!community.approved && address === "0x651f283C9FE9DD238ceaC39415F8d531D4ea792B" && (

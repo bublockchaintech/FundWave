@@ -56,7 +56,7 @@ function App() {
           <Home getProviderOrSigner={getProviderOrSigner} />
         </Route>
         <Route path="/communities/:contractAddress">
-          <Community />
+          <Community getProviderOrSigner={getProviderOrSigner} />
         </Route>
         <Route path="/communities">
           <Communities

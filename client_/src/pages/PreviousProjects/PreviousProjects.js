@@ -22,6 +22,7 @@ const PreviousProjects = ({ projects, setProjects, getProviderOrSigner }) => {
         const provider = await getProviderOrSigner();
         const contract = new Contract(DAO_CONTRACT_ADDRESS, DAO_ABI, provider);
         const projectsArr = [];
+        // update stageCount with less than, not less equal than
         for (let i = 1; i <= stageCount; i++) {
           const { projectCount } = await contract.stages(stageCount);
           for (let j = 1; j <= projectCount; j++) {
