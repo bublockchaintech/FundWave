@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./Home.css";
-import { BigNumber, Contract } from "ethers";
+import { Contract } from "ethers";
 import { DAO_CONTRACT_ADDRESS, DAO_ABI } from "../../constants";
 
 const Home = ({ getProviderOrSigner }) => {
@@ -23,20 +23,23 @@ const Home = ({ getProviderOrSigner }) => {
     }
   };
 
-  const getProps = async () => {
-    const provider = await getProviderOrSigner();
-    const contract = new Contract(DAO_CONTRACT_ADDRESS, DAO_ABI, provider);
-    const fundedAmount = await contract.allStagesFundAmount();
-    const projectsCount = await contract.allStagesProjectCount();
-    const votesCount = await contract.allStagesVoteCount();
-    setProjectsCount(projectsCount.toString());
-    setTotalFunds(fundedAmount.toString() / 10 ** 18);
-    setTotalVotes(votesCount.toString());
-  };
-
   useEffect(() => {
+    const getProps = async () => {
+      try {
+        const provider = await getProviderOrSigner();
+        const contract = new Contract(DAO_CONTRACT_ADDRESS, DAO_ABI, provider);
+        const fundedAmount = await contract.allStagesFundAmount();
+        const projectsCount = await contract.allStagesProjectCount();
+        const votesCount = await contract.allStagesVoteCount();
+        setProjectsCount(projectsCount.toString());
+        setTotalFunds(fundedAmount.toString() / 10 ** 18);
+        setTotalVotes(votesCount.toString());
+      } catch (err) {
+        console.log(err);
+      }
+    };
     getProps();
-  }, []);
+  }, [getProviderOrSigner]);
 
   return (
     <div className="body">

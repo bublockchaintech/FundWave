@@ -14,44 +14,37 @@ const FundProject = ({
   stageState,
   stageCount,
   stageProjectsCount,
-  address,
   setStageProjects,
 }) => {
   const [fundAmount, setFundAmount] = useState(0);
 
   const modalRef = useRef();
 
-  console.log(stageState);
-  console.log(stageCount);
-  console.log(stageProjectsCount);
-
-  const getProjects = async () => {
-    try {
-      const provider = await getProviderOrSigner();
-      const contract = new Contract(DAO_CONTRACT_ADDRESS, DAO_ABI, provider);
-      const projectsArr = [];
-      for (let i = 1; i <= stageProjectsCount; i++) {
-        const _project = await contract.stagesToProject(stageCount, i);
-        projectsArr.push({
-          project_name: _project.title,
-          community_address: _project.ownerContractAddress,
-          totalFunds: _project.totalFunds.toString() / 10 ** 18,
-          totalVotes: _project.totalVotes.toString(),
-          id: _project.id,
-          subject: _project.subject,
-          text: _project.explanation,
-        });
-      }
-      setStageProjects(projectsArr);
-      console.log(projects);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   useEffect(() => {
+    const getProjects = async () => {
+      try {
+        const provider = await getProviderOrSigner();
+        const contract = new Contract(DAO_CONTRACT_ADDRESS, DAO_ABI, provider);
+        const projectsArr = [];
+        for (let i = 1; i <= stageProjectsCount; i++) {
+          const _project = await contract.stagesToProject(stageCount, i);
+          projectsArr.push({
+            project_name: _project.title,
+            community_address: _project.ownerContractAddress,
+            totalFunds: _project.totalFunds.toString() / 10 ** 18,
+            totalVotes: _project.totalVotes.toString(),
+            id: _project.id,
+            subject: _project.subject,
+            text: _project.explanation,
+          });
+        }
+        setStageProjects(projectsArr);
+      } catch (error) {
+        console.log(error);
+      }
+    };
     getProjects();
-  }, []);
+  }, [getProviderOrSigner, projects, setStageProjects, stageCount, stageProjectsCount]);
 
   const showModal = () => {
     const modalEl = modalRef.current;
@@ -109,7 +102,7 @@ const FundProject = ({
                 </div>
               </div>
               <h5>{project.subject}</h5>
-              <p>{`${project.text.substring(0, 120)}...`} </p>
+              <p>{project.text.length > 120 ? `${project.text.substring(0, 120)}...` : project.text}</p>
             </div>
             <div className="card-footer fund_card_footer">
               <div className="form-label">
