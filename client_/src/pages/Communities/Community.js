@@ -95,9 +95,9 @@ const Community = ({ getProviderOrSigner }) => {
               </div>
             </div>
             {community.number_of_projects > 0 &&
-              community.projects.map((project) => {
+              community.projects.map((project, i) => {
                 return (
-                  <div className="comm_card_single card pt-3">
+                  <div key={i} className="comm_card_single card pt-3">
                     <div className="row">
                       <div className="col-8">
                         <h3 className="card-title">Stage: {project.stageId}</h3>
