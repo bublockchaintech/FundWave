@@ -18,3 +18,7 @@
   background-color: #212a3e;
   color: white !important;
 }
+
+.cursor {
+  cursor: pointer;
+}

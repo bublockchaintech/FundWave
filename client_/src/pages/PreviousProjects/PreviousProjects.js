@@ -5,7 +5,7 @@ import { Contract } from "ethers";
 import { DAO_ABI, DAO_CONTRACT_ADDRESS } from "../../constants";
 import { sliceAddress } from "../../utils/sliceAddress";
 
-const PreviousProjects = ({ projects, setProjects, getProviderOrSigner }) => {
+const PreviousProjects = ({ projects, setProjects, getProviderOrSigner, selectedStage }) => {
   const modalRef = useRef();
   const [stageCount, setStageCount] = useState(null);
 
@@ -47,7 +47,7 @@ const PreviousProjects = ({ projects, setProjects, getProviderOrSigner }) => {
 
     stageSection();
     getProjects();
-  }, [getProviderOrSigner]);
+  }, [projects]);
 
   const showModal = () => {
     const modalEl = modalRef.current;

@@ -4,14 +4,7 @@ import "./CreateProject.css";
 import { Contract } from "ethers";
 import { DAO_ABI, DAO_CONTRACT_ADDRESS } from "../../constants";
 
-const CreateProject = ({
-  lastUpdate,
-  getProviderOrSigner,
-  setStageToCreation,
-  setStageToFunding,
-  stageState,
-  address,
-}) => {
+const CreateProject = ({ lastUpdate, getProviderOrSigner, stageState }) => {
   const [contractAddress, setContractAddress] = useState("");
   const [title, setTitle] = useState("");
   const [subject, setSubject] = useState("");
@@ -52,7 +45,7 @@ const CreateProject = ({
             <div className="card-body py-4">
               <form>
                 <div className="form-label">
-                  <label for="text">Contract Address:</label>
+                  <label>Contract Address:</label>
                   <input
                     value={contractAddress}
                     onChange={(e) => setContractAddress(e.target.value)}
@@ -74,7 +67,7 @@ const CreateProject = ({
                   />
                 </div>
                 <div className="form-label">
-                  <label for="text">Subject:</label>
+                  <label>Subject:</label>
                   <input
                     value={subject}
                     onChange={(e) => setSubject(e.target.value)}

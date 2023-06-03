@@ -62,7 +62,7 @@ const Home = ({ getProviderOrSigner }) => {
               <h5 className="text-center">Create your community, find fund!</h5>
               <form onSubmit={onSubmitRequested}>
                 <div className="form-label">
-                  <label for="text">Contract Address:</label>
+                  <label>Contract Address:</label>
                   <div className="d-flex">
                     <input
                       value={requestedContractAddress}

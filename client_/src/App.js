@@ -12,6 +12,7 @@ function App() {
   const [communities, setCommunities] = useState([]);
   const [stageProjects, setStageProjects] = useState([]);
   const [allProjects, setAllProjects] = useState([]);
+  const [selectedStage, setSelectedStage] = useState(null);
 
   const web3ModalRef = useRef();
 
@@ -49,6 +50,7 @@ function App() {
         address={address}
         setAddress={setAddress}
         web3ModalRef={web3ModalRef}
+        setSelectedStage={setSelectedStage}
       />
 
       <Switch>
@@ -73,6 +75,7 @@ function App() {
             projects={allProjects}
             setProjects={setAllProjects}
             getProviderOrSigner={getProviderOrSigner}
+            selectedStage={selectedStage}
           />
         </Route>
         <Route path="/projects">
