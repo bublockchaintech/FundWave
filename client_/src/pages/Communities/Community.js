@@ -58,16 +58,13 @@ const Community = ({ getProviderOrSigner }) => {
                       </a>
                     </h1>
                   </div>
-                  <form>
-                    <div className="form-label">
-                      <label for="text">Approved</label>
-                      {community.is_approved && <i className={`fa-sharp fa-solid fa-circle-check fa-xl ms-2`}></i>}
-                      {!community.is_approved && <i className={`fa-sharp fa-solid fa-circle-xmark fa-xl ms-2`}></i>}
-                    </div>
-                  </form>
+                  <div className="form-label">
+                    <label for="text">Approved</label>
+                    {community.is_approved && <i className={`fa-sharp fa-solid fa-circle-check fa-xl ms-2`}></i>}
+                    {!community.is_approved && <i className={`fa-sharp fa-solid fa-circle-xmark fa-xl ms-2`}></i>}
+                  </div>
                   <div className="comm_info">
-                    <h5>Number of Projects:</h5>
-                    <p>{community.number_of_projects}</p>
+                    <h3>Number of Projects: {community.number_of_projects}</h3>
                   </div>
                 </div>
                 <div className="col-4">

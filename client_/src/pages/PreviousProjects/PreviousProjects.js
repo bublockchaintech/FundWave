@@ -5,7 +5,7 @@ import { Contract } from "ethers";
 import { DAO_ABI, DAO_CONTRACT_ADDRESS } from "../../constants";
 import { sliceAddress } from "../../utils/sliceAddress";
 
-const PreviousProjects = ({ projects, setProjects, getProviderOrSigner, selectedStage }) => {
+const PreviousProjects = ({ projects, setProjects, getProviderOrSigner }) => {
   const modalRef = useRef();
   const [stageCount, setStageCount] = useState(null);
 
@@ -89,8 +89,12 @@ const PreviousProjects = ({ projects, setProjects, getProviderOrSigner, selected
                   <i className="fa-sharp fa-solid fa-user"></i>
                   <p>{project.totalVotes}</p>
                 </div>
+                <div className="execute_number">
+                  <i class="fa-solid fa-circle-dollar-to-slot"></i>
+                  <p>{project.confirmedBalance}</p>
+                </div>
               </div>
-              <h5>{project.subject}</h5>
+              <b>{project.subject}</b>
               <p>{project.text.length > 120 ? `${project.text.substring(0, 120)}...` : project.text}</p>
             </div>
             <div className="execute_card_footer card-footer">
@@ -147,8 +151,8 @@ const PreviousProjects = ({ projects, setProjects, getProviderOrSigner, selected
 
   return (
     <div className="my-5">
-      ern
-      <div className="container my-4">
+      <p className="eren">eren</p>
+      <div className="container prev_cont my-5">
         <div className="row row-cols-1 row-cols-lg-3 row-cols-md-2 g-4">{listItems}</div>
       </div>
     </div>
