@@ -5,19 +5,7 @@ import Dropdown from "react-bootstrap/Dropdown";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { sliceAddress } from "../../utils/sliceAddress";
 
-const Navbar = ({
-  walletConnected,
-  setWalletConnected,
-  getProviderOrSigner,
-  address,
-  setAddress,
-  web3ModalRef,
-  setSelectedStage,
-}) => {
-  const { pathname } = useLocation();
-  const [display, setDisplay] = useState(false);
-  const [_stage, _setStage] = useState(0);
-
+const Navbar = ({ walletConnected, setWalletConnected, getProviderOrSigner, address, setAddress, web3ModalRef }) => {
   const connectWallet = async () => {
     try {
       await web3ModalRef.current.connect();
@@ -30,39 +18,10 @@ const Navbar = ({
     }
   };
 
-  const setStage = async () => {
-    setSelectedStage(_stage);
-    _setStage("");
-  };
-
-  useEffect(() => {
-    if (pathname === "/previous-projects") {
-      setDisplay(true);
-    } else {
-      setDisplay(false);
-    }
-  }, [pathname]);
-
   return (
     <nav className={`${styles.navbar} navbar navbar-expand navbar-light bg-light fixed-top`}>
       <div className="container">
-        <h2>FundWave</h2>
-        {display && (
-          <div className="input-group mx-5 rounded">
-            <input
-              type="search"
-              className="form-control"
-              placeholder="Search stage"
-              aria-label="Search"
-              aria-describedby="search-addon"
-              value={_stage}
-              onChange={(e) => _setStage(e.target.value)}
-            />
-            <span onClick={setStage} className="cursor input-group-text border-0" id="search-addon">
-              <i className="fa-solid fa-magnifying-glass"></i>
-            </span>
-          </div>
-        )}
+        <img className="logo" src="./2.svg" alt="" />
         <ul className="navbar-nav ms-auto">
           <li className="nav-item pe-5">
             <Link to="/" className="nav-link">
@@ -94,7 +53,6 @@ const Navbar = ({
           </NavDropdown>
         </ul>
         <button onClick={connectWallet} className={`${styles.nav_btn} btn`}></button>
-
         {!walletConnected ? (
           <button onClick={connectWallet} className={`${styles.nav_btn} btn`}>
             Connect
