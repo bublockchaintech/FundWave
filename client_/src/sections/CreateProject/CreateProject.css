@@ -36,3 +36,19 @@
   color: #212a3e !important;
   border: 1px solid #212a3e;
 }
+
+._govern {
+  border: none;
+}
+
+._govern * {
+  padding: 0.8em;
+  color: #fff;
+  background-color: #d63209;
+  border: #fff;
+}
+
+._govern button:hover {
+  background-color: #b84529;
+  transition: 1s;
+}

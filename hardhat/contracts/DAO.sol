@@ -125,19 +125,19 @@ contract DAO {
             MultiSignatureWallet storage _wallet = multiWallets[
                 multiSignatureContract
             ];
+
             if (_wallet.id == 0) {
                 multiWalletCount++;
                 _wallet.id = multiWalletCount;
                 _wallet.contractAddress = multiSignatureContract;
-                _wallet.owners = MultiSignature(multiSignatureContract)
-                    .getOwners();
+                multiAddresses.push(multiSignatureContract);
             }
+            _wallet.owners = MultiSignature(multiSignatureContract).getOwners();
         }
     }
 
     function approveRequest(address multiSignatureContract) external onlyOwner {
         multiWallets[multiSignatureContract].approved = true;
-        multiAddresses.push(multiSignatureContract);
     }
 
     function initializeStage() external onlyOwner {

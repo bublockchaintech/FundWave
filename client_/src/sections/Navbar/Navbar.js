@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./Navbar.css";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import Dropdown from "react-bootstrap/Dropdown";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { sliceAddress } from "../../utils/sliceAddress";
@@ -21,7 +21,7 @@ const Navbar = ({ walletConnected, setWalletConnected, getProviderOrSigner, addr
   return (
     <nav className={`${styles.navbar} navbar navbar-expand navbar-light bg-light fixed-top`}>
       <div className="container">
-        <h2>FundWave</h2>
+        <img className="logo" src="./2.svg" alt="" />
         <ul className="navbar-nav ms-auto">
           <li className="nav-item pe-5">
             <Link to="/" className="nav-link">
@@ -53,7 +53,6 @@ const Navbar = ({ walletConnected, setWalletConnected, getProviderOrSigner, addr
           </NavDropdown>
         </ul>
         <button onClick={connectWallet} className={`${styles.nav_btn} btn`}></button>
-
         {!walletConnected ? (
           <button onClick={connectWallet} className={`${styles.nav_btn} btn`}>
             Connect

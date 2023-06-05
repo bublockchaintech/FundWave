@@ -55,3 +55,5 @@ npx hardhat run scripts/deploy.js
 - There should be isOwner() function for control users.
 - Must have fallback and receive functions.
 - You can directly take the contract from our github.
+
+[0x24CC375B80ADc32F7bc79b83343301458219FA50,0x333A2399f8b7d898d8F20F53AD725455F679845D,0x3a179ca8b981bf0dE44E7D40B777fbdc58D799B3,0x3cd699f77Dd6a48aFb451BDAE3565EE1c79d3Acb,0x8a352721f081aa3188af4466B3d74A13a5893eCa]

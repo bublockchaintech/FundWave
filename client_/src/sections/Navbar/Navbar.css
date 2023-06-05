@@ -18,3 +18,13 @@
   background-color: #212a3e;
   color: white !important;
 }
+
+.cursor {
+  cursor: pointer;
+}
+
+.logo {
+  position: absolute;
+  width: 120px;
+  margin-top: 20px;
+}

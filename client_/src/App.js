@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { Communities, Community, Home, PreviousProjects, Projects } from "./pages";
 import { Footer, Navbar } from "./sections";
-import { providers, Contract, ethers } from "ethers";
+import { providers } from "ethers";
 import Web3Modal from "web3modal";
 
 function App() {
@@ -10,6 +10,9 @@ function App() {
   const [address, setAddress] = useState("");
   const [wallets, setWallets] = useState([]);
   const [communities, setCommunities] = useState([]);
+  const [stageProjects, setStageProjects] = useState([]);
+  const [allProjects, setAllProjects] = useState([]);
+  const [selectedStage, setSelectedStage] = useState(null);
 
   const web3ModalRef = useRef();
 
@@ -47,14 +50,15 @@ function App() {
         address={address}
         setAddress={setAddress}
         web3ModalRef={web3ModalRef}
+        setSelectedStage={setSelectedStage}
       />
 
       <Switch>
         <Route exact path="/">
-          <Home />
+          <Home getProviderOrSigner={getProviderOrSigner} />
         </Route>
         <Route path="/communities/:contractAddress">
-          <Community />
+          <Community getProviderOrSigner={getProviderOrSigner} />
         </Route>
         <Route path="/communities">
           <Communities
@@ -63,13 +67,24 @@ function App() {
             setCommunities={setCommunities}
             communities={communities}
             wallets={wallets}
+            address={address}
           />
         </Route>
         <Route path="/previous-projects">
-          <PreviousProjects />
+          <PreviousProjects
+            projects={allProjects}
+            setProjects={setAllProjects}
+            getProviderOrSigner={getProviderOrSigner}
+            selectedStage={selectedStage}
+          />
         </Route>
         <Route path="/projects">
-          <Projects getProviderOrSigner={getProviderOrSigner} />
+          <Projects
+            stageProjects={stageProjects}
+            setStageProjects={setStageProjects}
+            getProviderOrSigner={getProviderOrSigner}
+            address={address}
+          />
         </Route>
       </Switch>
 

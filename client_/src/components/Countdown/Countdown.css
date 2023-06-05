@@ -56,3 +56,14 @@
 .show_counter .countdown > .white {
   color: #fff !important;
 }
+
+.stage-button {
+  color: #7d2222;
+  font-weight: bold;
+  font-size: 120%;
+  background-color: transparent;
+  border: 0.4px solid white;
+  border-radius: 1em;
+  padding: 0.3em;
+  margin: 0;
+}

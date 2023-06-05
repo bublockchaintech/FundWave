@@ -5,17 +5,20 @@ import { Contract } from "ethers";
 import { DAO_CONTRACT_ADDRESS, DAO_ABI } from "../../constants";
 import { sliceAddress } from "../../utils/sliceAddress";
 
-const Communities = ({ getProviderOrSigner, setWallets, setCommunities, communities, wallets }) => {
+const Communities = ({ getProviderOrSigner, setWallets, setCommunities, communities, wallets, address }) => {
   const getWallets = async () => {
-    const provider = await getProviderOrSigner();
-    const contract = new Contract(DAO_CONTRACT_ADDRESS, DAO_ABI, provider);
-    const multiWalletCount = await contract.multiWalletCount();
-    for (let i = 0; i < multiWalletCount; i++) {
-      const address = await contract.multiAddresses(i);
-      const found = wallets.find((_address) => _address === address);
-      if (!found) {
-        setWallets([...wallets, address]);
+    try {
+      const provider = await getProviderOrSigner();
+      const contract = new Contract(DAO_CONTRACT_ADDRESS, DAO_ABI, provider);
+      const multiWalletCount = await contract.multiWalletCount();
+      const walletArr = [];
+      for (let i = 0; i < multiWalletCount; i++) {
+        const address = await contract.multiAddresses(i);
+        walletArr.push(address);
       }
+      setWallets(walletArr);
+    } catch (err) {
+      console.error(err);
     }
   };
 
@@ -26,24 +29,32 @@ const Communities = ({ getProviderOrSigner, setWallets, setCommunities, communit
     wallets.length > 0 &&
       wallets.forEach(async (address) => {
         const comm = await contract.multiWallets(address);
-        setCommunities([
-          ...communities,
-          {
-            approved: comm.approved,
-            contractAddress: comm.contractAddress,
-            executedProjectCounts: comm.executedProjectCounts,
-          },
-        ]);
+        arr.push({
+          approved: comm.approved,
+          contractAddress: comm.contractAddress,
+          executedProjectCounts: comm.executedProjectCounts,
+        });
       });
     setCommunities(arr);
   };
 
   useEffect(() => {
-    setWallets([]);
-    setCommunities([]);
     getWallets();
     getComms();
   }, []);
+
+  const approveComm = async (_contractAddress) => {
+    try {
+      const signer = await getProviderOrSigner(true);
+      const contract = new Contract(DAO_CONTRACT_ADDRESS, DAO_ABI, signer);
+      const tx = await contract.approveRequest(_contractAddress);
+      await tx.wait();
+      alert("Community Approved");
+    } catch (error) {
+      console.error(error);
+      alert(error.message);
+    }
+  };
 
   return (
     <div className="container my-4">
@@ -55,7 +66,11 @@ const Communities = ({ getProviderOrSigner, setWallets, setCommunities, communit
                 <div className="card-body">
                   <div className="comm_info">
                     <p>Community Contract Address:</p>
-                    <p>{sliceAddress(community.contractAddress)}</p>
+                    <p>
+                      <a href={`https://mumbai.polygonscan.com/address/${community.contractAddress}`} target="blank">
+                        {sliceAddress(community.contractAddress)}
+                      </a>
+                    </p>
                   </div>
                   <div className="comm_info">
                     <p>Is Approved: </p>
@@ -68,12 +83,14 @@ const Communities = ({ getProviderOrSigner, setWallets, setCommunities, communit
                     <p>Number of Projects: {community.executedProjectCounts}</p>
                   </div>
                   <div className="comm_card_footer card-footer">
-                    <Link
-                      className="comm_btn btn"
-                      to={{ pathname: `/communities/${community.contractAddress}`, state: { ...community } }}
-                    >
+                    <Link className="comm_btn btn" to={{ pathname: `/communities/${community.contractAddress}` }}>
                       Details
                     </Link>
+                    {!community.approved && address === "0x651f283C9FE9DD238ceaC39415F8d531D4ea792B" && (
+                      <button onClick={() => approveComm(community.contractAddress)} className="comm_btn btn _danger">
+                        Approve
+                      </button>
+                    )}
                   </div>
                 </div>
               </div>
