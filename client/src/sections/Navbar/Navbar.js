@@ -6,6 +6,8 @@ import NavDropdown from "react-bootstrap/NavDropdown";
 import { sliceAddress } from "../../utils/sliceAddress";
 
 const Navbar = ({ walletConnected, setWalletConnected, getProviderOrSigner, address, setAddress, web3ModalRef }) => {
+  const location = useLocation();
+
   const connectWallet = async () => {
     try {
       await web3ModalRef.current.connect();
@@ -21,7 +23,11 @@ const Navbar = ({ walletConnected, setWalletConnected, getProviderOrSigner, addr
   return (
     <nav className={`${styles.navbar} navbar navbar-expand navbar-light bg-light fixed-top`}>
       <div className="container">
-        <img className="logo" src="./2.svg" alt="" />
+        {location.pathname === "/" ? (
+          <img className="logo" src="./1.svg" alt="" />
+        ) : (
+          <img className="logo" src="./2.svg" alt="" />
+        )}
         <ul className="navbar-nav ms-auto">
           <li className="nav-item pe-5">
             <Link to="/" className="nav-link">
