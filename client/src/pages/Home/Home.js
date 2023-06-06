@@ -55,30 +55,45 @@ const Home = ({ getProviderOrSigner }) => {
 
           <div className="offcanvas offcanvas-bottom" id="myOffcanvas" data-bs-backdrop="false">
             <div className="offcanvas-header">
-              <h2 className="offcanvas-title ">CREATE YOUR COMMUNITY</h2>
+              <h2 className="offcanvas-title">CREATE YOUR COMMUNITY</h2>
               <button type="button" className="btn-close" data-bs-dismiss="offcanvas"></button>
             </div>
-            <div className="offcanvas-body">
-              <h5 className="text-center">Create your community, find fund!</h5>
-              <form onSubmit={onSubmitRequested}>
-                <div className="form-label">
-                  <label>Contract Address:</label>
-                  <div className="d-flex">
-                    <input
-                      value={requestedContractAddress}
-                      onChange={(e) => setRequestedContractAddress(e.target.value)}
-                      type="text"
-                      name="name"
-                      id="name"
-                      className="form-control w-50 me-3"
-                      placeholder="contract address"
-                    />
-                    <button type="submit" className="btn join-btn">
-                      Join Us
-                    </button>
+            <div className="offcanvas-body d-flex">
+              <div class="col-6">
+                <h5>Create your community, find fund!</h5>
+                <form>
+                  <div class="form-label">
+                    <label for="text">Contract Address:</label>
+                    <div class="d-flex">
+                      <input
+                        type="text"
+                        name="name"
+                        id="name"
+                        class="form-control w-50 me-3"
+                        placeholder="contract address"
+                      />
+                      <button class="btn join-btn">Join Us</button>
+                    </div>
                   </div>
-                </div>
-              </form>
+                </form>
+              </div>
+              <div class="col-6 list-scroll">
+                <ul>
+                  <li>
+                    At least 5 members should be in multisignature wallet. We should reach them via getOwners()
+                    function.
+                  </li>
+                  <li>There should not be any owner.</li>
+                  <li>All members should do their KYCs.</li>
+                  <li>
+                    There should be our DAO's contract address in constructor, and we should reach it via
+                    getDaoContractAddress() function.
+                  </li>
+                  <li>There should be isOwner() function for control users. </li>
+                  <li>Must have fallback and receive functions.</li>
+                  <li>You can directly take the contract from our github.</li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>

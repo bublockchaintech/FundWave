@@ -47,8 +47,29 @@
   font-size: 70px;
   color: #5d62f9 !important;
 }
+
 .offcanvas * {
   color: #180d5b !important;
+}
+
+.list-scroll {
+  height: 110px;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+.list-scroll::-webkit-scrollbar {
+  width: 1em;
+}
+
+.list-scroll::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  border-radius: 1em;
+}
+
+.list-scroll::-webkit-scrollbar-thumb {
+  background-color: darkgrey;
+  outline: 1px solid slategrey;
+  border-radius: 1em;
 }
 .offcanvas-title {
   padding-left: 36%;
