@@ -204,6 +204,10 @@ const Home = ({ getProviderOrSigner }) => {
           </div>
         </div>
       </div>
+      <div className="container mt-5 home__about">
+        <h1 className="fw-bold text-center">ROADMAP</h1>
+      </div>
+      <img src="./2.png" alt="" />
     </div>
   );
 };
