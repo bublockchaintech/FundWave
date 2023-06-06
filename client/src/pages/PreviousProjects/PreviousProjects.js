@@ -49,16 +49,22 @@ const PreviousProjects = ({ projects, setProjects, getProviderOrSigner }) => {
     getProjects();
   }, [getProviderOrSigner, setProjects, stageCount]);
 
-  const showModal = () => {
+  const [show, setShow] = useState(false);
+  const [tempData, setTempData] = useState([]);
+
+  const showModal = (project_name, community_address, totalFunds, totalVotes, confirmedBalance, subject, text) => {
+    setShow(true);
+    setTempData([project_name, community_address, totalFunds, totalVotes, confirmedBalance, subject, text]);
     const modalEl = modalRef.current;
     const bsModal = new Modal(modalEl, {
-      backdrop: "static",
-      keyboard: false,
+      keyboard: true,
     });
+    console.log(bsModal);
     bsModal.show();
   };
 
   const hideModal = () => {
+    setShow(false);
     const modalEl = modalRef.current;
     const bsModal = Modal.getInstance(modalEl);
     bsModal.hide();
@@ -98,50 +104,25 @@ const PreviousProjects = ({ projects, setProjects, getProviderOrSigner }) => {
               <p>{project.text.length > 120 ? `${project.text.substring(0, 120)}...` : project.text}</p>
             </div>
             <div className="execute_card_footer card-footer">
-              <button onClick={showModal} type="button" className="btn-light prev_btn btn">
+              <button
+                data-toggle="modal"
+                data-target="target-model"
+                onClick={() =>
+                  showModal(
+                    project.project_name,
+                    project.community_address,
+                    project.totalFunds,
+                    project.totalVotes,
+                    project.confirmedBalance,
+                    project.subject,
+                    project.text
+                  )
+                }
+                type="button"
+                className="btn-light prev_btn btn"
+              >
                 Details
               </button>
-            </div>
-          </div>
-        </div>
-
-        <div className="modal" ref={modalRef}>
-          <div className="modal-dialog modal-dialog-scrollable modal-fullscreen-sm-down">
-            <div className="modal-content">
-              <div className="modal-header">
-                <h4 className="modal-title">{project.project_name}</h4>
-                <button type="button" className="btn-close" onClick={hideModal}></button>
-              </div>
-              <div className="modal-body">
-                <p>
-                  Community Address:
-                  <a
-                    className="a_tag_modal"
-                    href={`https://mumbai.polygonscan.com/address/${project.community_address}`}
-                    target="blank"
-                  >
-                    <span className="bold">{`  ${sliceAddress(project.community_address)}`}</span>
-                  </a>
-                </p>
-                <p>
-                  Subject: <span className="bold">{project.subject}</span>
-                </p>
-                <p>Explanation: </p>
-                <p>
-                  <span className="bold">{project.text}</span>
-                </p>
-                <div className="execute_icons">
-                  <div>
-                    <i className="fa-solid fa-coins"></i>
-                    <p>{project.totalFunds}</p>
-                  </div>
-                  <div>
-                    <i className="fa-sharp fa-solid fa-user"></i>
-                    <p>{project.totalVotes}</p>
-                  </div>
-                </div>
-                <div className="execute_modal_footer modal-footer"></div>
-              </div>
             </div>
           </div>
         </div>
@@ -154,6 +135,48 @@ const PreviousProjects = ({ projects, setProjects, getProviderOrSigner }) => {
       <p className="eren">eren</p>
       <div className="container prev_cont my-5">
         <div className="row row-cols-1 row-cols-lg-3 row-cols-md-2 g-4">{listItems}</div>
+        {show && (
+          <div id="target-modal" className="modal" ref={modalRef}>
+            <div className="modal-dialog modal-dialog-scrollable modal-fullscreen-sm-down">
+              <div className="modal-content">
+                <div className="modal-header">
+                  <h4 className="modal-title">{tempData[0]}</h4>
+                  <button type="button" className="btn-close" onClick={hideModal}></button>
+                </div>
+                <div className="modal-body">
+                  <p>
+                    Community Address:
+                    <a
+                      className="a_tag_modal"
+                      href={`https://mumbai.polygonscan.com/address/${tempData[1]}`}
+                      target="blank"
+                    >
+                      <span className="bold">{`  ${sliceAddress(tempData[1])}`}</span>
+                    </a>
+                  </p>
+                  <p>
+                    Subject: <span className="bold">{tempData[5]}</span>
+                  </p>
+                  <p>Explanation: </p>
+                  <p>
+                    <span className="bold">{tempData[6]}</span>
+                  </p>
+                  <div className="execute_icons">
+                    <div>
+                      <i className="fa-solid fa-coins"></i>
+                      <p>{tempData[2]}</p>
+                    </div>
+                    <div>
+                      <i className="fa-sharp fa-solid fa-user"></i>
+                      <p>{tempData[3]}</p>
+                    </div>
+                  </div>
+                  <div className="execute_modal_footer modal-footer"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
