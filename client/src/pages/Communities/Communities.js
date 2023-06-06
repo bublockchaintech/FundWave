@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./Community.css";
 import { Contract } from "ethers";
@@ -75,8 +75,12 @@ const Communities = ({ getProviderOrSigner, setWallets, setCommunities, communit
                   <div className="comm_info">
                     <p>Is Approved: </p>
                     <p>
-                      {community.approved && <i className={`fa-sharp fa-solid fa-circle-check fa-xl ms-2`}></i>}
-                      {!community.approved && <i className={`fa-sharp fa-solid fa-circle-xmark fa-xl ms-2`}></i>}
+                      {community.approved && (
+                        <i className={`text-success fa-sharp fa-solid fa-circle-check fa-xl ms-2`}></i>
+                      )}
+                      {!community.approved && (
+                        <i className={`text-danger fa-sharp fa-solid fa-circle-xmark fa-xl ms-2`}></i>
+                      )}
                     </p>
                   </div>
                   <div className="comm_info">
@@ -87,7 +91,7 @@ const Communities = ({ getProviderOrSigner, setWallets, setCommunities, communit
                       Details
                     </Link>
                     {!community.approved && address === "0x651f283C9FE9DD238ceaC39415F8d531D4ea792B" && (
-                      <button onClick={() => approveComm(community.contractAddress)} className="comm_btn btn _danger">
+                      <button onClick={() => approveComm(community.contractAddress)} className="comm_btn btn bg-danger">
                         Approve
                       </button>
                     )}

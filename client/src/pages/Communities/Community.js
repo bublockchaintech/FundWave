@@ -59,9 +59,13 @@ const Community = ({ getProviderOrSigner }) => {
                     </h1>
                   </div>
                   <div className="form-label">
-                    <label for="text">Approved</label>
-                    {community.is_approved && <i className={`fa-sharp fa-solid fa-circle-check fa-xl ms-2`}></i>}
-                    {!community.is_approved && <i className={`fa-sharp fa-solid fa-circle-xmark fa-xl ms-2`}></i>}
+                    <label>Approved</label>
+                    {community.is_approved && (
+                      <i className={`text-success fa-sharp fa-solid fa-circle-check fa-xl ms-2`}></i>
+                    )}
+                    {!community.is_approved && (
+                      <i className={`text-danger fa-sharp fa-solid fa-circle-xmark fa-xl ms-2`}></i>
+                    )}
                   </div>
                   <div className="comm_info">
                     <h3>Number of Projects: {community.number_of_projects}</h3>
@@ -97,16 +101,24 @@ const Community = ({ getProviderOrSigner }) => {
                   <div key={i} className="comm_card_single card pt-3">
                     <div className="row">
                       <div className="col-8">
-                        <h3 className="card-title">Stage: {project.stageId}</h3>
-                        <h3 className="card-title">Project ID: {project.id}</h3>
-                        <h3 className="card-title">{project.title}</h3>
+                        <h3 className="card-title">
+                          <i>Stage:</i> {project.stageId}
+                        </h3>
+                        <h3 className="card-title">
+                          <i>Project ID:</i> {project.id}
+                        </h3>
+                        <h3 className="card-title">
+                          <i>{project.title}</i>
+                        </h3>
                         <div className="comm_info">
-                          <h5>Subject:</h5>
-                          <p>{project.subject}</p>
+                          <h5>
+                            <i>Subject:</i> <span className="h6">{project.subject}</span>
+                          </h5>
                         </div>
                         <div className="comm_info">
-                          <h5>Project Details:</h5>
-                          <p>{project.explanation} </p>
+                          <h5>
+                            <i>Project Details:</i> <span className="h6">{project.explanation}</span>
+                          </h5>
                         </div>
                       </div>
                       <div className="col-4">

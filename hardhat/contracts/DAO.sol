@@ -157,7 +157,7 @@ contract DAO {
     function setStageToCreation() external onlyOwner isStageInitialized {
         Stage storage stage = stages[stageCount];
         require(
-            (stage.updatedAt + 5 minutes) < block.timestamp,
+            (stage.updatedAt + 30 seconds) < block.timestamp, // 3 days should be
             "Initialized stage is not over"
         );
         stage.stageState = StageSection.PROJECT_CREATION_STAGE;
@@ -167,7 +167,7 @@ contract DAO {
     function setStageToFunding() external onlyOwner isProjectCreationStage {
         Stage storage stage = stages[stageCount];
         require(
-            (stage.updatedAt + 5 minutes) < block.timestamp,
+            (stage.updatedAt + 30 seconds) < block.timestamp, // 5 days should be
             "Creation stage is not over"
         );
         stage.stageState = StageSection.PROJECT_FUNDING_STAGE;
@@ -177,7 +177,7 @@ contract DAO {
     function setStageToExecution() external onlyOwner isProjectFundingStage {
         Stage storage stage = stages[stageCount];
         require(
-            (stage.updatedAt + 8 minutes) < block.timestamp,
+            (stage.updatedAt + 30 seconds) < block.timestamp, // 8 days should be
             "Funding stage is not over"
         );
         stage.stageState = StageSection.PROJECT_EXECUTION_STAGE;

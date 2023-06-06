@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styles from "./Navbar.css";
 import { Link, useLocation } from "react-router-dom";
 import Dropdown from "react-bootstrap/Dropdown";

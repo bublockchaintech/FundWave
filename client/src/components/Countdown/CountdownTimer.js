@@ -14,8 +14,7 @@ const CountdownTimer = ({ targetDate, stageState, getProviderOrSigner }) => {
   }
 };
 
-const ExpiredNotice = ({ stageState, getProviderOrSigner }) => {
-  const [text, setText] = useState();
+const ExpiredNotice = ({ getProviderOrSigner }) => {
   const [_stageState, _setStageState] = useState(0);
 
   const stageSection = async () => {
@@ -108,7 +107,6 @@ const ExpiredNotice = ({ stageState, getProviderOrSigner }) => {
   };
 
   const changeStageState = async () => {
-    console.log(_stageState);
     try {
       switch (_stageState) {
         case 0:
@@ -135,31 +133,8 @@ const ExpiredNotice = ({ stageState, getProviderOrSigner }) => {
     }
   };
 
-  const whatIsText = () => {
-    switch (_stageState) {
-      case 0:
-        setText("Set stage to creation!");
-        break;
-      case 1:
-        setText("Set stage to funding!");
-        break;
-      case 2:
-        setText("Set stage to execution!");
-        break;
-      case 3:
-        setText("Distribute funds!");
-        break;
-      case 4:
-        setText("Initialize stage!");
-        break;
-      default:
-        break;
-    }
-  };
-
   useEffect(() => {
     stageSection();
-    whatIsText();
   }, []);
 
   return (

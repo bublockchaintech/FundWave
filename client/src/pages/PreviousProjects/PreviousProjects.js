@@ -9,14 +9,14 @@ const PreviousProjects = ({ projects, setProjects, getProviderOrSigner }) => {
   const modalRef = useRef();
   const [stageCount, setStageCount] = useState(null);
 
-  const stageSection = async () => {
-    const provider = await getProviderOrSigner();
-    const contract = new Contract(DAO_CONTRACT_ADDRESS, DAO_ABI, provider);
-    const _stageCount = await contract.stageCount();
-    setStageCount(_stageCount);
-  };
-
   useEffect(() => {
+    const stageSection = async () => {
+      const provider = await getProviderOrSigner();
+      const contract = new Contract(DAO_CONTRACT_ADDRESS, DAO_ABI, provider);
+      const _stageCount = await contract.stageCount();
+      setStageCount(_stageCount);
+    };
+
     const getProjects = async () => {
       try {
         const provider = await getProviderOrSigner();
@@ -24,7 +24,7 @@ const PreviousProjects = ({ projects, setProjects, getProviderOrSigner }) => {
         const projectsArr = [];
         // update stageCount with less than, not less equal than
         for (let i = 1; i <= stageCount; i++) {
-          const { projectCount } = await contract.stages(stageCount);
+          const { projectCount } = await contract.stages(i);
           for (let j = 1; j <= projectCount; j++) {
             const _project = await contract.stagesToProject(i, j);
             projectsArr.push({
@@ -47,7 +47,7 @@ const PreviousProjects = ({ projects, setProjects, getProviderOrSigner }) => {
 
     stageSection();
     getProjects();
-  }, [projects]);
+  }, [getProviderOrSigner, setProjects, stageCount]);
 
   const showModal = () => {
     const modalEl = modalRef.current;
@@ -90,7 +90,7 @@ const PreviousProjects = ({ projects, setProjects, getProviderOrSigner }) => {
                   <p>{project.totalVotes}</p>
                 </div>
                 <div className="execute_number">
-                  <i class="fa-solid fa-circle-dollar-to-slot"></i>
+                  <i className="fa-solid fa-circle-dollar-to-slot"></i>
                   <p>{project.confirmedBalance}</p>
                 </div>
               </div>

@@ -67,14 +67,6 @@
   text-decoration: none;
 }
 
-.comm_form_label .fa_circle_check {
-  color: green !important;
-}
-
-.comm_form_label .fa_circle_xmark {
-  color: red !important;
-}
-
 .comm_scroll {
   height: 240px;
   overflow-x: hidden;
@@ -97,8 +89,4 @@
   background-color: darkgrey;
   outline: 1px solid slategrey;
   border-radius: 1em;
-}
-
-._danger {
-  background-color: rgb(221, 66, 66);
 }

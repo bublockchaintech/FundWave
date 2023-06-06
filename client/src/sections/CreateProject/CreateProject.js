@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Stage } from "../../components";
 import "./CreateProject.css";
 import { Contract } from "ethers";
@@ -9,8 +9,6 @@ const CreateProject = ({ lastUpdate, getProviderOrSigner, stageState }) => {
   const [title, setTitle] = useState("");
   const [subject, setSubject] = useState("");
   const [text, setText] = useState("");
-
-  console.log(stageState);
 
   const createProject = async () => {
     try {
@@ -56,7 +54,7 @@ const CreateProject = ({ lastUpdate, getProviderOrSigner, stageState }) => {
                   />
                 </div>
                 <div className="form-label">
-                  <label for="text">Title:</label>
+                  <label>Title:</label>
                   <input
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}

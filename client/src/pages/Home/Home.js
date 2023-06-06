@@ -59,25 +59,29 @@ const Home = ({ getProviderOrSigner }) => {
               <button type="button" className="btn-close" data-bs-dismiss="offcanvas"></button>
             </div>
             <div className="offcanvas-body d-flex">
-              <div class="col-6">
+              <div className="col-6">
                 <h5>Create your community, find fund!</h5>
-                <form>
-                  <div class="form-label">
-                    <label for="text">Contract Address:</label>
-                    <div class="d-flex">
+                <form onSubmit={onSubmitRequested}>
+                  <div className="form-label">
+                    <label>Contract Address:</label>
+                    <div className="d-flex">
                       <input
+                        value={requestedContractAddress}
+                        onChange={(e) => setRequestedContractAddress(e.target.value)}
                         type="text"
                         name="name"
                         id="name"
-                        class="form-control w-50 me-3"
+                        className="form-control w-50 me-3"
                         placeholder="contract address"
                       />
-                      <button class="btn join-btn">Join Us</button>
+                      <button type="submit" className="btn join-btn">
+                        Join Us
+                      </button>
                     </div>
                   </div>
                 </form>
               </div>
-              <div class="col-6 list-scroll">
+              <div className="col-6 list-scroll">
                 <ul>
                   <li>
                     At least 5 members should be in multisignature wallet. We should reach them via getOwners()
@@ -187,23 +191,18 @@ const Home = ({ getProviderOrSigner }) => {
             </div>
             <div className="col-6 about_text">
               <p>
-                Fundwave is a blockchain application created to connect communities and entrepreneurs seeking funding
-                for their project with funders. Thanks to Multisign wallets and contracts, the signing authority is
-                entirely in the community that will create the project. With the created cryptographic infrastructure,
-                digital asset transfers are carried out in a safe and transparent way.
+                There are three separate processes: project creation, funding and execution. During the project creation
+                process, communities and entrepreneurs create projects with their contract addresses, including the
+                wallet addresses of the team members. The projects created are shared with the funders when the funding
+                process begins. During this process, fund owners can donate any amount of funds they want to any project
+                they want. Each fund donation counts as one vote. When the funding process is completed, it moves to the
+                execute phase. Fund donations received during the fund process completed at this stage are distributed
+                to the project owners fairly in proportion to the votes received by the projects and shared through the
+                application.
               </p>
             </div>
           </div>
         </div>
-        <p>
-          There are three separate processes: project creation, funding and execution. During the project creation
-          process, communities and entrepreneurs create projects with their contract addresses, including the wallet
-          addresses of the team members. The projects created are shared with the funders when the funding process
-          begins. During this process, fund owners can donate any amount of funds they want to any project they want.
-          Each fund donation counts as one vote. When the funding process is completed, it moves to the execute phase.
-          Fund donations received during the fund process completed at this stage are distributed to the project owners
-          fairly in proportion to the votes received by the projects and shared through the application.
-        </p>
       </div>
     </div>
   );
