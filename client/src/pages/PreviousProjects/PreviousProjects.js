@@ -53,20 +53,23 @@ const PreviousProjects = ({ projects, setProjects, getProviderOrSigner }) => {
   const [tempData, setTempData] = useState([]);
 
   const showModal = (project_name, community_address, totalFunds, totalVotes, confirmedBalance, subject, text) => {
-    setShow(true);
-    setTempData([project_name, community_address, totalFunds, totalVotes, confirmedBalance, subject, text]);
-    const modalEl = modalRef.current;
-    const bsModal = new Modal(modalEl, {
-      keyboard: true,
-    });
-    console.log(bsModal);
-    bsModal.show();
+    try {
+      setShow(true);
+      setTempData([project_name, community_address, totalFunds, totalVotes, confirmedBalance, subject, text]);
+      const modalEl = modalRef.current;
+      const bsModal = new Modal(modalEl, {
+        keyboard: true,
+      });
+      bsModal.show();
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const hideModal = () => {
     setShow(false);
     const modalEl = modalRef.current;
-    const bsModal = Modal.getInstance(modalEl);
+    const bsModal = Modal.getOrCreateInstance(modalEl);
     bsModal.hide();
   };
 
