@@ -151,7 +151,7 @@ const Home = ({ getProviderOrSigner }) => {
                   <h5 className="mt-5 fw-bold">TOTAL FUNDS</h5>
                 </div>
                 <div>
-                  <h1>{totalFunds}</h1>
+                  <h1>{totalFunds} MATIC</h1>
                 </div>
               </div>
             </div>

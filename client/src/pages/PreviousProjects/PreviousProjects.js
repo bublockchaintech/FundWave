@@ -71,27 +71,27 @@ const PreviousProjects = ({ projects, setProjects, getProviderOrSigner }) => {
           <div className={`color${i % 6} prev_card card mb-3 shadow`}>
             <div className="card-body">
               <h5 className="card-title">{project.project_name}</h5>
+              <p>
+                <a
+                  className="a_tag"
+                  href={`https://mumbai.polygonscan.com/address/${project.community_address}`}
+                  target="blank"
+                >
+                  {sliceAddress(project.community_address)}
+                </a>
+              </p>
               <div className="execute_info">
-                <p>
-                  <a
-                    className="a_tag"
-                    href={`https://mumbai.polygonscan.com/address/${project.community_address}`}
-                    target="blank"
-                  >
-                    {sliceAddress(project.community_address)}
-                  </a>
-                </p>
                 <div className="execute_number">
                   <i className="fa-solid fa-coins"></i>
-                  <p>{project.totalFunds}</p>
+                  <p>{project.totalFunds} MATIC</p>
+                </div>
+                <div className="execute_number h6">
+                  <i className="fa-solid fa-circle-dollar-to-slot"></i>
+                  <p>{project.confirmedBalance} MATIC</p>
                 </div>
                 <div className="execute_number">
                   <i className="fa-sharp fa-solid fa-user"></i>
                   <p>{project.totalVotes}</p>
-                </div>
-                <div className="execute_number">
-                  <i className="fa-solid fa-circle-dollar-to-slot"></i>
-                  <p>{project.confirmedBalance}</p>
                 </div>
               </div>
               <b>{project.subject}</b>

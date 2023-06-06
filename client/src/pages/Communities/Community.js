@@ -97,6 +97,7 @@ const Community = ({ getProviderOrSigner }) => {
             </div>
             {community.number_of_projects > 0 &&
               community.projects.map((project, i) => {
+                console.log(project);
                 return (
                   <div key={i} className="comm_card_single card pt-3">
                     <div className="row">
@@ -121,10 +122,14 @@ const Community = ({ getProviderOrSigner }) => {
                           </h5>
                         </div>
                       </div>
-                      <div className="col-4">
-                        <div>
+                      <div className="col-4 d-flex flex-column align-items-center justify-content-center">
+                        <div className="text-center">
                           <i className="fa-solid fa-coins"></i>
-                          <p>{project.totalFunds.toString() / 10 ** 18}</p>
+                          <p>{project.totalFunds.toString() / 10 ** 18} MATIC</p>
+                        </div>
+                        <div className="h4 text-success text-center">
+                          <i className="fa-solid fa-circle-dollar-to-slot"></i>
+                          <p>{project.confirmedBalance.toString() / 10 ** 18} MATIC</p>
                         </div>
                         <div>
                           <i className="fa-sharp fa-solid fa-user"></i>
