@@ -15,7 +15,7 @@ const Item = ({ getProviderOrSigner, project }) => {
       const signer = await getProviderOrSigner(true);
       const contract = new Contract(DAO_CONTRACT_ADDRESS, DAO_ABI, signer);
       let tx = await contract.fund(_id, { value: parseEther(fundAmount.toString()) });
-      tx.wait();
+      await tx.wait();
       window.alert("Funded successfully");
       setFundAmount(0);
     } catch (error) {

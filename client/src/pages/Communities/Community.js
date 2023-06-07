@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { Contract } from "ethers";
 import { DAO_ABI, DAO_CONTRACT_ADDRESS, MULTI_ABI } from "../../constants";
 import { sliceAddress } from "../../utils/sliceAddress";
+import ProjectCard from "./ProjectCard";
 
 const Community = ({ getProviderOrSigner }) => {
   const { contractAddress } = useParams();
@@ -96,50 +97,9 @@ const Community = ({ getProviderOrSigner }) => {
               </div>
             </div>
             {community.number_of_projects > 0 &&
-              community.projects.map((project, i) => {
-                console.log(project);
-                return (
-                  <div key={i} className="comm_card_single card pt-3">
-                    <div className="row">
-                      <div className="col-8">
-                        <h3 className="card-title">
-                          <i>Stage:</i> {project.stageId}
-                        </h3>
-                        <h3 className="card-title">
-                          <i>Project ID:</i> {project.id}
-                        </h3>
-                        <h3 className="card-title">
-                          <i>{project.title}</i>
-                        </h3>
-                        <div className="comm_info">
-                          <h5>
-                            <i>Subject:</i> <span className="h6">{project.subject}</span>
-                          </h5>
-                        </div>
-                        <div className="comm_info">
-                          <h5>
-                            <i>Project Details:</i> <span className="h6">{project.explanation}</span>
-                          </h5>
-                        </div>
-                      </div>
-                      <div className="col-4 d-flex flex-column align-items-center justify-content-center">
-                        <div className="text-center">
-                          <i className="fa-solid fa-coins"></i>
-                          <p>{(project.totalFunds.toString() / 10 ** 18).toFixed(3)} MATIC</p>
-                        </div>
-                        <div className="h4 text-success text-center">
-                          <i className="fa-solid fa-circle-dollar-to-slot"></i>
-                          <p>{(project.confirmedBalance.toString() / 10 ** 18).toFixed(3)} MATIC</p>
-                        </div>
-                        <div>
-                          <i className="fa-sharp fa-solid fa-user"></i>
-                          <p>{project.totalVotes.toString()}</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
+              community.projects.map((project, i) => (
+                <ProjectCard project={project} key={i} getProviderOrSigner={getProviderOrSigner} />
+              ))}
           </div>
         </>
       )}
