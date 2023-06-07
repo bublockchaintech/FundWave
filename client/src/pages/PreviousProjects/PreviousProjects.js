@@ -46,7 +46,9 @@ const PreviousProjects = ({ projects, setProjects, getProviderOrSigner }) => {
     };
 
     stageSection();
-    getProjects();
+    if (projects.length === 0) {
+      getProjects();
+    }
   }, [getProviderOrSigner, setProjects, stageCount]);
 
   const [show, setShow] = useState(false);
@@ -73,65 +75,67 @@ const PreviousProjects = ({ projects, setProjects, getProviderOrSigner }) => {
     bsModal.hide();
   };
 
-  const listItems = projects.map((project, i) => {
-    return (
-      <span key={i}>
-        <div className="col">
-          <div className={`color${i % 6} prev_card card mb-3 shadow`}>
-            <div className="card-body">
-              <h5 className="card-title">{project.project_name}</h5>
-              <p>
-                <a
-                  className="a_tag"
-                  href={`https://mumbai.polygonscan.com/address/${project.community_address}`}
-                  target="blank"
-                >
-                  {sliceAddress(project.community_address)}
-                </a>
-              </p>
-              <div className="execute_info">
-                <div className="execute_number">
-                  <i className="fa-solid fa-coins"></i>
-                  <p>{project.totalFunds} MATIC</p>
+  const listItems = projects
+    .sort((a, b) => b.confirmedBalance - a.confirmedBalance)
+    .map((project, i) => {
+      return (
+        <span key={i}>
+          <div className="col">
+            <div className={`color${i % 6} prev_card card mb-3 shadow`}>
+              <div className="card-body">
+                <h5 className="card-title">{project.project_name}</h5>
+                <p>
+                  <a
+                    className="a_tag"
+                    href={`https://mumbai.polygonscan.com/address/${project.community_address}`}
+                    target="blank"
+                  >
+                    {sliceAddress(project.community_address)}
+                  </a>
+                </p>
+                <div className="execute_info">
+                  <div className="execute_number">
+                    <i className="fa-solid fa-coins"></i>
+                    <p>{project.totalFunds} MATIC</p>
+                  </div>
+                  <div className="execute_number h6">
+                    <i className="fa-solid fa-circle-dollar-to-slot"></i>
+                    <p>{project.confirmedBalance} MATIC</p>
+                  </div>
+                  <div className="execute_number">
+                    <i className="fa-sharp fa-solid fa-user"></i>
+                    <p>{project.totalVotes}</p>
+                  </div>
                 </div>
-                <div className="execute_number h6">
-                  <i className="fa-solid fa-circle-dollar-to-slot"></i>
-                  <p>{project.confirmedBalance} MATIC</p>
-                </div>
-                <div className="execute_number">
-                  <i className="fa-sharp fa-solid fa-user"></i>
-                  <p>{project.totalVotes}</p>
-                </div>
+                <b>{project.subject}</b>
+                <p>{project.text.length > 120 ? `${project.text.substring(0, 120)}...` : project.text}</p>
               </div>
-              <b>{project.subject}</b>
-              <p>{project.text.length > 120 ? `${project.text.substring(0, 120)}...` : project.text}</p>
-            </div>
-            <div className="execute_card_footer card-footer">
-              <button
-                data-toggle="modal"
-                data-target="target-model"
-                onClick={() =>
-                  showModal(
-                    project.project_name,
-                    project.community_address,
-                    project.totalFunds,
-                    project.totalVotes,
-                    project.confirmedBalance,
-                    project.subject,
-                    project.text
-                  )
-                }
-                type="button"
-                className="btn-light prev_btn btn"
-              >
-                Details
-              </button>
+              <div className="execute_card_footer card-footer">
+                <button
+                  data-toggle="modal"
+                  data-target="target-model"
+                  onClick={() =>
+                    showModal(
+                      project.project_name,
+                      project.community_address,
+                      project.totalFunds,
+                      project.totalVotes,
+                      project.confirmedBalance,
+                      project.subject,
+                      project.text
+                    )
+                  }
+                  type="button"
+                  className="btn-light prev_btn btn"
+                >
+                  Details
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-      </span>
-    );
-  });
+        </span>
+      );
+    });
 
   return (
     <div className="my-5">

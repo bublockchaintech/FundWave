@@ -53,9 +53,11 @@ const FundProject = ({
       />
       <div className="container my-4">
         <div className="row row-cols-1 row-cols-lg-3 row-cols-md-2 g-4">
-          {projects.map((project, i) => (
-            <Item key={i} getProviderOrSigner={getProviderOrSigner} project={project} />
-          ))}
+          {projects
+            .sort((a, b) => b.totalVotes - a.totalVotes)
+            .map((project, i) => (
+              <Item key={i} getProviderOrSigner={getProviderOrSigner} project={project} />
+            ))}
         </div>
       </div>
     </>

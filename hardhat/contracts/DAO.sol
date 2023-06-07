@@ -271,7 +271,6 @@ contract DAO {
             "Not authorized"
         );
         require(!project.withdrawed, "Project already withdrawed");
-
         project.withdrawed = true;
 
         (bool sent, ) = project.ownerContractAddress.call{
