@@ -125,11 +125,11 @@ const Community = ({ getProviderOrSigner }) => {
                       <div className="col-4 d-flex flex-column align-items-center justify-content-center">
                         <div className="text-center">
                           <i className="fa-solid fa-coins"></i>
-                          <p>{project.totalFunds.toString() / 10 ** 18} MATIC</p>
+                          <p>{(project.totalFunds.toString() / 10 ** 18).toFixed(3)} MATIC</p>
                         </div>
                         <div className="h4 text-success text-center">
                           <i className="fa-solid fa-circle-dollar-to-slot"></i>
-                          <p>{project.confirmedBalance.toString() / 10 ** 18} MATIC</p>
+                          <p>{(project.confirmedBalance.toString() / 10 ** 18).toFixed(3)} MATIC</p>
                         </div>
                         <div>
                           <i className="fa-sharp fa-solid fa-user"></i>

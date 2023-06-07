@@ -30,8 +30,8 @@ const PreviousProjects = ({ projects, setProjects, getProviderOrSigner }) => {
             projectsArr.push({
               project_name: _project.title,
               community_address: _project.ownerContractAddress,
-              totalFunds: _project.totalFunds.toString() / 10 ** 18,
-              confirmedBalance: _project.confirmedBalance.toString() / 10 ** 18,
+              totalFunds: (_project.totalFunds.toString() / 10 ** 18).toFixed(3),
+              confirmedBalance: (_project.confirmedBalance.toString() / 10 ** 18).toFixed(3),
               totalVotes: _project.totalVotes.toString(),
               id: _project.id,
               subject: _project.subject,
