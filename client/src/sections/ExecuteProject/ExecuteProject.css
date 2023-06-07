@@ -21,13 +21,14 @@
   margin-left: auto;
   margin-right: 15px;
   margin-bottom: 10px;
-  background: #212a3e;
-  color: white !important;
-}
-.execute_btn:hover {
   background-color: #f1f6f9;
   color: #212a3e !important;
   border: 1px solid #212a3e;
+}
+
+.execute_btn:hover {
+  background: #212a3e;
+  color: white !important;
 }
 
 #execute_number {

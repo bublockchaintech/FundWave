@@ -12,7 +12,7 @@ const Stage = ({ stage, lastUpdate, stageState, getProviderOrSigner }) => {
   }
 
   const updateDate = new Date(lastUpdate).getTime() * 1000;
-  const dateTimeAfterThreeDays = updateDate + dayNeedTime;
+  const dateTimeAfterThreeDays = updateDate;
 
   return (
     <>

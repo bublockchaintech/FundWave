@@ -1,5 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
-import { Stage } from "../../components";
+import React, { useRef, useState } from "react";
 import { Modal } from "bootstrap";
 import "./FundProject.css";
 import { DAO_ABI, DAO_CONTRACT_ADDRESS } from "../../constants";
