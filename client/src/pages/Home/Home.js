@@ -95,7 +95,14 @@ const Home = ({ getProviderOrSigner }) => {
                   </li>
                   <li>There should be isOwner() function for control users. </li>
                   <li>Must have fallback and receive functions.</li>
-                  <li>You can directly take the contract from our github.</li>
+                  <li>
+                    You can directly take the contract from our{" "}
+                    <a href="https://github.com/bublockchaintech/chainlink-hackathon/blob/master/hardhat/contracts/MultiSignature.sol">
+                      github
+                    </a>
+                    .
+                  </li>
+                  <li>Contract should be verified.</li>
                 </ul>
               </div>
             </div>
