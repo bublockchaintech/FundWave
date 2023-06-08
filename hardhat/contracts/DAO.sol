@@ -189,7 +189,9 @@ contract DAO is AutomationCompatibleInterface {
             stageState: StageSection.NON_STAGE,
             projectCount: 0,
             coefficient: 0,
-            isFundDistributed: false
+            isFundDistributed: false,
+            firstTimeCreation: false,
+            firstTimeFunding: false
         });
     }
 
