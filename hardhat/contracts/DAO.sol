@@ -4,9 +4,13 @@ pragma solidity ^0.8.9;
 import "./interfaces/MultiSignature.sol";
 import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 import "hardhat/console.sol";
+import "@chainlink/contracts/src/v0.8/AutomationCompatible.sol";
 
-contract DAO {
+contract DAO is AutomationCompatibleInterface {
     using SafeMath for uint256;
+
+    uint256 public immutable interval;
+    uint256 public lastTimeStamp;
 
     enum StageSection {
         NON_STAGE, // Stage Opening, 3 DAYS
@@ -63,11 +67,6 @@ contract DAO {
 
     address private owner;
 
-    modifier isStageInitialized() {
-        require(stages[stageCount].stageState == StageSection.NON_STAGE);
-        _;
-    }
-
     modifier isProjectCreationStage() {
         require(
             stages[stageCount].stageState == StageSection.PROJECT_CREATION_STAGE
@@ -78,14 +77,6 @@ contract DAO {
     modifier isProjectFundingStage() {
         require(
             stages[stageCount].stageState == StageSection.PROJECT_FUNDING_STAGE
-        );
-        _;
-    }
-
-    modifier isProjectExecutingStage() {
-        require(
-            stages[stageCount].stageState ==
-                StageSection.PROJECT_EXECUTION_STAGE
         );
         _;
     }
@@ -110,8 +101,56 @@ contract DAO {
         _;
     }
 
-    constructor() {
+    constructor(uint256 updateInterval) {
         owner = msg.sender;
+        interval = updateInterval;
+        lastTimeStamp = block.timestamp;
+
+        stages[stageCount].stageState = StageSection.FINISHED;
+    }
+
+    function checkUpkeep(
+        bytes calldata /* checkData */
+    )
+        external
+        view
+        override
+        returns (bool upkeepNeeded, bytes memory /* performData */)
+    {
+        upkeepNeeded = (block.timestamp - lastTimeStamp) > interval;
+    }
+
+    function performUpkeep(bytes calldata /* performData */) external override {
+        if ((block.timestamp - lastTimeStamp) > interval) {
+            if (stages[stageCount].stageState == StageSection.FINISHED) {
+                lastTimeStamp = block.timestamp;
+                initializeStage();
+            } else if (
+                stages[stageCount].stageState == StageSection.NON_STAGE
+            ) {
+                setStageToCreation();
+            } else if (
+                stages[stageCount].stageState ==
+                StageSection.PROJECT_CREATION_STAGE
+            ) {
+                setStageToFunding();
+            } else if (
+                stages[stageCount].stageState ==
+                StageSection.PROJECT_FUNDING_STAGE
+            ) {
+                setStageToExecution();
+            } else if (
+                stages[stageCount].stageState ==
+                StageSection.PROJECT_EXECUTION_STAGE
+            ) {
+                if (stages[stageCount].projectCount > 0) {
+                    calculateFormula();
+                    distributeFunds();
+                } else {
+                    initializeStage();
+                }
+            }
+        }
     }
 
     /*
@@ -140,7 +179,7 @@ contract DAO {
         multiWallets[multiSignatureContract].approved = true;
     }
 
-    function initializeStage() external onlyOwner {
+    function initializeStage() internal {
         stageCount++;
         stages[stageCount] = Stage({
             id: stageCount,
@@ -154,7 +193,7 @@ contract DAO {
         });
     }
 
-    function setStageToCreation() external isStageInitialized {
+    function setStageToCreation() internal {
         Stage storage stage = stages[stageCount];
         // require(
         //     (stage.updatedAt + 3 days) < block.timestamp,
@@ -164,7 +203,7 @@ contract DAO {
         stage.updatedAt = uint48(block.timestamp);
     }
 
-    function setStageToFunding() external isProjectCreationStage {
+    function setStageToFunding() internal {
         Stage storage stage = stages[stageCount];
         // require(
         //     (stage.updatedAt + 5 days) < block.timestamp,
@@ -174,7 +213,7 @@ contract DAO {
         stage.updatedAt = uint48(block.timestamp);
     }
 
-    function setStageToExecution() external isProjectFundingStage {
+    function setStageToExecution() internal {
         Stage storage stage = stages[stageCount];
         // require(
         //     (stage.updatedAt + 8 days) < block.timestamp,
@@ -231,11 +270,7 @@ contract DAO {
         allStagesVoteCount++;
     }
 
-    function distributeFunds()
-        external
-        isProjectExecutingStage
-        isFormulaCalculated
-    {
+    function distributeFunds() internal {
         Stage storage stage = stages[stageCount];
         require(!stage.isFundDistributed, "Fund already distributed");
         stage.isFundDistributed = true;
@@ -278,7 +313,7 @@ contract DAO {
         require(sent, "Failed to send ether");
     }
 
-    function calculateFormula() external onlyOwner isProjectExecutingStage {
+    function calculateFormula() internal {
         Stage storage stage = stages[stageCount];
         uint256 sum = 0;
         for (
