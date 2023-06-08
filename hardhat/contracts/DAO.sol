@@ -154,32 +154,32 @@ contract DAO {
         });
     }
 
-    function setStageToCreation() external onlyOwner isStageInitialized {
+    function setStageToCreation() external isStageInitialized {
         Stage storage stage = stages[stageCount];
-        require(
-            (stage.updatedAt + 30 seconds) < block.timestamp, // 3 days should be
-            "Initialized stage is not over"
-        );
+        // require(
+        //     (stage.updatedAt + 3 days) < block.timestamp,
+        //     "Initialized stage is not over"
+        // );
         stage.stageState = StageSection.PROJECT_CREATION_STAGE;
         stage.updatedAt = uint48(block.timestamp);
     }
 
-    function setStageToFunding() external onlyOwner isProjectCreationStage {
+    function setStageToFunding() external isProjectCreationStage {
         Stage storage stage = stages[stageCount];
-        require(
-            (stage.updatedAt + 30 seconds) < block.timestamp, // 5 days should be
-            "Creation stage is not over"
-        );
+        // require(
+        //     (stage.updatedAt + 5 days) < block.timestamp,
+        //     "Creation stage is not over"
+        // );
         stage.stageState = StageSection.PROJECT_FUNDING_STAGE;
         stage.updatedAt = uint48(block.timestamp);
     }
 
-    function setStageToExecution() external onlyOwner isProjectFundingStage {
+    function setStageToExecution() external isProjectFundingStage {
         Stage storage stage = stages[stageCount];
-        require(
-            (stage.updatedAt + 30 seconds) < block.timestamp, // 8 days should be
-            "Funding stage is not over"
-        );
+        // require(
+        //     (stage.updatedAt + 8 days) < block.timestamp,
+        //     "Funding stage is not over"
+        // );
         stage.stageState = StageSection.PROJECT_EXECUTION_STAGE;
         stage.updatedAt = uint48(block.timestamp);
     }
@@ -215,7 +215,7 @@ contract DAO {
     }
 
     function fund(uint16 projectId) external payable isProjectFundingStage {
-        // require(msg.value > 0, "Fund must be more than 0");
+        require(msg.value > 0, "Fund must be more than 0");
         Project storage project = stagesToProject[stageCount][projectId];
         Stage storage stage = stages[stageCount];
 
@@ -233,7 +233,6 @@ contract DAO {
 
     function distributeFunds()
         external
-        onlyOwner
         isProjectExecutingStage
         isFormulaCalculated
     {
