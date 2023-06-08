@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: UNLICENSED
+// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.9;
 
 import "./interfaces/MultiSignature.sol";
@@ -13,10 +13,10 @@ contract DAO is AutomationCompatibleInterface {
     uint256 public lastTimeStamp;
 
     enum StageSection {
-        NON_STAGE, // Stage Opening, 3 DAYS
-        PROJECT_CREATION_STAGE, // Project Creation, 5 DAYS
-        PROJECT_FUNDING_STAGE, // Project Funding 8 DAYS
-        PROJECT_EXECUTION_STAGE, // Project Execution 3 DAYS
+        NON_STAGE, // Stage Opening, 5 DAYS
+        PROJECT_CREATION_STAGE, // Project Creation, 10 DAYS
+        PROJECT_FUNDING_STAGE, // Project Funding 10 DAYS
+        PROJECT_EXECUTION_STAGE, // Project Execution 5 DAYS
         FINISHED // Finished
     }
 
@@ -29,6 +29,8 @@ contract DAO is AutomationCompatibleInterface {
         uint16 projectCount;
         uint256 coefficient;
         bool isFundDistributed;
+        bool firstTimeCreation;
+        bool firstTimeFunding;
     }
 
     struct MultiSignatureWallet {
@@ -122,27 +124,25 @@ contract DAO is AutomationCompatibleInterface {
 
     function performUpkeep(bytes calldata /* performData */) external override {
         if ((block.timestamp - lastTimeStamp) > interval) {
-            if (stages[stageCount].stageState == StageSection.FINISHED) {
+            StageSection _stageSection = stages[stageCount].stageState;
+            if (_stageSection == StageSection.FINISHED) {
                 lastTimeStamp = block.timestamp;
                 initializeStage();
-            } else if (
-                stages[stageCount].stageState == StageSection.NON_STAGE
-            ) {
-                setStageToCreation();
-            } else if (
-                stages[stageCount].stageState ==
-                StageSection.PROJECT_CREATION_STAGE
-            ) {
-                setStageToFunding();
-            } else if (
-                stages[stageCount].stageState ==
-                StageSection.PROJECT_FUNDING_STAGE
-            ) {
+            } else if (_stageSection == StageSection.NON_STAGE) {
+                if (!stages[stageCount].firstTimeCreation) {
+                    stages[stageCount].firstTimeCreation = true;
+                } else {
+                    setStageToCreation();
+                }
+            } else if (_stageSection == StageSection.PROJECT_CREATION_STAGE) {
+                if (!stages[stageCount].firstTimeFunding) {
+                    stages[stageCount].firstTimeFunding = true;
+                } else {
+                    setStageToFunding();
+                }
+            } else if (_stageSection == StageSection.PROJECT_FUNDING_STAGE) {
                 setStageToExecution();
-            } else if (
-                stages[stageCount].stageState ==
-                StageSection.PROJECT_EXECUTION_STAGE
-            ) {
+            } else if (_stageSection == StageSection.PROJECT_EXECUTION_STAGE) {
                 if (stages[stageCount].projectCount > 0) {
                     calculateFormula();
                     distributeFunds();
