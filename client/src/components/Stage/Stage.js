@@ -1,14 +1,14 @@
 import CountdownTimer from "../Countdown/CountdownTimer";
 import "./Stage.css";
 
-const Stage = ({ stage, lastUpdate, stageState, getProviderOrSigner }) => {
+const Stage = ({ stage, lastUpdate }) => {
   let dayNeedTime;
   if (stage === "CREATE_PROJECT") {
-    dayNeedTime = 3 * 24 * 60 * 60 * 1000; // 3 DAYS
+    dayNeedTime = /*3 * 24 * */ 15 * 60 * 1000; // 3 DAYS
   } else if (stage === "FUND_PROJECT") {
-    dayNeedTime = 3 * 24 * 60 * 60 * 1000; // 3 DAYS
+    dayNeedTime = /*3 * 24 * */ 15 * 60 * 1000; // 3 DAYS
   } else if (stage === "EXECUTE_PROJECT") {
-    dayNeedTime = 3 * 24 * 60 * 60 * 1000; // 3 DAYS
+    dayNeedTime = /*3 * 24 * */ 15 * 60 * 1000; // 3 DAYS
   }
 
   const updateDate = new Date(lastUpdate).getTime() * 1000;
@@ -60,11 +60,7 @@ const Stage = ({ stage, lastUpdate, stageState, getProviderOrSigner }) => {
         </div>
       </div>
       <div className="last_day">
-        <CountdownTimer
-          targetDate={dateTimeAfterThreeDays}
-          stageState={stageState}
-          getProviderOrSigner={getProviderOrSigner}
-        />
+        <CountdownTimer targetDate={dateTimeAfterThreeDays} />
       </div>
     </>
   );
