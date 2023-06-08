@@ -2,13 +2,9 @@ import CountdownTimer from "../Countdown/CountdownTimer";
 import "./Stage.css";
 
 const Stage = ({ stage, lastUpdate }) => {
-  let dayNeedTime;
-  if (stage === "CREATE_PROJECT") {
-    dayNeedTime = /*3 * 24 * */ 15 * 60 * 1000; // 3 DAYS
-  } else if (stage === "FUND_PROJECT") {
-    dayNeedTime = /*3 * 24 * */ 15 * 60 * 1000; // 3 DAYS
-  } else if (stage === "EXECUTE_PROJECT") {
-    dayNeedTime = /*3 * 24 * */ 15 * 60 * 1000; // 3 DAYS
+  let dayNeedTime = 1 * 60 * 1000; // instead of 1 it will change 15
+  if (stage === "CREATE_PROJECT" || stage === "FUND_PROJECT") {
+    dayNeedTime = dayNeedTime * 2;
   }
 
   const updateDate = new Date(lastUpdate).getTime() * 1000;

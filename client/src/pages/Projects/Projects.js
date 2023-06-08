@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { CreateProject, ExecuteProject, FundProject } from "../../sections";
+import { CreateProject, ExecuteProject, FundProject, InitializeProject } from "../../sections";
 import { Contract } from "ethers";
 import { DAO_CONTRACT_ADDRESS, DAO_ABI } from "../../constants";
 
@@ -23,12 +23,19 @@ const Projects = ({ getProviderOrSigner, address, stageProjects, setStageProject
   useEffect(() => {
     stageSection();
   }, []);
-
   return (
     <>
       {/* Project Cards */}
 
-      {(stageState === 0 || stageState === 1) && (
+      {stageState === 0 && (
+        <InitializeProject
+          getProviderOrSigner={getProviderOrSigner}
+          lastUpdate={lastUpdate}
+          stageState={stageState}
+          address={address}
+        />
+      )}
+      {stageState === 1 && (
         <CreateProject
           getProviderOrSigner={getProviderOrSigner}
           lastUpdate={lastUpdate}
