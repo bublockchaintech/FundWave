@@ -136,7 +136,6 @@ const PreviousProjects = ({ projects, setProjects, getProviderOrSigner }) => {
         </span>
       );
     });
-
   return (
     <div className="my-5">
       <p className="eren">eren</p>
@@ -168,10 +167,14 @@ const PreviousProjects = ({ projects, setProjects, getProviderOrSigner }) => {
                   <p>
                     <span className="bold">{tempData[6]}</span>
                   </p>
-                  <div className="execute_icons">
+                  <div className="execute_icons text-center">
                     <div>
                       <i className="fa-solid fa-coins"></i>
-                      <p>{tempData[2]}</p>
+                      <p>{tempData[2]} MATIC</p>
+                    </div>
+                    <div className="text-success">
+                      <i className="fa-solid fa-circle-dollar-to-slot"></i>
+                      <p>{tempData[4]} MATIC</p>
                     </div>
                     <div>
                       <i className="fa-sharp fa-solid fa-user"></i>
