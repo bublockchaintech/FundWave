@@ -12,7 +12,7 @@ const CountdownTimer = ({ targetDate }) => {
 };
 
 const ExpiredNotice = () => {
-  return <div className="expired_notice">Stage will change soon!</div>;
+  return <div className="expired_notice">Refresh the page!</div>;
 };
 
 const ShowCounter = ({ days, hours, minutes, seconds }) => {
