@@ -1,36 +1,36 @@
 ## Inspiration
 
-The main purpose and philosophy of blockchain technology can be summarized as correcting existing injustices and focusing on real problems. This principle impressed us deeply and inspired us to adopt this mission in our project. One of the biggest challenges, both as a student and blockchain club, was finding funds for our cool ideas and projects. We took action to address this issue and also wanted to correct a deficiency in existing funding systems.
+The main purpose and philosophy of blockchain technology can be summarized as correcting existing injustices and focusing on real problems. This principle impressed us deeply and inspired us to adopt this mission in our project. One of the biggest challenges, both as a student and blockchain club, was _finding funds_ for our cool ideas and projects. We took action to address this issue and also wanted to correct a deficiency in existing funding systems.
 
-This project was not just a step forward, but an effort to turn a vision into reality. Project reflects the vision of realizing the potential of blockchain technology and making the financing of future projects more equitable. Based on the values we believe in, we prioritized fairness and participation in this project. Our goal is to create a change in the world of blockchain and provide solutions to real problems.
+This project was not just a step forward, but an effort to turn a vision into reality. Project reflects the vision of realizing the potential of blockchain technology and making the financing of future projects **more equitable**. Based on the values we believe in, we prioritized fairness and participation in this project. Our goal is to create a change in the world of blockchain and provide solutions to real problems.
 
 ## What it Does & How it Work?
 
-FundWave is a crowdfunding platform that allows teams of at least 5 members to join the system using multi-signature wallets. This eliminates the need for appointing a specific administrator within the community and creates a decentralized autonomous organization (DAO) structure. Furthermore, the multi-signature wallets must meet the following criterias:
+FundWave is a crowdfunding platform that allows teams of at least 5 members to join the system using multi-signature wallets. This eliminates the need for appointing a specific administrator within the community and creates a decentralized autonomous organization **(DAO) structure**. Furthermore, the multi-signature wallets must meet the following **criterias**:
 
-- The multi-signature wallet should have a minimum of 5 members, and these members should be accessible through the getOwners() function.
+- The _multi-signature wallet_ should have a _minimum of 5 members_, and these members should be accessible through the `getOwners()` function.
 - There should not be a specific owner; instead, all users in the multi-signature wallet should be considered owners.
-- The constructor of the wallet should include the contract address of our DAO, and it should be accessible through the getDaoContractAddress() function.
-- There should be an isOwner() function to check if a user is an owner.
-- The wallet must have fallback and receive functions to receive funds.
+- The constructor of the wallet should include the contract address of our DAO, and it should be accessible through the `getDaoContractAddress()` function.
+- There should be an `isOwner()` function to check if a user is an owner.
+- The wallet must have **fallback and receive functions** to receive funds.
 - You can directly obtain the contract from our <a href="https://github.com/bublockchaintech/chainlink-hackathon/blob/master/hardhat/contracts/MultiSignature.sol">GitHub repository</a> and customize it according to your needs.
-- Your contract should be verified on Mumbai PolygonScan so that we can review your code and approve your requests.
-- All members must undergo KYC (Know Your Customer) verification. This step will be added later.
+- Your contract should be **verified** on Mumbai PolygonScan so that we can review your code and approve your requests.
+- All members must undergo **KYC (Know Your Customer)** verification. This step will be added later.
 
 Teams that meet these criteria can integrate with our system and add their projects for funding.
 
 The FundWave platform consists of 4 stages:
 
-1. Initialization Stage: This stage serves as a precursor to the project creation phase.
-2. Project Creation Stage: Community members create their projects and share the relevant information on the platform. This stage has a specific duration and transitions to the funding stage upon completion.
-3. Funding Stage: Users start providing funds to the projects they like within the system. This stage also has a predefined duration and transitions the projects to the execution stage. The total amount of funds raised for each project and the number of participants contributing to the funding are displayed.
-4. Execution Stage: In this stage, information such as the total amount of funds raised, the number of participants, and approved balances for each project is available.
+1. **Initialization Stage**: This stage serves as a precursor to the project creation phase.
+2. **Project Creation Stage**: Community members create their projects and share the relevant information on the platform. This stage has a specific duration and transitions to the funding stage upon completion.
+3. **Funding Stage**: Users start providing funds to the projects they like within the system. This stage also has a predefined duration and transitions the projects to the execution stage. The total amount of funds raised for each project and the number of participants contributing to the funding are displayed.
+4. **Execution Stage**: In this stage, information such as the total amount of funds raised, the number of participants, and approved balances for each project is available.
 
-Chainlink Automation technology enables the transition between stages without the need for a centralized structure. As a result, automation processes are carried out in a decentralized manner. Chainlink eliminates the influence of real individuals in this automated process that operates at specific time intervals.
+**Chainlink Automation** technology enables the transition between stages without the need for a centralized structure. As a result, automation processes are carried out in a decentralized manner. Chainlink eliminates the influence of real individuals in this automated process that operates at specific time intervals.
 
 At the end of these stages, communities can withdraw their approved funds and implement their projects. Additionally, users can view previous projects on FundWave and access detailed information on community pages.
 
-The FundWave platform aims to provide a fair and participant-centric approach to crowdfunding. While traditional systems often prioritize financial contributions, we believe that the involvement of each individual is valuable. Therefore, we have developed a formula that balances the amount of funds and the number of participants, ensuring a more equitable distribution. You can review the details of our formula and how it works in the image below.
+The FundWave platform aims to provide a **fair** and **participant-centric** approach to crowdfunding. While traditional systems often prioritize financial contributions, we believe that the involvement of each individual is valuable. Therefore, we have developed a **formula** that balances the amount of funds and the number of participants, ensuring a more equitable distribution. You can review the details of our formula and how it works in the image below.
 
 ![](./assets/formula.png)
 ![](./assets/how-it-works.png)
