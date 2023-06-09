@@ -1,4 +1,4 @@
-export const DAO_CONTRACT_ADDRESS = "0x0F3537b30C605Ffb89b747d22452f583DBF3D3E7";
+export const DAO_CONTRACT_ADDRESS = "0x65E1d98B899354Ce94E8e280f5E3d43f9e8D5F29";
 
 export const MULTI_ABI = [
   {
@@ -37,9 +37,113 @@ export const MULTI_ABI = [
 
 export const DAO_ABI = [
   {
-    inputs: [],
+    inputs: [
+      {
+        internalType: "address",
+        name: "multiSignatureContract",
+        type: "address",
+      },
+    ],
+    name: "approveRequest",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "contractAddress",
+        type: "address",
+      },
+      {
+        internalType: "string",
+        name: "_title",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "_subject",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "_explanation",
+        type: "string",
+      },
+    ],
+    name: "createProject",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint16",
+        name: "projectId",
+        type: "uint16",
+      },
+    ],
+    name: "fund",
+    outputs: [],
+    stateMutability: "payable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "bytes",
+        name: "",
+        type: "bytes",
+      },
+    ],
+    name: "performUpkeep",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "multiSignatureContract",
+        type: "address",
+      },
+    ],
+    name: "requestForMultiSignature",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "updateInterval",
+        type: "uint256",
+      },
+    ],
     stateMutability: "nonpayable",
     type: "constructor",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint16",
+        name: "stageId",
+        type: "uint16",
+      },
+      {
+        internalType: "uint16",
+        name: "projectId",
+        type: "uint16",
+      },
+    ],
+    name: "withdrawProjectMoney",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
   },
   {
     inputs: [],
@@ -83,69 +187,25 @@ export const DAO_ABI = [
   {
     inputs: [
       {
-        internalType: "address",
-        name: "multiSignatureContract",
-        type: "address",
+        internalType: "bytes",
+        name: "",
+        type: "bytes",
       },
     ],
-    name: "approveRequest",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "calculateFormula",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
+    name: "checkUpkeep",
+    outputs: [
       {
-        internalType: "address",
-        name: "contractAddress",
-        type: "address",
+        internalType: "bool",
+        name: "upkeepNeeded",
+        type: "bool",
       },
       {
-        internalType: "string",
-        name: "_title",
-        type: "string",
-      },
-      {
-        internalType: "string",
-        name: "_subject",
-        type: "string",
-      },
-      {
-        internalType: "string",
-        name: "_explanation",
-        type: "string",
+        internalType: "bytes",
+        name: "",
+        type: "bytes",
       },
     ],
-    name: "createProject",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "distributeFunds",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint16",
-        name: "projectId",
-        type: "uint16",
-      },
-    ],
-    name: "fund",
-    outputs: [],
-    stateMutability: "payable",
+    stateMutability: "view",
     type: "function",
   },
   {
@@ -317,9 +377,28 @@ export const DAO_ABI = [
   },
   {
     inputs: [],
-    name: "initializeStage",
-    outputs: [],
-    stateMutability: "nonpayable",
+    name: "interval",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "lastTimeStamp",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
     type: "function",
   },
   {
@@ -389,40 +468,6 @@ export const DAO_ABI = [
     type: "function",
   },
   {
-    inputs: [
-      {
-        internalType: "address",
-        name: "multiSignatureContract",
-        type: "address",
-      },
-    ],
-    name: "requestForMultiSignature",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "setStageToCreation",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "setStageToExecution",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "setStageToFunding",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
     inputs: [],
     name: "stageCount",
     outputs: [
@@ -483,6 +528,16 @@ export const DAO_ABI = [
       {
         internalType: "bool",
         name: "isFundDistributed",
+        type: "bool",
+      },
+      {
+        internalType: "bool",
+        name: "firstTimeCreation",
+        type: "bool",
+      },
+      {
+        internalType: "bool",
+        name: "firstTimeFunding",
         type: "bool",
       },
     ],
@@ -556,24 +611,6 @@ export const DAO_ABI = [
       },
     ],
     stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint16",
-        name: "stageId",
-        type: "uint16",
-      },
-      {
-        internalType: "uint16",
-        name: "projectId",
-        type: "uint16",
-      },
-    ],
-    name: "withdrawProjectMoney",
-    outputs: [],
-    stateMutability: "nonpayable",
     type: "function",
   },
 ];
