@@ -135,17 +135,24 @@ contract DAO is AutomationCompatibleInterface {
                     setStageToCreation();
                 }
             } else if (_stageSection == StageSection.PROJECT_CREATION_STAGE) {
-                if (!stages[stageCount].firstTimeFunding) {
-                    stages[stageCount].firstTimeFunding = true;
+                if (!stages[stageCount].firstTimeCreation) {
+                    stages[stageCount].firstTimeCreation = true;
                 } else {
                     setStageToFunding();
                 }
             } else if (_stageSection == StageSection.PROJECT_FUNDING_STAGE) {
-                setStageToExecution();
+                if (!stages[stageCount].firstTimeFunding) {
+                    stages[stageCount].firstTimeFunding = true;
+                } else {
+                    setStageToExecution();
+                }
             } else if (_stageSection == StageSection.PROJECT_EXECUTION_STAGE) {
                 if (stages[stageCount].projectCount > 0) {
-                    calculateFormula();
-                    distributeFunds();
+                    if (stages[stageCount].coefficient == 0) {
+                        calculateFormula();
+                    } else {
+                        distributeFunds();
+                    }
                 } else {
                     initializeStage();
                 }
