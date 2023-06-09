@@ -11,10 +11,14 @@ const PreviousProjects = ({ projects, setProjects, getProviderOrSigner }) => {
 
   useEffect(() => {
     const stageSection = async () => {
-      const provider = await getProviderOrSigner();
-      const contract = new Contract(DAO_CONTRACT_ADDRESS, DAO_ABI, provider);
-      const _stageCount = await contract.stageCount();
-      setStageCount(_stageCount);
+      try {
+        const provider = await getProviderOrSigner();
+        const contract = new Contract(DAO_CONTRACT_ADDRESS, DAO_ABI, provider);
+        const _stageCount = await contract.stageCount();
+        setStageCount(_stageCount);
+      } catch (err) {
+        console.log(err);
+      }
     };
 
     const getProjects = async () => {

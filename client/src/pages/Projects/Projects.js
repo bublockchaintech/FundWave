@@ -10,14 +10,18 @@ const Projects = ({ getProviderOrSigner, address, stageProjects, setStageProject
   const [lastUpdate, setLastUpdate] = useState(null);
 
   const stageSection = async () => {
-    const provider = await getProviderOrSigner();
-    const contract = new Contract(DAO_CONTRACT_ADDRESS, DAO_ABI, provider);
-    const _stageCount = await contract.stageCount();
-    const stage = await contract.stages(_stageCount);
-    setStageCount(_stageCount);
-    setStageProjectsCount(stage.projectCount);
-    setStageState(stage.stageState);
-    setLastUpdate(stage.updatedAt);
+    try {
+      const provider = await getProviderOrSigner();
+      const contract = new Contract(DAO_CONTRACT_ADDRESS, DAO_ABI, provider);
+      const _stageCount = await contract.stageCount();
+      const stage = await contract.stages(_stageCount);
+      setStageCount(_stageCount);
+      setStageProjectsCount(stage.projectCount);
+      setStageState(stage.stageState);
+      setLastUpdate(stage.updatedAt);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {
