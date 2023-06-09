@@ -92,11 +92,8 @@ const Communities = ({ getProviderOrSigner, setWallets, setCommunities, communit
                       <Link className="comm_btn btn" to={{ pathname: `/communities/${community.contractAddress}` }}>
                         Details
                       </Link>
-                      {!community.approved && address === "0x651f283C9FE9DD238ceaC39415F8d531D4ea792B" && (
-                        <button
-                          onClick={() => approveComm(community.contractAddress)}
-                          className="comm_btn btn bg-danger"
-                        >
+                      {!community.approved && address === "0x24CC375B80ADc32F7bc79b83343301458219FA50" && (
+                        <button onClick={() => approveComm(community.contractAddress)} className="comm_btn btn">
                           Approve
                         </button>
                       )}
