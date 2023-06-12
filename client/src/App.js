@@ -5,6 +5,29 @@ import { Footer, Navbar } from "./sections";
 import { providers } from "ethers";
 import Web3Modal from "web3modal";
 
+const _communities = [
+  {
+    approved: true,
+    contractAddress: "0x4f54417479A535Ea0091dBb51FB3374892a4B5d0",
+    executedProjectCounts: 2,
+  },
+  {
+    approved: true,
+    contractAddress: "0xa420bBD1B85787A078C5af0Da37f13e9015445Be",
+    executedProjectCounts: 2,
+  },
+  {
+    approved: true,
+    contractAddress: "0x9c725aE0EC7f636DbA9489D6EBD3E2a8312b86bB",
+    executedProjectCounts: 1,
+  },
+  {
+    approved: false,
+    contractAddress: "0x8786Bc4cac71a541A4a7975C483CCeb0211fe0a2",
+    executedProjectCounts: 0,
+  },
+];
+
 function App() {
   const [walletConnected, setWalletConnected] = useState(false);
   const [address, setAddress] = useState("");
@@ -13,7 +36,6 @@ function App() {
   const [stageProjects, setStageProjects] = useState([]);
   const [allProjects, setAllProjects] = useState([]);
   const [selectedStage, setSelectedStage] = useState(null);
-
   const web3ModalRef = useRef();
 
   useEffect(() => {
@@ -65,7 +87,7 @@ function App() {
             getProviderOrSigner={getProviderOrSigner}
             setWallets={setWallets}
             setCommunities={setCommunities}
-            communities={communities}
+            communities={communities.length > 0 ? communities : _communities}
             wallets={wallets}
             address={address}
           />
