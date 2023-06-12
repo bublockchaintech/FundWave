@@ -2,10 +2,7 @@ import CountdownTimer from "../Countdown/CountdownTimer";
 import "./Stage.css";
 
 const Stage = ({ stage, lastUpdate }) => {
-  let dayNeedTime = 2 * 60 * 60 * 1000; // instead of 3 it will change 15
-  if (stage === "CREATE_PROJECT" || stage === "FUND_PROJECT" || stage === "EXECUTE_PROJECT") {
-    dayNeedTime = dayNeedTime * 2;
-  }
+  let dayNeedTime = 4 * 60 * 60 * 1000;
 
   const updateDate = new Date(lastUpdate).getTime() * 1000;
   const dateTimeAfterThreeDays = updateDate + dayNeedTime;
